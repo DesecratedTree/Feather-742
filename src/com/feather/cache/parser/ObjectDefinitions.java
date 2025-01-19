@@ -744,4 +744,7 @@ public class ObjectDefinitions {
 		return field.get(this);
 	}
 
+	public int getAccessBlockFlag() {
+		return anInt3925;
+	}
 }

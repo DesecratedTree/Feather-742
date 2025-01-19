@@ -1292,12 +1292,6 @@ public class WorldPacketsEncoder extends Encoder {
 
 	// CUTSCENE PACKETS START
 
-	/**
-	 * This will blackout specified area.
-	 * 
-	 * @param byte area = area which will be blackout (0 = unblackout; 1 =
-	 *        blackout orb; 2 = blackout map; 5 = blackout orb and map)
-	 */
 	public void sendBlackOut(int area) {
 		OutputStream out = new OutputStream(2);
 		out.writePacket(player, 69);
@@ -1436,5 +1430,4 @@ public class WorldPacketsEncoder extends Encoder {
 		packet.endPacketVarShort();
 		session.write(packet);
 	}
-
 }

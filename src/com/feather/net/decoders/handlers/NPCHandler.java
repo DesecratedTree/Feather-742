@@ -4,6 +4,7 @@ import com.feather.Settings;
 import com.feather.game.Animation;
 import com.feather.game.ForceTalk;
 import com.feather.game.World;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
 import com.feather.game.npc.others.FireSpirit;
@@ -12,6 +13,7 @@ import com.feather.game.npc.pet.Pet;
 import com.feather.game.npc.slayer.Strykewyrm;
 import com.feather.game.player.CoordsEvent;
 import com.feather.game.player.Player;
+import com.feather.game.player.RouteEvent;
 import com.feather.game.player.actions.Fishing;
 import com.feather.game.player.actions.Fishing.FishingSpots;
 import com.feather.game.player.actions.mining.LivingMineralMining;
@@ -79,7 +81,7 @@ public class NPCHandler {
 		}
 		if(SiphonActionCreatures.siphon(player, npc)) 
 			return;
-		player.setCoordsEvent(new CoordsEvent(npc, new Runnable() {
+		player.setRouteEvent(new RouteEvent(npc, new Runnable() {
 			@Override
 			public void run() {
 				npc.resetWalkSteps();
@@ -242,7 +244,7 @@ public class NPCHandler {
 								+ npc.getY() + ", " + npc.getPlane());
 				}
 			}
-		}, npc.getSize()));
+		}, true));
 	}
 
 	public static void handleOption2(final Player player, InputStream stream) {
@@ -265,7 +267,7 @@ public class NPCHandler {
 			player.getBank().openBank();
 			return;
 		}
-		player.setCoordsEvent(new CoordsEvent(npc, new Runnable() {
+		player.setRouteEvent(new RouteEvent(npc, new Runnable() {
 			@Override
 			public void run() {
 				npc.resetWalkSteps();
@@ -378,7 +380,7 @@ public class NPCHandler {
 								+ npc.getY() + ", " + npc.getPlane());
 				}
 			}
-		}, npc.getSize()));
+		}, true));
 	}
 
 	public static void handleOption3(final Player player, InputStream stream) {
@@ -392,7 +394,7 @@ public class NPCHandler {
 		player.stopAll(false);
 		if(forceRun)
 			player.setRun(forceRun);
-		player.setCoordsEvent(new CoordsEvent(npc, new Runnable() {
+		player.setRouteEvent(new RouteEvent(npc, new Runnable() {
 			@Override
 			public void run() {
 				npc.resetWalkSteps();
@@ -419,10 +421,91 @@ public class NPCHandler {
 				}
 
 			}
-		}, npc.getSize()));
+		}, true));
 		if (Settings.DEBUG)
 			System.out.println("cliked 3 at npc id : "
 					+ npc.getId() + ", " + npc.getX() + ", "
 					+ npc.getY() + ", " + npc.getPlane());
+	}
+
+	public static WorldTile findNPCTile(NPC n, Player player) {
+		int x = player.getX();
+		int y = player.getY();
+		WorldTile to = n;
+		int offX = n.getSize();
+		int offY = n.getSize();
+		if (offX == 1 && offY == 1)
+			return n;
+		offX -= 1;
+		offY -= 1;
+		if (x >= to.getX() && x <= to.getX()+offX
+				&& y > to.getY()+offY) {//if I am north
+			return new WorldTile(x, to.getY()+offY, player.getPlane());
+
+		} else if (x >= to.getX() && x <= to.getX()+offX
+				&& y < to.getY()) {//if I am south
+			return new WorldTile(x, to.getY(), player.getPlane());
+
+		} else if (x > to.getX()+offX
+				&& y >= to.getY() && y <= to.getY()+offY) {//if I am east
+			return new WorldTile(to.getX()+offX, y, player.getPlane());
+
+		} else if (x < to.getX()
+				&& y >= to.getY() && y <= to.getY()+offY) {//if I am west
+			return new WorldTile(to.getX(), y, player.getPlane());
+
+		} else if (x > to.getX()+offX
+				&& y > to.getY()+offY) {//if I am north-east
+			return new WorldTile(to.getX()+offX, to.getY()+offY, player.getPlane());
+
+		} else if (x < to.getX()
+				&& y > to.getY()+offY) {//if I am north-west
+			return new WorldTile(to.getX(), to.getY()+offY, player.getPlane());
+
+		} else if (x > to.getX()+offX
+				&& y < to.getY()) {//if I am south-east
+			return new WorldTile(to.getX()+offX, to.getY(), player.getPlane());
+
+		} else if (x < to.getX()+offX
+				&& y < to.getY()+offY) {//if I am south-west
+			return new WorldTile(to.getX(), to.getY(), player.getPlane());
+
+		}
+		return to;
+	}
+
+	public static int getMinDistance(Player player, NPC npc) {
+		if (npc == null || npc.isCantInteract() || npc.isDead()
+				|| npc.hasFinished()
+				|| !player.getMapRegionsIds().contains(npc.getRegionId()))
+			return 1;
+		if (isBanker(npc.getName(), npc.getId())) {
+			return 3;
+		}
+		if (npc.getDefinitions().name.toLowerCase().equals(
+				"grand exchange clerk")) {
+			return 2;
+		}
+		if (npc.getId() == 745) {
+			return 4;
+		}
+		return 1;
+	}
+
+	public static boolean isBanker(String name, int npcId) {
+		if (name.contains("Banker") || name.contains("banker"))
+			return true;
+		switch (npcId) {
+			case 902:
+			case 2718:
+			case 3293:
+			case 3416:
+			case 3418:
+			case 3824:
+			case 6362:
+			case 14707:
+				return true;
+		}
+		return false;
 	}
 }

@@ -143,7 +143,8 @@ public class Player extends Entity {
 	private transient DuelRules lastDuelRules;
 	private transient IsaacKeyPair isaacKeyPair;
 	private transient Pet pet;
-	
+	protected transient RouteEvent routeEvent;
+
 
 	// used for packets logic
 	private transient ConcurrentLinkedQueue<LogicPacket> logicPackets;
@@ -1251,8 +1252,17 @@ public class Player extends Entity {
 		return actionManager;
 	}
 
-	public void setCoordsEvent(CoordsEvent coordsEvent) {
+	public void setRouteEvent(CoordsEvent coordsEvent) {
 		this.coordsEvent = coordsEvent;
+	}
+
+	public void setRouteEvent(RouteEvent routeEvent) {
+		this.routeEvent = routeEvent;
+		resetAppearance();
+	}
+
+	public RouteEvent getRouteEvent() {
+		return routeEvent;
 	}
 
 	public DialogueManager getDialogueManager() {
@@ -1292,6 +1302,13 @@ public class Player extends Entity {
 					World.sendProjectile(target, user, 2263, 11, 11, 20, 5, 0, 0);
 			}
 		}, 0);
+	}
+
+	public void resetAppearance() {
+		getAppearence().setRenderEmote(
+				-1);
+		if (getTemporaryAttributtes().remove("commandtransform") != null)
+			getAppearence().resetAppearance();
 	}
 
 	@Override
