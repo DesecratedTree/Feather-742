@@ -8,7 +8,7 @@ Run the server using `Launcher.java` or by running the jar from the command line
 
 `java -jar Feather742.jar false true`
 
-##Usage
+## Usage
 
 There are 2 args you can use. `Hosted` and `Debug` in their respective order.
 
