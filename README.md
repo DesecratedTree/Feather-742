@@ -17,3 +17,9 @@ Please note when launching via Jar, you will need to place the /data/ directory 
 ![image](https://github.com/user-attachments/assets/6071a710-7043-4758-b088-4077d4d995d9)
 
 Requires JDK 8.
+
+## Credits
+- Jagex, for RuneScape.
+- [Gircat on Rune-Server](https://rune-server.org/members/gircat.247379/) for providing the original release.
+- [One Time on Rune-Server](https://rune-server.org/members/one-time.325253/) for providing a mirrored copy.
+- Rune-Server
