@@ -91,7 +91,7 @@ public class RouteEvent {
                 if ((!RouteFinder.lastIsAlternative() && steps <= 0)
                         || alternative) {
                     if (alternative)
-                        //player.getPackets().sendResetMinimapFlag();
+                        player.getPackets().sendResetMinimapFlag();
                     event.run();//it thinks that it's reached the npc
                     return true;
                 }
@@ -112,7 +112,7 @@ public class RouteEvent {
                     continue;
                 if ((!RouteFinder.lastIsAlternative() && steps <= 0)) {
                     if (alternative)
-                        //player.getPackets().sendResetMinimapFlag();
+                        player.getPackets().sendResetMinimapFlag();
                     event.run();
                     return true;
                 }
@@ -134,7 +134,7 @@ public class RouteEvent {
                 }
                 return false;
             }
-            //player.getPackets().sendResetMinimapFlag();
+            player.getPackets().sendResetMinimapFlag();
             return true;
         }
     }

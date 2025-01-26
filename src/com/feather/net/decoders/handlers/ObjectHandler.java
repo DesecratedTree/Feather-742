@@ -121,21 +121,33 @@ public final class ObjectHandler {
 		switch(option) {
 		case 1:
 			handleOption1(player, object);
+			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 2:
 			handleOption2(player, object);
+			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 3:
 			handleOption3(player, object);
+			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 4:
 			handleOption4(player, object);
+			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 5:
 			handleOption5(player, object);
+			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case -1:
 			handleOptionExamine(player, object);
+			player.getPackets().sendGameMessage("Clicked Object: " + id);
+			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		}
 	}
@@ -145,16 +157,9 @@ public final class ObjectHandler {
 		final int id = object.getId();
 		final int x = object.getX();
 		final int y = object.getY();
+		if(SihponActionNodes.siphon(player, object))
+			return;
 		player.setRouteEvent(new RouteEvent(object, new Runnable() {
-			@Override
-			public void run() {
-				player.stopAll();
-				player.faceObject(object);
-			}
-		}));
-		/*if(SihponActionNodes.siphon(player, object))
-			return;*/
-		/*player.setRouteEvent(new RouteEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1114,7 +1119,7 @@ public final class ObjectHandler {
 									+ object.getRotation() + ", "
 									+ object.getDefinitions().name);
 			}
-		}, true));*/
+		}, true));
 	}
 
 	private static void handleOption2(final Player player, final WorldObject object) {

@@ -1430,4 +1430,88 @@ public class WorldPacketsEncoder extends Encoder {
 		packet.endPacketVarShort();
 		session.write(packet);
 	}
+
+	public void sendResetMinimapFlag() {
+		OutputStream stream = new OutputStream(3);
+		stream.writePacket(player, 13);
+		stream.writeByte128(255);
+		stream.writeByte128(255);
+		session.write(stream);
+	}
+
+	public void sendPlayerMessage(int border, Player player, String message) {
+		sendGameMessage(message);
+		sendGlobalString(306, message);
+		sendGlobalConfig(1699, 15263739);
+		sendGlobalConfig(1700, border);
+		sendGlobalConfig(1695, 1);
+		sendPlayerInterface(player, true, 746, 1, 1177);
+	}
+
+	public void sendNPCMessage(int border, NPC npc, String message) {
+		sendGameMessage(message);
+		sendGlobalString(306, message);
+		sendGlobalConfig(1699, 15263739);
+		sendGlobalConfig(1700, border);
+		sendGlobalConfig(1695, 1);
+		sendNPCInterface(npc, true, 746, 1, 1177);
+	}
+
+	public void sendObjectMessage(int border, WorldObject object, String message) {
+		sendGameMessage(message);
+		sendGlobalString(306, message);
+		sendGlobalConfig(1699, 15263739);
+		sendGlobalConfig(1700, border);
+		sendGlobalConfig(1695, 1);
+		sendObjectInterface(object, true, 746, 1, 1177);
+	}
+
+	public void sendObjectInterface(WorldObject object, boolean nocliped, int windowId, int windowComponentId,
+									int interfaceId) {
+		int[] xteas = new int[4];
+		OutputStream stream = new OutputStream(33);
+		stream.writePacket(player, 143);
+		stream.writeIntV2(xteas[1]);
+		stream.writeByte(nocliped ? 1 : 0);
+		stream.writeIntLE(xteas[2]);
+		stream.writeIntV1(object.getId());
+		stream.writeByte128((object.getType() << 2) | (object.getRotation() & 0x3));
+		stream.writeInt((object.getPlane() << 28) | (object.getX() << 14) | object.getY());
+		stream.writeIntV2((windowId << 16) | windowComponentId);
+		stream.writeShort(interfaceId);
+		stream.writeInt(xteas[3]);
+		stream.writeInt(xteas[0]);
+		session.write(stream);
+	}
+
+	public void sendPlayerInterface(Player player, boolean nocliped, int windowId, int windowComponentId,
+									int interfaceId) {
+		int[] xteas = new int[4];
+		OutputStream stream = new OutputStream(26);
+		stream.writePacket(player, 57);
+		stream.writeIntV2(xteas[0]);
+		stream.writeShortLE128(player.getIndex());
+		stream.writeByte128(nocliped ? 1 : 0);
+		stream.writeInt(xteas[3]);
+		stream.writeShortLE128(interfaceId);
+		stream.writeIntLE(xteas[2]);
+		stream.writeIntV2(xteas[1]);
+		stream.writeIntV1(windowId << 16 | windowComponentId);
+		session.write(stream);
+	}
+
+	public void sendNPCInterface(NPC npc, boolean nocliped, int windowId, int windowComponentId, int interfaceId) {
+		int[] xteas = new int[4];
+		OutputStream stream = new OutputStream(26);
+		stream.writePacket(player, 57);
+		stream.writeIntV2(xteas[0]);
+		stream.writeShortLE128(npc.getIndex());
+		stream.writeByte128(nocliped ? 1 : 0);
+		stream.writeInt(xteas[3]);
+		stream.writeShortLE128(interfaceId);
+		stream.writeIntLE(xteas[2]);
+		stream.writeIntV2(xteas[1]);
+		stream.writeIntV1(windowId << 16 | windowComponentId);
+		session.write(stream);
+	}
 }
