@@ -3,6 +3,4 @@
 /bin
 /data/cache
 /out
-/data/characters/*.p
-/data/charactersBackup/*.p
 /.settings
