@@ -20,11 +20,11 @@ public final class Settings {
 	/**
 	 * Link settings
 	 */
-	public static final String WEBSITE_LINK = "http://www.feather2012.org/";
+	public static final String WEBSITE_LINK = "";
 	public static final String ITEMLIST_LINK = "";
 	public static final String ITEMDB_LINK = "";
-	public static final String VOTE_LINK = "http://www.feather2012.org/vote/";
-	public static final String HIGHSCORES_LINK = "http://www.feather2012.org/highscores/";
+	public static final String VOTE_LINK = "";
+	public static final String HIGHSCORES_LINK = "";
 
 	/**
 	 * Launching settings
