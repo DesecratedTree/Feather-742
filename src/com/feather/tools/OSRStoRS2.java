@@ -82,7 +82,7 @@ public class OSRStoRS2 {
         System.out.println("Overlays transported");
         transport_underlays(osrs_cache, rs2_cache, 256);
         System.out.println("Underlays transported");
-        transport_maps(osrs_cache, rs2_cache, collect_regionids(12894));
+        transport_maps(osrs_cache, rs2_cache, collect_regionids(6965, 7221));
         System.out.println("Maps transported");
 
     }
@@ -736,11 +736,9 @@ public class OSRStoRS2 {
 
     private static void initialiseXteas() throws IOException {
         StringBuilder builder = new StringBuilder();
-        URL url = new URL("https://archive.openrs2.org/caches/runescape/129/keys.json"); // Rev198 keys
-        URLConnection connection = url.openConnection();
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("User-Agent", "Mozilla 5.0");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        // Use a local file path
+        File file = new File("C:\\Users\\austi\\Documents\\GitHub\\Feather-742\\data\\keys.json");
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             char[] chars = new char[2048];
             int read;
             while ((read = reader.read(chars)) != -1) {
@@ -750,9 +748,10 @@ public class OSRStoRS2 {
             e.printStackTrace();
             System.exit(1);
         }
+
         Gson gson = new Gson();
         Xtea[] xteas = gson.fromJson(builder.toString(), Xtea[].class);
-        System.out.println("Parsed " + xteas.length + "rev 198 Xtea keys..");
+        System.out.println("Parsed " + xteas.length + " rev 198 Xtea keys..");
         for (Xtea xtea : xteas) {
             if (Arrays.equals(xtea.keys, new int[4])) {
                 continue;
@@ -764,6 +763,7 @@ public class OSRStoRS2 {
             set.add(xtea.keys);
         }
     }
+
 
     private static final class Xtea {
 
