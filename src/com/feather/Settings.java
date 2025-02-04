@@ -12,11 +12,13 @@ public final class Settings {
 	public static final String SERVER_NAME = "Feather";
 	public static final int PORT_ID = 43594;
 	public static final String CACHE_PATH = "data/cache/";
+	public static final String OSRS_CACHE_PATH = "data/cache/";
 	public static final int RECEIVE_DATA_LIMIT = 7500;
 	public static final int PACKET_SIZE_LIMIT = 7500;
 	public static final int CLIENT_BUILD = 718;
 	public static final int CUSTOM_CLIENT_BUILD = 3;
-	
+
+
 	/**
 	 * Link settings
 	 */
@@ -25,7 +27,6 @@ public final class Settings {
 	public static final String ITEMDB_LINK = "";
 	public static final String VOTE_LINK = "";
 	public static final String HIGHSCORES_LINK = "";
-
 	/**
 	 * Launching settings
 	 */

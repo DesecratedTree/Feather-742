@@ -512,10 +512,10 @@ public class Region {
 			return;	
 		if (type >= 0 && type <= 3) {
 			map.addWall(plane, x, y, type, rotation,
-					objectDefinition.isProjectileCliped(), true);
-			if (objectDefinition.isProjectileCliped())
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
 				clipedOnlyMap.addWall(plane, x, y, type, rotation,
-						objectDefinition.isProjectileCliped(), true);
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type >= 9 && type <= 21) {
 			int sizeX;
 			int sizeY;
@@ -527,10 +527,10 @@ public class Region {
 				sizeY = objectDefinition.getSizeX();
 			}
 			map.addObject(plane, x, y, sizeX, sizeY,
-					objectDefinition.isProjectileCliped(), true);
-			if (objectDefinition.isProjectileCliped())
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
 				clipedOnlyMap.addObject(plane, x, y, sizeX, sizeY,
-						objectDefinition.isProjectileCliped(), true);
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type == 22) {
 			// map.addFloor(plane, x, y);
 		}
@@ -554,10 +554,10 @@ public class Region {
 			return;
 		if (type >= 0 && type <= 3) {
 			map.removeWall(plane, x, y, type, rotation,
-					objectDefinition.isProjectileCliped(), true);
-			if (objectDefinition.isProjectileCliped())
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
 				clipedOnlyMap.removeWall(plane, x, y, type, rotation,
-						objectDefinition.isProjectileCliped(), true);
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type >= 9 && type <= 21) {
 			int sizeX;
 			int sizeY;
@@ -569,10 +569,10 @@ public class Region {
 				sizeY = objectDefinition.getSizeX();
 			}
 			map.removeObject(plane, x, y, sizeX, sizeY,
-					objectDefinition.isProjectileCliped(), true);
-			if (objectDefinition.isProjectileCliped())
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
 				clipedOnlyMap.removeObject(plane, x, y, sizeX, sizeY,
-						objectDefinition.isProjectileCliped(), true);
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type == 22) {
 			// map.removeFloor(plane, x, y);
 		}

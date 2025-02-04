@@ -1,6 +1,5 @@
 package com.feather.cache.parser;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public class ObjectDefinitions {
 	public boolean secondBool;
 	public boolean aBoolean3853;
 	int anInt3855;
-	public boolean notCliped;
+	public boolean ignoreClipOnAlternativeRoute;
 	int anInt3857;
 	private byte[] aByteArray3858;
 	int[] anIntArray3859;
@@ -49,7 +48,7 @@ public class ObjectDefinitions {
 	int anInt3865;
 	boolean aBoolean3866;
 	boolean aBoolean3867;
-	public boolean projectileCliped;
+	public boolean projectileClipped;
 	private int[] anIntArray3869;
 	boolean aBoolean3870;
 	public int sizeY;
@@ -74,7 +73,7 @@ public class ObjectDefinitions {
 	boolean aBoolean3895;
 	int anInt3896;
 	int configId;
-	private byte[] aByteArray3899;
+	private byte[] shapes;
 	int anInt3900;
 	public String name;
 	private int anInt3902;
@@ -86,7 +85,7 @@ public class ObjectDefinitions {
 	int anInt3913;
 	private byte aByte3914;
 	private int anInt3915;
-	public int[][] modelIds;
+	public int[][] models;
 	private int anInt3917;
 	/**
 	 * Object anim shit 1
@@ -100,7 +99,7 @@ public class ObjectDefinitions {
 	private HashMap<Integer, Object> parameters;
 	boolean aBoolean3923;
 	boolean aBoolean3924;
-	int anInt3925;
+	int accessBlockFlag;
 	public int id;
 
 	private int[] anIntArray4534;
@@ -159,7 +158,7 @@ public class ObjectDefinitions {
 				if (opcode != 14) {
 					if (opcode != 15) {
 						if (opcode == 17) { // nocliped
-							projectileCliped = false;
+							projectileClipped = false;
 							clipType = 0;
 						} else if (opcode != 18) {
 							if (opcode == 19)
@@ -229,8 +228,7 @@ public class ObjectDefinitions {
 																	else if (opcode != 66) {
 																		if (opcode != 67) {
 																			if (opcode == 69)
-																				anInt3925 = stream
-																				.readUnsignedByte();
+																				accessBlockFlag = stream.readUnsignedByte();
 																			else if (opcode != 70) {
 																				if (opcode == 71)
 																					anInt3889 = stream
@@ -239,7 +237,7 @@ public class ObjectDefinitions {
 																					if (opcode == 73)
 																						secondBool = true;
 																					else if (opcode == 74)
-																						notCliped = true;
+																						ignoreClipOnAlternativeRoute = true;
 																					else if (opcode != 75) {
 																						if (opcode != 77
 																								&& opcode != 92) {
@@ -527,7 +525,7 @@ public class ObjectDefinitions {
 							} else
 								aBoolean3867 = true;
 						} else
-							projectileCliped = false;
+							projectileClipped = false;
 					} else
 						// 15
 						sizeY = stream.readUnsignedByte();
@@ -542,14 +540,14 @@ public class ObjectDefinitions {
 			if (opcode == 5 && aBoolean1162)
 				skipReadModelIds(stream);
 			int i_73_ = stream.readUnsignedByte();
-			modelIds = new int[i_73_][];
-			aByteArray3899 = new byte[i_73_];
+			models = new int[i_73_][];
+			shapes = new byte[i_73_];
 			for (int i_74_ = 0; i_74_ < i_73_; i_74_++) {
-				aByteArray3899[i_74_] = (byte) stream.readByte();
+				shapes[i_74_] = (byte) stream.readByte();
 				int i_75_ = stream.readUnsignedByte();
-				modelIds[i_74_] = new int[i_75_];
+				models[i_74_] = new int[i_75_];
 				for (int i_76_ = 0; i_75_ > i_76_; i_76_++)
-					modelIds[i_74_][i_76_] = stream.readBigSmart();
+					models[i_74_][i_76_] = stream.readBigSmart();
 			}
 			if (opcode == 5 && !aBoolean1162)
 				skipReadModelIds(stream);
@@ -607,8 +605,8 @@ public class ObjectDefinitions {
 		aBoolean3853 = true;
 		secondBool = false;
 		clipType = 2;
-		projectileCliped = true;
-		notCliped = false;
+		projectileClipped = true;
+		ignoreClipOnAlternativeRoute = false;
 		anInt3855 = -1;
 		anInt3878 = 0;
 		anInt3904 = 0;
@@ -630,7 +628,7 @@ public class ObjectDefinitions {
 		anInt3902 = 128;
 		configId = -1;
 		anInt3877 = 0;
-		anInt3925 = 0;
+		accessBlockFlag = 0;
 		anInt3892 = 64;
 		aBoolean3923 = false;
 		aBoolean3924 = false;
@@ -641,8 +639,8 @@ public class ObjectDefinitions {
 	final void method3287() {
 		if (secondInt == -1) {
 			secondInt = 0;
-			if (aByteArray3899 != null && aByteArray3899.length == 1
-					&& aByteArray3899[0] == 10)
+			if (shapes != null && shapes.length == 1
+					&& shapes[0] == 10)
 				secondInt = 1;
 			for (int i_13_ = 0; i_13_ < 5; i_13_++) {
 				if (options[i_13_] != null) {
@@ -666,18 +664,18 @@ public class ObjectDefinitions {
 			def.id = id;
 			byte[] data = Cache.STORE.getIndexes()[16].getFile(getArchiveId(id), id & 0xff);
 			if (data == null) {
-				// System.out.println("Failed loading Object " + id + ".");
+				def.readOsrsValues(new InputStream(data));
 			} else
 				def.readValueLoop(new InputStream(data));
 			def.method3287();
 			if (def.name.equalsIgnoreCase("bank booth") || def.name.equalsIgnoreCase("counter")) {
-				def.notCliped = false;
-				def.projectileCliped = true;
+				def.ignoreClipOnAlternativeRoute = false;
+				def.projectileClipped = true;
 				if (def.clipType == 0)
 					def.clipType = 1;
 			}
-			if (def.notCliped) {
-				def.projectileCliped = false;
+			if (def.ignoreClipOnAlternativeRoute) {
+				def.projectileClipped = false;
 				def.clipType = 0;
 			}
 			objectDefinitions.put(id, def);
@@ -685,12 +683,186 @@ public class ObjectDefinitions {
 		return def;
 	}
 
+	private void readOsrsValues(InputStream buffer) {
+		for (;;) {
+			int opcode = buffer.readUnsignedByte();
+			if (opcode == 0) {
+				break;
+			}
+			decodeOSRS(buffer, opcode);
+		}
+	}
+
+	private void decodeOSRS(InputStream buffer, int opcode) {
+		if (1 == opcode) {
+			int num_shapes = buffer.readUnsignedByte();
+			shapes = new byte[num_shapes];
+			models = new int[num_shapes][];
+			for (int shape_index = 0; shape_index < num_shapes; shape_index++) {
+				models[shape_index] = new int[] { buffer.readUnsignedShort() + 200_000 };
+				shapes[shape_index] = (byte) buffer.readByte();
+			}
+		} else if (opcode == 2) {
+			name = buffer.readString();
+		} else if (opcode == 5) {
+			shapes = new byte[] { 10 };
+			int num_models = buffer.readUnsignedByte();
+			models = new int[1][num_models];
+			for (int index = 0; index < num_models; index++) {
+				models[0][index] = buffer.readUnsignedShort() + 200_000;
+			}
+		} else if (14 == opcode) {
+			sizeX = buffer.readUnsignedByte();
+		} else if (opcode == 15) {
+			sizeY = buffer.readUnsignedByte();
+		} else if (opcode == 17) {
+			clipType = 0;
+			projectileClipped = false;
+		} else if (opcode == 18) {
+			projectileClipped = false;
+		} else if (19 == opcode) {
+			secondInt = buffer.readUnsignedByte();
+		} else if (21 == opcode) {
+			aByte3912 = (byte) 1;
+		} else if (opcode == 22) {
+			aBoolean3867 = true;
+		} else if (opcode == 23) {
+			thirdInt = 1;
+		} else if (24 == opcode) {
+			int i_5_ = buffer.readUnsignedShort();
+			if (i_5_ == 65535) {
+				objectAnimation = -1;
+			} else {
+				i_5_ += 30_000;
+				objectAnimation = i_5_;
+			}
+		} else if (opcode == 27) {
+			clipType = 1;
+		} else if (28 == opcode) {
+			anInt3892 = buffer.readUnsignedByte() << 2;
+		} else if (opcode == 29) {
+			anInt3878 = buffer.readByte();
+		} else if (39 == opcode) {
+			anInt3840 = buffer.readByte();
+		} else if (opcode >= 30 && opcode < 35) {
+			options[opcode - 30] = buffer.readString();
+			if (options[opcode - 30].equalsIgnoreCase("Hidden")) {
+				options[opcode - 30] = null;
+			}
+		} else if (opcode == 40) {
+			int i_6_ = buffer.readUnsignedByte();
+			originalColors = new short[i_6_];
+			modifiedColors = new short[i_6_];
+			for (int i_7_ = 0; i_7_ < i_6_; i_7_++) {
+				originalColors[i_7_] = (short) buffer.readUnsignedShort();
+				modifiedColors[i_7_] = (short) buffer.readUnsignedShort();
+			}
+		} else if (opcode == 41) {
+			int i_8_ = buffer.readUnsignedByte();
+			short[] retexture_src = new short[i_8_];
+			short[] retexture_dst = new short[i_8_];
+			for (int i_9_ = 0; i_9_ < i_8_; i_9_++) {
+				retexture_src[i_9_] = (short) buffer.readUnsignedShort();
+				retexture_dst[i_9_] = (short) buffer.readUnsignedShort();
+			}
+		} else if (opcode == 42) {
+			int i_10_ = buffer.readUnsignedByte();
+			aByteArray3858 = new byte[i_10_];
+			for (int i_11_ = 0; i_11_ < i_10_; i_11_++) {
+				aByteArray3858[i_11_] = (byte) buffer.readByte();
+			}
+		} else if (opcode == 62) {
+			aBoolean3839 = true;
+		} else if (64 == opcode) {
+			aBoolean3872 = false;
+		} else if (65 == opcode) {
+			anInt3902 = buffer.readUnsignedShort();
+		} else if (66 == opcode) {
+			anInt3841 = buffer.readUnsignedShort();
+		} else if (opcode == 67) {
+			anInt3917 = buffer.readUnsignedShort();
+		} else if (opcode == 68) {
+			buffer.readUnsignedShort();
+		} else if (opcode == 69) {
+			accessBlockFlag = buffer.readUnsignedByte();
+		} else if (opcode == 70) {
+			anInt3883 = buffer.readShort() << 2;
+		} else if (opcode == 71) {
+			anInt3889 = buffer.readShort() << 2;
+		} else if (opcode == 72) {
+			anInt3915 = buffer.readShort() << 2;
+		} else if (opcode == 73) {
+			secondBool = true;
+		} else if (opcode == 74) {
+			ignoreClipOnAlternativeRoute = true;
+		} else if (opcode == 75) {
+			anInt3855 = buffer.readUnsignedByte();
+		} else if (77 == opcode || 92 == opcode) {
+			configFileId = buffer.readUnsignedShort();
+			if (65535 == configFileId) {
+				configFileId = -1;
+			}
+			configId = buffer.readUnsignedShort();
+			if (65535 == configId) {
+				configId = -1;
+			}
+			int i_12_ = -1;
+			if (92 == opcode) {
+				i_12_ = buffer.readUnsignedShort();
+				if (i_12_ == 65535) {
+					i_12_ = -1;
+				} else {
+					i_12_ += 200_000;
+				}
+			}
+			int i_13_ = buffer.readUnsignedByte();
+			toObjectIds = new int[2 + i_13_];
+			for (int i_14_ = 0; i_14_ <= i_13_; i_14_++) {
+				toObjectIds[i_14_] = buffer.readUnsignedShort();
+				if (toObjectIds[i_14_] == 65535) {
+					toObjectIds[i_14_] = -1;
+				} else {
+					toObjectIds[i_14_] += 200_00;
+				}
+			}
+			toObjectIds[i_13_ + 1] = i_12_;
+		} else if (opcode == 78) {
+			anInt3860 = buffer.readUnsignedShort();
+			anInt3904 = buffer.readUnsignedByte();
+		} else if (opcode == 79) {
+			anInt3900 = buffer.readUnsignedShort();
+			anInt3905 = buffer.readUnsignedShort();
+			anInt3904 = buffer.readUnsignedByte();
+			int i_15_ = buffer.readUnsignedByte();
+			anIntArray3859 = new int[i_15_];
+			for (int i_16_ = 0; i_16_ < i_15_; i_16_++) {
+				anIntArray3859[i_16_] = buffer.readUnsignedShort();
+			}
+		} else if (81 == opcode) {
+			aByte3912 = (byte) 2;
+			anInt3882 = buffer.readUnsignedByte() * 256;
+		} else if (opcode == 82) {
+			aBoolean3891 = true;
+		} else if (opcode == 249) {
+			int i_23_ = buffer.readUnsignedByte();
+			if (parameters == null) {
+				parameters = new HashMap<>(i_23_);
+			}
+			for (int i_25_ = 0; i_25_ < i_23_; i_25_++) {
+				boolean bool = buffer.readUnsignedByte() == 1;
+				int i_26_ = buffer.read24BitInt();
+				parameters.put(i_26_, bool ? buffer.readString() : buffer.readInt());
+			}
+		}
+	}
+
+
 	public int getClipType() {
 		return clipType;
 	}
 
-	public boolean isProjectileCliped() {
-		return projectileCliped;
+	public boolean isProjectileClipped() {
+		return projectileClipped;
 	}
 
 	public int getSizeX() {
@@ -745,6 +917,6 @@ public class ObjectDefinitions {
 	}
 
 	public int getAccessBlockFlag() {
-		return anInt3925;
+		return accessBlockFlag;
 	}
 }
