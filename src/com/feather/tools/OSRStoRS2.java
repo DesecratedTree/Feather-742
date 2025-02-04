@@ -1,8 +1,5 @@
 package com.feather.tools;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
@@ -23,6 +20,10 @@ import com.feather.io.InputStream;
 import com.feather.io.OutputStream;
 import com.feather.utils.Utils;
 
+import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
 
 public class OSRStoRS2 {
     private static final DecimalFormat format = new DecimalFormat("#.##");
@@ -36,7 +37,7 @@ public class OSRStoRS2 {
         underwaterMaps.add(9008);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main() throws IOException {
         // if (false) {
         // // this should be only executed to transfer your customs from your old cache
         // to
@@ -58,20 +59,77 @@ public class OSRStoRS2 {
         // }
 
         Store rs2_cache = new Store(Settings.CACHE_PATH + "\\");
-        Store osrs_cache = new Store(Settings.OSRS_CACHE_PATH + "\\"); // Revision 198 (https://archive.openrs2.org/caches/runescape/536/disk.zip)
+        Store osrs_cache = new Store(Settings.OSRS_CACHE_PATH + "\\"); // Revision 189 (https://archive.openrs2.org/caches/runescape/536/disk.zip)
+
+
 
         /**
          * When packing npcs use the following lines;
          * models, npcs, and animations.
          */
 
-         /*transport_animations(osrs_cache, rs2_cache);
-         transport_models(osrs_cache, rs2_cache, 200000);
-         transport_npcs(osrs_cache, rs2_cache, 31000);
-         transport_locations(osrs_cache, rs2_cache, 200000);
-         transport_overlays(osrs_cache, rs2_cache, 256);
-         transport_underlays(osrs_cache, rs2_cache, 256);
-         transport_maps(osrs_cache, rs2_cache, collect_regionids(12894));*/
+        backup_rs2_cache();
+        System.out.println("Cache successfully backed up from " + Settings.CACHE_PATH + "\\");
+        transport_animations(osrs_cache, rs2_cache);
+        System.out.println("Animations transported");
+        transport_models(osrs_cache, rs2_cache, 200000);
+        System.out.println("Models transported");
+        transport_npcs(osrs_cache, rs2_cache, 31000);
+        System.out.println("NPCs transported");
+        transport_locations(osrs_cache, rs2_cache, 200000);
+        System.out.println("Locs transported");
+        transport_overlays(osrs_cache, rs2_cache, 256);
+        System.out.println("Overlays transported");
+        transport_underlays(osrs_cache, rs2_cache, 256);
+        System.out.println("Underlays transported");
+        transport_maps(osrs_cache, rs2_cache, collect_regionids(12894));
+        System.out.println("Maps transported");
+
+    }
+
+    private static void backup_rs2_cache() {
+        Path sourceDir = Paths.get(Settings.CACHE_PATH);
+        Path backupDir = Paths.get(Settings.BACKUP_CACHE_PATH);
+
+        // Check if source directory exists
+        if (Files.exists(sourceDir) && Files.isDirectory(sourceDir)) {
+            try {
+                // Ensure the backup directory exists, create if necessary
+                if (!Files.exists(backupDir)) {
+                    Files.createDirectories(backupDir);
+                }
+
+                // Copy all files and subdirectories recursively from source to backup
+                Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        Path targetDir = backupDir.resolve(sourceDir.relativize(dir));
+                        if (!Files.exists(targetDir)) {
+                            Files.createDirectory(targetDir);
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        Path targetFile = backupDir.resolve(sourceDir.relativize(file));
+                        Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+
+                System.out.println("Cache successfully backed up from " + sourceDir + " to " + backupDir);
+            } catch (IOException e) {
+                System.out.println("Error during backup: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Source cache directory does not exist: " + sourceDir);
+        }
     }
 
     private static void transport_locations(Store osrs_cache, Store nsrs_cache, int offset) {
@@ -678,7 +736,7 @@ public class OSRStoRS2 {
 
     private static void initialiseXteas() throws IOException {
         StringBuilder builder = new StringBuilder();
-        URL url = new URL("https://archive.openrs2.org/caches/runescape/536/keys.json"); // Rev198 keys
+        URL url = new URL("https://archive.openrs2.org/caches/runescape/129/keys.json"); // Rev198 keys
         URLConnection connection = url.openConnection();
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("User-Agent", "Mozilla 5.0");

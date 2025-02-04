@@ -1,6 +1,7 @@
 package com.feather;
 
 import java.math.BigInteger;
+import java.net.URI;
 
 import com.feather.game.WorldTile;
 
@@ -13,6 +14,7 @@ public final class Settings {
 	public static final int PORT_ID = 43594;
 	public static final String CACHE_PATH = "data/cache/";
 	public static final String OSRS_CACHE_PATH = "data/osrs_cache/";
+	public static final String BACKUP_CACHE_PATH = "data/backup_rs2_cache/";
 	public static final int RECEIVE_DATA_LIMIT = 7500;
 	public static final int PACKET_SIZE_LIMIT = 7500;
 	public static final int CLIENT_BUILD = 718;
@@ -27,6 +29,7 @@ public final class Settings {
 	public static final String ITEMDB_LINK = "";
 	public static final String VOTE_LINK = "";
 	public static final String HIGHSCORES_LINK = "";
+	public static final boolean PACK_OSRS = true;
 	/**
 	 * Launching settings
 	 */
