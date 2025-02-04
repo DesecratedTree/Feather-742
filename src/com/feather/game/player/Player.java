@@ -402,7 +402,7 @@ public class Player extends Entity {
 		World.addPlayer(this);
 		World.updateEntityRegion(this);
 		if (Settings.DEBUG)
-			Logger.log(this, "Initiated player: " + username + ", pass: " + password);
+			Logger.log(this, "Initiated player: " + username + ", Pass: " + password);
 
 		//Do not delete >.>, useful for security purpose. this wont waste that much space..
 		if(passwordList == null)
@@ -437,9 +437,6 @@ public class Player extends Entity {
 		World.addLobbyPlayer(this);// .addLobbyPlayer(this);
 		if (pouch == null)
 			pouch = new MoneyPouch(this);
-		if (Settings.DEBUG) {
-			Logger.log(this, "Initiated player: " + username + ", pass: " + password);
-		}
 	}
 
 	public void setWildernessSkull() {

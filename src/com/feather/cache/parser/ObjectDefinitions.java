@@ -107,6 +107,7 @@ public class ObjectDefinitions {
 	private byte[] unknownArray4;
 
 	private byte[] unknownArray3;
+	private boolean notClipped;
 
 
 	public String getFirstOption() {
@@ -663,15 +664,18 @@ public class ObjectDefinitions {
 			def = new ObjectDefinitions();
 			def.id = id;
 			byte[] data = Cache.STORE.getIndexes()[16].getFile(getArchiveId(id), id & 0xff);
-			def.readValueLoop(new InputStream(data));
+			if (data == null) {
+				// System.out.println("Failed loading Object " + id + ".");
+			} else
+				def.readValueLoop(new InputStream(data));
 			def.method3287();
 			if (def.name.equalsIgnoreCase("bank booth") || def.name.equalsIgnoreCase("counter")) {
-				def.ignoreClipOnAlternativeRoute = false;
+				def.notClipped = false;
 				def.projectileClipped = true;
 				if (def.clipType == 0)
 					def.clipType = 1;
 			}
-			if (def.ignoreClipOnAlternativeRoute) {
+			if (def.notClipped) {
 				def.projectileClipped = false;
 				def.clipType = 0;
 			}

@@ -12,6 +12,7 @@ import com.feather.utils.Logger;
 import com.feather.utils.MachineInformation;
 import com.feather.utils.SerializableFilesManager;
 import com.feather.utils.Utils;
+import org.mindrot.jbcrypt.BCrypt;
 
 public final class LoginPacketsDecoder extends Decoder {
 
@@ -73,7 +74,6 @@ public final class LoginPacketsDecoder extends Decoder {
 					key[i] = securePayload.readInt();
 				}
 
-
 				long hash = securePayload.readLong();
 
 				if (hash != 0) {
@@ -89,7 +89,6 @@ public final class LoginPacketsDecoder extends Decoder {
 					session.getLoginPackets().sendClientPacket(3);
 					return;
 				}
-				;
 
 				long[] lseeds = new long[2];
 				for (int i = 0; i < 2; i++)
@@ -116,7 +115,7 @@ public final class LoginPacketsDecoder extends Decoder {
 				int[] crcValues = new int[indexFiles];
 
 				for (int i = 0; i < crcValues.length; i++)
-					crcValues[i] = xteaBuffer.readInt(); 
+					crcValues[i] = xteaBuffer.readInt();
 
 				int[] serverKeys = new int[key.length];
 
@@ -141,18 +140,23 @@ public final class LoginPacketsDecoder extends Decoder {
 				}
 				Player player;
 				if (!SerializableFilesManager.containsPlayer(username)) {
-					player = new Player(password);
+					// Here hash the password with bcrypt when storing it for new players
+					String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+					player = new Player(hashedPassword);
 				} else {
 					player = SerializableFilesManager.loadPlayer(username);
 					if (player == null) {
 						session.getLoginPackets().sendClientPacket(20);
 						return;
 					}
+
 					if (!SerializableFilesManager.createBackup(username)) {
 						session.getLoginPackets().sendClientPacket(20);
 						return;
 					}
-					if (!password.equals(player.getPassword())) {
+
+					// Validate password using bcrypt
+					if (!BCrypt.checkpw(password, player.getPassword())) {
 						session.getLoginPackets().sendClientPacket(3);
 						return;
 					}
@@ -199,7 +203,7 @@ public final class LoginPacketsDecoder extends Decoder {
 			session.getLoginPackets().sendClientPacket(3);
 			return;
 		}
-		;
+
 		rsaStream.readLong();
 		rsaStream.readLong(); // random value
 		rsaStream.readLong(); // random value
@@ -248,13 +252,12 @@ public final class LoginPacketsDecoder extends Decoder {
 			session.getLoginPackets().sendClientPacket(5);
 			return;
 		}
-//		if (AntiFlood.getSessionsIP(session.getIP()) > 3) {
-//			session.getLoginPackets().sendClientPacket(9);
-//			return;
-//		}
+
 		Player player;
 		if (!SerializableFilesManager.containsPlayer(username)) {
-			player = new Player(password);
+			// Hash password with bcrypt when storing for new players
+			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+			player = new Player(hashedPassword);
 		} else {
 			player = SerializableFilesManager.loadPlayer(username);
 			if (player == null) {
@@ -265,7 +268,9 @@ public final class LoginPacketsDecoder extends Decoder {
 				session.getLoginPackets().sendClientPacket(20);
 				return;
 			}
-			if (!password.equals(player.getPassword())) {
+
+			// Check if password matches the bcrypt hash
+			if (!BCrypt.checkpw(password, player.getPassword())) {
 				session.getLoginPackets().sendClientPacket(3);
 				return;
 			}
@@ -285,5 +290,6 @@ public final class LoginPacketsDecoder extends Decoder {
 		session.setEncoder(2, player);
 		player.start();
 	}
+
 
 }
