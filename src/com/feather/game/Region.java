@@ -621,19 +621,17 @@ public class Region {
 	public void loadRegionMap() {
 		int regionX = (regionId >> 8) * 64;
 		int regionY = (regionId & 0xff) * 64;
-		int landArchiveId = Cache.STORE.getIndexes()[5].getArchiveId("l"
-				+ ((regionX >> 3) / 8) + "_" + ((regionY >> 3) / 8));
-		byte[] landContainerData = landArchiveId == -1 ? null : Cache.STORE
-				.getIndexes()[5].getFile(landArchiveId, 0,
-				MapArchiveKeys.getMapKeys(regionId));
-		int mapArchiveId = Cache.STORE.getIndexes()[5].getArchiveId("m"
-				+ ((regionX >> 3) / 8) + "_" + ((regionY >> 3) / 8));
-		byte[] mapContainerData = mapArchiveId == -1 ? null : Cache.STORE
-				.getIndexes()[5].getFile(mapArchiveId, 0);
-		byte[][][] mapSettings = mapContainerData == null ? null
-				: new byte[4][64][64];
+		int landArchiveId = Cache.STORE.getIndexes()[5].getArchiveId("l" + (regionX >> 3) / 8 + "_" + (regionY >> 3) / 8);
+		byte[] landContainerData = landArchiveId == -1 ? null : Cache.STORE.getIndexes()[5].getFile(landArchiveId, 0, MapArchiveKeys.getMapKeys(regionId));
+		int mapArchiveId = Cache.STORE.getIndexes()[5].getArchiveId("m" + (regionX >> 3) / 8 + "_" + (regionY >> 3) / 8);
+		byte[] mapContainerData = mapArchiveId == -1 ? null : Cache.STORE.getIndexes()[5].getFile(mapArchiveId, 0);
+		byte[][][] mapSettings = mapContainerData == null ? null : new byte[4][64][64];
 		if (mapContainerData != null) {
+			final boolean osrs = mapContainerData[0] == 'O' && mapContainerData[1] == 'S' && mapContainerData[2] == 'R' && mapContainerData[3] == 'S';
 			InputStream mapStream = new InputStream(mapContainerData);
+			if (osrs) {
+				mapStream.readInt();
+			}
 			for (int plane = 0; plane < 4; plane++) {
 				for (int x = 0; x < 64; x++) {
 					for (int y = 0; y < 64; y++) {
@@ -654,53 +652,68 @@ public class Region {
 					}
 				}
 			}
-			if (regionId != 11844) { // that region floor is wrong shouldnt be
-										// cliped
-				for (int plane = 0; plane < 4; plane++) {
-					for (int x = 0; x < 64; x++) {
-						for (int y = 0; y < 64; y++) {
-							if ((mapSettings[plane][x][y] & 0x1) == 1
-									&& (mapSettings[1][x][y] & 2) != 2)
-								forceGetRegionMap().clipTile(plane, x, y);
+			for (int plane = 0; plane < 4; plane++) {
+				for (int x = 0; x < 64; x++) {
+					for (int y = 0; y < 64; y++) {
+						if ((mapSettings[plane][x][y] & 0x1) == 1) {
+							int realPlane = plane;
+							if ((mapSettings[1][x][y] & 2) == 2) {
+								realPlane--;
+							}
+							if (realPlane >= 0) {
+								forceGetRegionMap().addUnwalkable(realPlane, x, y);
+							}
 						}
+					}
+				}
+			}
+		} else {
+			for (int plane = 0; plane < 4; plane++) {
+				for (int x = 0; x < 64; x++) {
+					for (int y = 0; y < 64; y++) {
+						forceGetRegionMap().addUnwalkable(plane, x, y);
 					}
 				}
 			}
 		}
 		if (landContainerData != null) {
+			final boolean osrs = landContainerData[0] == 'O' && landContainerData[1] == 'S' && landContainerData[2] == 'R' && landContainerData[3] == 'S';
 			InputStream landStream = new InputStream(landContainerData);
+			if (osrs) {
+				landStream.readInt();
+			}
 			int objectId = -1;
 			int incr;
-			while ((incr = landStream.readSmart2()) != 0) {
+			while ((incr = osrs ? landStream.readUnsignedSmart() : landStream.readSmart2()) != 0) {
 				objectId += incr;
 				int location = 0;
 				int incr2;
 				while ((incr2 = landStream.readUnsignedSmart()) != 0) {
 					location += incr2 - 1;
-					int localX = (location >> 6 & 0x3f);
-					int localY = (location & 0x3f);
+					int localX = location >> 6 & 0x3f;
+					int localY = location & 0x3f;
 					int plane = location >> 12;
 					int objectData = landStream.readUnsignedByte();
 					int type = objectData >> 2;
 					int rotation = objectData & 0x3;
-					if (localX < 0 || localX >= 64 || localY < 0
-							|| localY >= 64)
+					if (localX < 0 || localX >= 64 || localY < 0 || localY >= 64) {
 						continue;
+					}
 					int objectPlane = plane;
-					if (mapSettings != null
-							&& (mapSettings[1][localX][localY] & 2) == 2) 
+					if (mapSettings != null && (mapSettings[1][localX][localY] & 2) == 2) {
 						objectPlane--;
-					if (objectPlane < 0 || objectPlane >= 4 || plane < 0
-							|| plane >= 4)
+					}
+					if (objectPlane < 0 || objectPlane >= 4 || plane < 0 || plane >= 4) {
 						continue;
-					addObject(new WorldObject(objectId, type, rotation, localX + regionX, localY + regionY, objectPlane), 
-							objectPlane, localX, localY);
+					}
+					// if (type)
+					addObject(new WorldObject(objectId + (osrs ? 200_000 : 0), type, rotation, localX + regionX, localY + regionY, objectPlane), objectPlane, localX, localY);
 				}
 			}
 		}
-		if (Settings.DEBUG && landContainerData == null && landArchiveId != -1
-				&& MapArchiveKeys.getMapKeys(regionId) != null)
+		if (Settings.DEBUG && landContainerData == null && landArchiveId != -1 && MapArchiveKeys.getMapKeys(regionId) != null) {
 			Logger.log(this, "Missing xteas for region " + regionId + ".");
+		}
 	}
 
 	public void addObject(WorldObject object, int plane, int localX, int localY) {
