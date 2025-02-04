@@ -494,39 +494,28 @@ public class Region {
 	}
 
 	public void addMapObject(WorldObject object, int x, int y) {
-		if (map == null) {
+		if (map == null)
 			map = new RegionMap(regionId, false);
-		}
-		if (clipedOnlyMap == null) {
+		if (clipedOnlyMap == null)
 			clipedOnlyMap = new RegionMap(regionId, true);
-		}
-		if (object == null) {
-			return;
-		}
 		int plane = object.getPlane();
 		int type = object.getType();
 		int rotation = object.getRotation();
-		if (x < 0 || y < 0 || x >= map.getMasks()[plane].length || y >= map.getMasks()[plane][x].length) {
+		if (x < 0 || y < 0 || x >= map.getMasks()[plane].length
+				|| y >= map.getMasks()[plane][x].length)
 			return;
-		}
-		ObjectDefinitions objectDefinition = ObjectDefinitions.getObjectDefinitions(object.getId()); // load
-		// here
+		ObjectDefinitions objectDefinition = ObjectDefinitions
+				.getObjectDefinitions(object.getId()); // load here
 
-		if (type == 22 ? objectDefinition.getClipType() != 1 : objectDefinition.getClipType() == 0) {
-			return;
-		}
+		if (type == 22 ? objectDefinition.getClipType() != 0 : objectDefinition
+				.getClipType() == 0)
+			return;	
 		if (type >= 0 && type <= 3) {
-			if (!objectDefinition.ignoreClipOnAlternativeRoute) {
-				// those walls
-				// for now since
-				// theyre guard
-				// corners,
-				// temporary fix
-				map.addWall(plane, x, y, type, rotation, objectDefinition.isProjectileClipped(), !objectDefinition.ignoreClipOnAlternativeRoute);
-			}
-			if (objectDefinition.isProjectileClipped()) {
-				clipedOnlyMap.addWall(plane, x, y, type, rotation, objectDefinition.isProjectileClipped(), !objectDefinition.ignoreClipOnAlternativeRoute);
-			}
+			map.addWall(plane, x, y, type, rotation,
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
+				clipedOnlyMap.addWall(plane, x, y, type, rotation,
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type >= 9 && type <= 21) {
 			int sizeX;
 			int sizeY;
@@ -537,14 +526,13 @@ public class Region {
 				sizeX = objectDefinition.getSizeY();
 				sizeY = objectDefinition.getSizeX();
 			}
-			map.addObject(plane, x, y, sizeX, sizeY, objectDefinition.isProjectileClipped(), !objectDefinition.ignoreClipOnAlternativeRoute);
-			if (objectDefinition.isProjectileClipped()) {
-				clipedOnlyMap.addObject(plane, x, y, sizeX, sizeY, objectDefinition.isProjectileClipped(), !objectDefinition.ignoreClipOnAlternativeRoute);
-			}
+			map.addObject(plane, x, y, sizeX, sizeY,
+					objectDefinition.isProjectileClipped(), true);
+			if (objectDefinition.isProjectileClipped())
+				clipedOnlyMap.addObject(plane, x, y, sizeX, sizeY,
+						objectDefinition.isProjectileClipped(), true);
 		} else if (type == 22) {
-			map.addFloor(plane, x, y); // dont ever fucking think about removing
-			// it..., some floor deco objects DOES
-			// BLOCK WALKING
+			// map.addFloor(plane, x, y);
 		}
 	}
 

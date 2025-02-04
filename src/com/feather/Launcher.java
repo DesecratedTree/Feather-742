@@ -24,7 +24,6 @@ import com.feather.game.player.cutscenes.CutscenesHandler;
 import com.feather.game.player.dialogues.DialogueHandler;
 import com.feather.game.worldlist.WorldList;
 import com.feather.net.ServerChannelHandler;
-import com.feather.tools.OSRStoRS2;
 import com.feather.utils.DTRank;
 import com.feather.utils.DisplayNames;
 import com.feather.utils.IPBanL;
@@ -51,10 +50,9 @@ public final class Launcher {
 		Settings.HOSTED = false;
 		Settings.DEBUG = true;
 		long currentTime = Utils.currentTimeMillis();
-		/*if (Settings.PACK_OSRS) {
-			Logger.log("OSRStoRS2", "Packing OSRS");
-			OSRStoRS2.main();
-		}*/
+		if (Settings.HOSTED) {
+
+		}
 		Logger.log("Launcher", "Initing Cache...");
 		Cache.init();
 		ItemsEquipIds.init();
