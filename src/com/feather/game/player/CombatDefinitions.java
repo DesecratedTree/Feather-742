@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.item.Item;
 import com.feather.game.player.actions.PlayerCombat;
-import com.feather.utils.ItemBonuses;
 
 public final class CombatDefinitions implements Serializable {
 
@@ -467,21 +466,81 @@ public final class CombatDefinitions implements Serializable {
 		return bonuses;
 	}
 
+	public int[] getBonuses(int id) {
+		if (ItemDefinitions.getItemDefinitions(id).getStabAttack() != -1) {
+			bonuses[STAB_ATTACK] += ItemDefinitions.getItemDefinitions(id).getStabAttack();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getSlashAttack() != -1) {
+			bonuses[SLASH_ATTACK] += ItemDefinitions.getItemDefinitions(id).getSlashAttack();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getCrushAttack() != -1) {
+			bonuses[CRUSH_ATTACK] += ItemDefinitions.getItemDefinitions(id).getCrushAttack();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getMagicAttack() != -1) {
+			bonuses[MAGIC_ATTACK] += ItemDefinitions.getItemDefinitions(id).getMagicAttack();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getRangeAttack() != -1) {
+			bonuses[RANGE_ATTACK] += ItemDefinitions.getItemDefinitions(id).getRangeAttack();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getStabDef() != -1) {
+			bonuses[STAB_DEF] += ItemDefinitions.getItemDefinitions(id).getStabDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getSlashDef() != -1) {
+			bonuses[SLASH_DEF] += ItemDefinitions.getItemDefinitions(id).getSlashDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getCrushDef() != -1) {
+			bonuses[CRUSH_DEF] += ItemDefinitions.getItemDefinitions(id).getCrushDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getMagicDef() != -1) {
+			bonuses[MAGIC_DEF] += ItemDefinitions.getItemDefinitions(id).getMagicDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getRangeDef() != -1) {
+			bonuses[RANGE_DEF] += ItemDefinitions.getItemDefinitions(id).getRangeDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getSummoningDef() != -1) {
+			bonuses[SUMMONING_DEF] += ItemDefinitions.getItemDefinitions(id).getSummoningDef();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getAbsorveMeleeBonus() != -1) {
+			bonuses[ABSORVE_MELEE_BONUS] += ItemDefinitions.getItemDefinitions(id).getAbsorveMeleeBonus();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getAbsorveMageBonus() != -1) {
+			bonuses[ABSORVE_MAGE_BONUS] += ItemDefinitions.getItemDefinitions(id).getAbsorveMageBonus();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getAbsorveRangeBonus() != -1) {
+			bonuses[ABSORVE_RANGE_BONUS] += ItemDefinitions.getItemDefinitions(id).getAbsorveRangeBonus();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getStrengthBonus() != -1) {
+			bonuses[STRENGTH_BONUS] += ItemDefinitions.getItemDefinitions(id).getStrengthBonus();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getRangedStrBonus() != -1) {
+			bonuses[RANGED_STR_BONUS] += ItemDefinitions.getItemDefinitions(id).getRangedStrBonus();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getMagicDamage() != -1) {
+			bonuses[MAGIC_DAMAGE] += ItemDefinitions.getItemDefinitions(id).getMagicDamage();
+		}
+		if (ItemDefinitions.getItemDefinitions(id).getPrayerBonus() != -1) {
+			bonuses[PRAYER_BONUS] += ItemDefinitions.getItemDefinitions(id).getPrayerBonus();
+		}
+		return bonuses;
+	}
+
 	public void refreshBonuses() {
 		bonuses = new int[18];
 		for (Item item : player.getEquipment().getItems().getItems()) {
 			if (item == null)
 				continue;
-			int[] bonuses = ItemBonuses.getItemBonuses(item.getId());
+			int[] bonuses = getBonuses(item.getId());
 			if (bonuses == null)
 				continue;
 			for (int id = 0; id < bonuses.length; id++) {
 				if (id == RANGED_STR_BONUS && this.bonuses[RANGED_STR_BONUS] != 0)
 					continue;
-				this.bonuses[id] += bonuses[id];
+				this.bonuses[id] = bonuses[id];
 			}
 		}
 	}
+
+
 
 	public void resetSpecialAttack() {
 		desecreaseSpecialAttack(0);

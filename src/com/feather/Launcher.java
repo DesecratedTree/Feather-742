@@ -27,7 +27,6 @@ import com.feather.net.ServerChannelHandler;
 import com.feather.utils.DTRank;
 import com.feather.utils.DisplayNames;
 import com.feather.utils.IPBanL;
-import com.feather.utils.ItemBonuses;
 import com.feather.utils.ItemExamines;
 import com.feather.utils.Logger;
 import com.feather.utils.MapArchiveKeys;
@@ -70,7 +69,6 @@ public final class Launcher {
 		NPCBonuses.init();
 		NPCDrops.init();
 		ItemExamines.init();
-		ItemBonuses.init();
 		MusicHints.init();
 		ShopsHandler.init();
 		Logger.log("Launcher", "Initing WorldList...");
