@@ -1529,7 +1529,10 @@ public final class Commands {
 
 			case "check":
 				IPBanL.checkCurrent();
-				return true; 
+				return true;
+
+			case "home":
+				player.setNextWorldTile(new WorldTile(3093, 3493, 0));
 
 			case "reloadfiles":
 				IPBanL.init();

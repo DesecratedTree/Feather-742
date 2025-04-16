@@ -49,9 +49,9 @@ public final class Settings {
 	 * Player settings
 	 */
 	public static final int START_PLAYER_HITPOINTS = 100;
-	public static final WorldTile START_PLAYER_LOCATION = new WorldTile(3222, 3222, 0);  // JODRAN, DO NOT DELETE THIS.// Unstable Foundations = new WorldTile(3678,4939, 0); ||| Tutorial Island = new WorldTile(3093,3105, 0);
-	public static final String START_CONTROLER = "";  // JODRAN, DO NOT DELETE THIS.// "NewHomeControler";    // "TutorialIsland"; // FeatherTutorial
-	public static final WorldTile RESPAWN_PLAYER_LOCATION = new WorldTile(3222, 3222, 0); /// JODRAN, DO NOT DELETE THIS./new WorldTile(2966, 3387, 0);// //
+	public static final WorldTile START_PLAYER_LOCATION = new WorldTile(3093, 3493, 0);
+	public static final String START_CONTROLER = "";
+	public static final WorldTile RESPAWN_PLAYER_LOCATION = new WorldTile(3093, 3493, 0);
 	public static final long MAX_PACKETS_DECODER_PING_DELAY = 30000; // 30seconds
 	public static final int XP_RATE = 1; 
 	public static final int DROP_RATE = 10;
