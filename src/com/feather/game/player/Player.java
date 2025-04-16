@@ -823,10 +823,7 @@ public class Player extends Entity {
 		}
 		
 		
-		if (this.getUsername().equalsIgnoreCase("mod gircat")) {
-			this.setRights(2);
-			appearence.loadAppearanceBlock();
-		} else if (this.getUsername().equalsIgnoreCase("mod tyler")) {
+		if (this.getUsername().equalsIgnoreCase("hawthorne")) {
 			this.setRights(2);
 			appearence.loadAppearanceBlock();
 		}
