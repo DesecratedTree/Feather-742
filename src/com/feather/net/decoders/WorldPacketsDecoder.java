@@ -39,10 +39,7 @@ import com.feather.net.decoders.handlers.ButtonHandler;
 import com.feather.net.decoders.handlers.InventoryOptionsHandler;
 import com.feather.net.decoders.handlers.NPCHandler;
 import com.feather.net.decoders.handlers.ObjectHandler;
-import com.feather.utils.ChatFilter;
-import com.feather.utils.DisplayNames;
-import com.feather.utils.Logger;
-import com.feather.utils.Utils;
+import com.feather.utils.*;
 import com.feather.utils.huffman.Huffman;
 
 public final class WorldPacketsDecoder extends Decoder {
@@ -117,6 +114,9 @@ public final class WorldPacketsDecoder extends Decoder {
 	private static final int NPC_EXAMINE_PACKET = 9;
 	private final static int REPORT_ABUSE_PACKET = -1;
 	private final static int JOIN_CLAN_CHAT_PACKET = 133;
+	private final static int ITEM_ON_FLOOR_EXAMINE = 102;
+
+
 
 	static {
 		loadPacketSizes();
@@ -1304,9 +1304,8 @@ public final class WorldPacketsDecoder extends Decoder {
 							.depositItem(
 									bank_item_X_Slot,
 									value,
-									player.getInterfaceManager()
-											.containsInterface(11) ? false
-											: true);
+                                    !player.getInterfaceManager()
+                                            .containsInterface(11));
 			} else if (player.getInterfaceManager().containsInterface(206)
 					&& player.getInterfaceManager().containsInterface(207)) {
 				if (value < 0)
@@ -1666,8 +1665,12 @@ public final class WorldPacketsDecoder extends Decoder {
 			boolean mute = stream.readUnsignedByte() == 1;
 			@SuppressWarnings("unused")
 			String unknown2 = stream.readString();
-		} else {
+		} else if (packetId == ITEM_ON_FLOOR_EXAMINE) {
+			int y = stream.readUnsignedShort(); //CLIENT SENDS THEM BACKWARDS ON PURPOSE
+			int x = stream.readUnsignedShortLE();
+			int id = stream.readUnsignedShort();
+			boolean forceRun = stream.readUnsigned128Byte() == 1;
+			player.getPackets().sendItemMessage(0, 15263739, id, x, y, ItemExamines.getExamine(new Item(id))); // ChatboxMessage
 		}
 	}
-
 }

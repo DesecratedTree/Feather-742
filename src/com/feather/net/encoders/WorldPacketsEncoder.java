@@ -1514,4 +1514,29 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.writeIntV1(windowId << 16 | windowComponentId);
 		session.write(stream);
 	}
+
+	public void sendItemMessage(int border, int colour, int id, int x, int y, String message) {
+		sendGameMessage(message);
+		sendGlobalString(306, message);
+		sendGlobalConfig(1699, colour); //"color" - Default; 1 - Black
+		sendGlobalConfig(1700, border); //"border" - Default; 0 - White; 1 - Red; 2 - No Border
+		sendGlobalConfig(1695, 1);
+		sendItemInterface(new Item(id), new WorldTile(x, y, player.getPlane()), true, 746, 0, 1177);
+	}
+
+	public void sendItemInterface(Item item, WorldTile tile, boolean noclipped, int windowId, int windowComponentId, int interfaceId) {
+		int[] xteas = new int[4];
+		OutputStream stream = new OutputStream(30);
+		stream.writePacket(player, 36);
+		stream.writeByte128(noclipped ? 1 : 0);
+		stream.writeIntV2(xteas[0]);
+		stream.writeIntLE((windowId << 16) | windowComponentId);
+		stream.writeIntV1(xteas[1]);
+		stream.writeShort(item.getId());
+		stream.writeIntV1(xteas[2]);
+		stream.writeInt(xteas[3]);
+		stream.writeShortLE(interfaceId);
+		stream.writeInt((tile.getPlane() << 28) | (tile.getX() << 14) | tile.getY());
+		session.write(stream);
+	}
 }
