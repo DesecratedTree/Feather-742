@@ -131,42 +131,10 @@ public class PlayerCombat extends Action {
 	}
 
 	private int getRangeCombatDelay(int weaponId, int attackStyle) {
-		int delay = 6;
-		if (weaponId != -1) {
-			String weaponName = ItemDefinitions.getItemDefinitions(weaponId)
-					.getName().toLowerCase();
-			if (weaponName.contains("shortbow")
-					|| weaponName.contains("karil's crossbow"))
-				delay = 3;
-			else if (weaponName.contains("crossbow"))
-				delay = 5;
-			else if (weaponName.contains("dart")
-					|| weaponName.contains("knife") 
-					|| weaponName.contains("chinchompa"))
-				delay = 2;
-			else {
-				switch (weaponId) {
-				case 15241:
-					delay = 7;
-					break;
-				case 11235: // dark bows
-				case 15701:
-				case 15702:
-				case 15703:
-				case 15704:
-					delay = 9;
-					break;
-				default:
-					delay = 6;
-					break;
-				}
-			}
-		}
-		if (attackStyle == 1)
-			delay--;
-		else if (attackStyle == 2)
-			delay++;
-		return delay;
+
+		int attackSpeed = ItemDefinitions.getItemDefinitions(weaponId).getAttackSpeed();
+		if (attackStyle == 1) attackSpeed = attackSpeed - 1;
+		return attackSpeed;
 	}
 
 	public Entity[] getMultiAttackTargets(Player player) {
@@ -3437,54 +3405,7 @@ public class PlayerCombat extends Action {
 	}
 
 	private int getMeleeCombatDelay(Player player, int weaponId) {
-		if (weaponId != -1) {
-			String weaponName = ItemDefinitions.getItemDefinitions(weaponId)
-					.getName().toLowerCase();
-
-			// Interval 2.4
-			if (weaponName.equals("zamorakian spear")
-					||	weaponName.equals("korasi's sword"))
-				return 3;
-			// Interval 3.6
-			if (weaponName.contains("godsword")
-					|| weaponName.contains("warhammer")
-					|| weaponName.contains("battleaxe")
-					|| weaponName.contains("maul")
-					|| weaponName.equals("dominion sword"))
-				return 5;
-			// Interval 4.2
-			if (weaponName.contains("greataxe")
-					|| weaponName.contains("halberd")
-					|| weaponName.contains("2h sword")
-					|| weaponName.contains("two handed sword")
-					|| weaponName.contains("katana")
-					|| weaponName.equals("thok's sword"))
-				return 6;
-			// Interval 3.0
-			if (weaponName.contains("spear")
-					|| weaponName.contains(" sword")
-					|| weaponName.contains("longsword")
-					|| weaponName.contains("light")
-					|| weaponName.contains("hatchet")
-					|| weaponName.contains("pickaxe")
-					|| weaponName.contains("mace")
-					|| weaponName.contains("hasta")
-					|| weaponName.contains("warspear")
-					|| weaponName.contains("flail")
-					|| weaponName.contains("hammers"))
-				return 4;
-		}
-		switch (weaponId) {
-		case 6527:// tzhaar-ket-em
-			return 4;
-		case 10887:// barrelchest anchor
-			return 5;
-		case 15403:// balmung
-		case 6528:// tzhaar-ket-om
-			return 6;
-		default:
-			return 3;
-		}
+		return ItemDefinitions.getItemDefinitions(weaponId).getAttackSpeed();
 	}
 
 	@Override

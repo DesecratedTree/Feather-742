@@ -273,11 +273,11 @@ public final class ItemDefinitions {
 
 	public int getAttackSpeed() {
 		if (clientScriptData == null)
-			return 4;
+			return 3;
 		Object attackSpeed = clientScriptData.get(14);
 		if (attackSpeed != null && attackSpeed instanceof Integer)
-			return (int) attackSpeed;
-		return 4;
+			return (int) attackSpeed - 1;
+		return 3;
 	}
 
 	public int getStabAttack() {
