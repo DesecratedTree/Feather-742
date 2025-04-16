@@ -13,7 +13,14 @@ import com.feather.game.minigames.creations.StealingCreation;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
 import com.feather.game.npc.familiar.Familiar.SpecialAttack;
-import com.feather.game.player.*;
+import com.feather.game.player.CoordsEvent;
+import com.feather.game.player.Inventory;
+import com.feather.game.player.LendingManager;
+import com.feather.game.player.LogicPacket;
+import com.feather.game.player.Player;
+import com.feather.game.player.PublicChatMessage;
+import com.feather.game.player.QuickChatMessage;
+import com.feather.game.player.Skills;
 import com.feather.game.player.actions.PlayerCombat;
 import com.feather.game.player.actions.PlayerFollow;
 import com.feather.game.player.actions.Summoning;
@@ -996,7 +1003,7 @@ public final class WorldPacketsDecoder extends Decoder {
 			player.stopAll(false);
 			if(forceRun)
 				player.setRun(forceRun);
-			player.setRouteEvent(new RouteEvent(tile, new Runnable() {
+			player.setCoordsEvent(new CoordsEvent(tile, new Runnable() {
 				@Override
 				public void run() {
 					final FloorItem item = World.getRegion(regionId)
@@ -1009,7 +1016,7 @@ public final class WorldPacketsDecoder extends Decoder {
 					player.addWalkSteps(tile.getX(), tile.getY(), 1);
 					World.removeGroundItem(player, item);
 				}
-			}, true));
+			}, 1, 1));
 		}
 	}
 

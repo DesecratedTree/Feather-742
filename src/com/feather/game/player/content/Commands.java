@@ -2676,18 +2676,9 @@ public final class Commands {
 				player.getPackets().sendGameMessage(
 						"You receive a guide book about "
 								+ Settings.SERVER_NAME + ".");
-				return true;
+				return true; 
 
-				case "coords":
-					player.getPackets().sendPanelBoxMessage(
-							"Coords: " + player.getX() + ", " + player.getY()
-									+ ", " + player.getPlane() + ", regionId: "
-									+ player.getRegionId() + ", rx: "
-									+ player.getChunkX() + ", ry: "
-									+ player.getChunkY());
-					return true;
-
-				case "title":
+			case "title":
 				if (cmd.length < 2) {
 					player.getPackets().sendGameMessage("Use: ::title id");
 					return true;

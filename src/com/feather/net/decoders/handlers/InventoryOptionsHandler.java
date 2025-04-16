@@ -12,7 +12,12 @@ import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar.SpecialAttack;
 import com.feather.game.npc.pet.Pet;
-import com.feather.game.player.*;
+import com.feather.game.player.ClueScrolls;
+import com.feather.game.player.CoordsEvent;
+import com.feather.game.player.Equipment;
+import com.feather.game.player.Inventory;
+import com.feather.game.player.LendingManager;
+import com.feather.game.player.Player;
 import com.feather.game.player.actions.BoxAction;
 import com.feather.game.player.actions.Firemaking;
 import com.feather.game.player.actions.Fletching;
@@ -498,7 +503,7 @@ public class InventoryOptionsHandler {
 		if (item == null) {
 			return;
 		}
-		player.setRouteEvent(new RouteEvent(npc, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(npc, new Runnable() {
 			@Override
 			public void run() {
 				if (!player.getInventory().containsItem(item.getId(), item.getAmount())) {
@@ -510,12 +515,12 @@ public class InventoryOptionsHandler {
 					return;
 				}
 			}
-		}, true));
+		}, npc.getSize()));
 	}
 
 public static void handleItemOnPlayer(final Player player,
 		final Player usedOn, final int itemId) {
-	player.setRouteEvent(new RouteEvent(usedOn, new Runnable() {
+	player.setCoordsEvent(new CoordsEvent(usedOn, new Runnable() {
 		public void run() {
 			player.faceEntity(usedOn);
 			if (usedOn.getInterfaceManager().containsScreenInter()) {
@@ -545,6 +550,6 @@ public static void handleItemOnPlayer(final Player player,
 				break;
 			}
 		}
-	}, true));
+	}, usedOn.getSize()));
 }
 }

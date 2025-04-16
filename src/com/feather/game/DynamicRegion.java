@@ -40,7 +40,7 @@ public class DynamicRegion extends Region {
 			return;	
 		if (type >= 0 && type <= 3) {
 			removedMap.addWall(plane, x, y, type, rotation,
-					objectDefinition.isProjectileClipped(), true);
+					objectDefinition.isProjectileCliped(), true);
 		} else if (type >= 9 && type <= 21) {
 			int sizeX;
 			int sizeY;
@@ -52,7 +52,7 @@ public class DynamicRegion extends Region {
 				sizeY = objectDefinition.getSizeX();
 			}
 			removedMap.addObject(plane, x, y, sizeX, sizeY,
-					objectDefinition.isProjectileClipped(), true);
+					objectDefinition.isProjectileCliped(), true);
 		} else if (type == 22) {
 			// map.addFloor(plane, x, y);
 		}

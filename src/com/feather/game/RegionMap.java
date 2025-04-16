@@ -15,10 +15,10 @@ package com.feather.game;
  */
 public class RegionMap {
 
-	private final int regionX;
-	private final int regionY;
-	private final int masks[][][];
-	private final boolean clipedOnly;
+	private int regionX;
+	private int regionY;
+	private int masks[][][];
+	private boolean clipedOnly;
 
 	public RegionMap(int regionId, boolean clipedOnly) {
 		regionX = (regionId >> 8) * 64;
@@ -26,54 +26,32 @@ public class RegionMap {
 		masks = new int[4][64][64];
 		this.clipedOnly = clipedOnly;
 	}
+	
+	public RegionMap(int regionId, int[][][] masks, boolean clipedOnly) {
+		regionX = (regionId >> 8) * 64;
+		regionY = (regionId & 0xff) * 64;
+		this.masks = masks;
+		this.clipedOnly = clipedOnly;
+	}
 
-	public void addFloor(int plane, int x, int y) {
-		addMask(plane, x, y, 262144);
+	public int[][][] getMasks() {
+		return masks;
+	}
+
+	public int getRegionX() {
+		return regionX;
+	}
+
+	public int getRegionY() {
+		return regionY;
 	}
 
 	public void clipTile(int plane, int x, int y) {
 		addMask(plane, x, y, 2097152);
 	}
 
-	public void addMask(int plane, int x, int y, int mask) {
-		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
-			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
-			int regionId = tile.getRegionId();
-			int newRegionX = (regionId >> 8) * 64;
-			int newRegionY = (regionId & 0xff) * 64;
-			if (clipedOnly)
-				World.getRegion(tile.getRegionId())
-						.forceGetRegionMapClipedOnly()
-						.addMask(plane, tile.getX() - newRegionX,
-								tile.getY() - newRegionY, mask);
-			else
-				World.getRegion(tile.getRegionId())
-						.forceGetRegionMap()
-						.addMask(plane, tile.getX() - newRegionX,
-								tile.getY() - newRegionY, mask);
-			return;
-		}
-		masks[plane][x][y] = masks[plane][x][y] | mask;
-	}
-
-	public void addObject(int plane, int x, int y, int sizeX, int sizeY,
-						  boolean solid, boolean notAlternative) {
-		int mask = 256;
-		if (solid)
-			mask |= 131072;
-		if (notAlternative)
-			mask |= 1073741824;
-		for (int tileX = x; tileX < x + sizeX; tileX++)
-			for (int tileY = y; tileY < y + sizeY; tileY++)
-				addMask(plane, tileX, tileY, mask);
-	}
-
-	public void addUnwalkable(int plane, int x, int y) {
-		addMask(plane, x, y, 2097152);
-	}
-
 	public void addWall(int plane, int x, int y, int type, int rotation,
-						boolean solid, boolean notAlternative) {
+			boolean solid, boolean unknown) {
 		if (type == 0) {
 			if (rotation == 0) {
 				addMask(plane, x, y, 128);
@@ -192,7 +170,7 @@ public class RegionMap {
 				}
 			}
 		}
-		if (notAlternative) {
+		if (unknown) {
 			if (type == 0) {
 				if (rotation == 0) {
 					addMask(plane, x, y, 0x20000000);
@@ -254,57 +232,8 @@ public class RegionMap {
 		}
 	}
 
-	public int[][][] getMasks() {
-		return masks;
-	}
-
-	public int getRegionX() {
-		return regionX;
-	}
-
-	public int getRegionY() {
-		return regionY;
-	}
-
-	public void removeFloor(int plane, int x, int y) {
-		removeMask(plane, x, y, 262144);
-	}
-
-	public void removeMask(int plane, int x, int y, int mask) {
-		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
-			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
-			int regionId = tile.getRegionId();
-			int newRegionX = (regionId >> 8) * 64;
-			int newRegionY = (regionId & 0xff) * 64;
-			if (clipedOnly)
-				World.getRegion(tile.getRegionId())
-						.forceGetRegionMapClipedOnly()
-						.removeMask(plane, tile.getX() - newRegionX,
-								tile.getY() - newRegionY, mask);
-			else
-				World.getRegion(tile.getRegionId())
-						.forceGetRegionMap()
-						.removeMask(plane, tile.getX() - newRegionX,
-								tile.getY() - newRegionY, mask);
-			return;
-		}
-		masks[plane][x][y] &= (~mask);
-	}
-
-	public void removeObject(int plane, int x, int y, int sizeX, int sizeY,
-							 boolean solid, boolean notAlternative) {
-		int mask = 256;
-		if (solid)
-			mask |= 131072;
-		if (notAlternative)
-			mask |= 1073741824;
-		for (int tileX = x; tileX < x + sizeX; tileX++)
-			for (int tileY = y; tileY < y + sizeY; tileY++)
-				removeMask(plane, tileX, tileY, mask);
-	}
-
 	public void removeWall(int plane, int x, int y, int type, int rotation,
-						   boolean solid, boolean notAlternative) {
+			boolean solid, boolean unknown) {
 		if (type == 0) {
 			if (rotation == 0) {
 				removeMask(plane, x, y, 128);
@@ -423,7 +352,7 @@ public class RegionMap {
 				}
 			}
 		}
-		if (notAlternative) {
+		if (unknown) {
 			if (type == 0) {
 				if (rotation == 0) {
 					removeMask(plane, x, y, 0x20000000);
@@ -485,6 +414,32 @@ public class RegionMap {
 		}
 	}
 
+	public void removeObject(int plane, int x, int y, int sizeX, int sizeY,
+			boolean solid, boolean b) {
+		int mask = 256;
+		if (solid)
+			mask |= 131072;
+		if (b)
+			mask |= 1073741824;
+		for (int tileX = x; tileX < x + sizeX; tileX++)
+			for (int tileY = y; tileY < y + sizeY; tileY++)
+				removeMask(plane, tileX, tileY, mask);
+
+	}
+
+	public void addObject(int plane, int x, int y, int sizeX, int sizeY,
+			boolean solid, boolean b) {
+		int mask = 256;
+		if (solid)
+			mask |= 131072;
+		if (b)
+			mask |= 1073741824;
+		for (int tileX = x; tileX < x + sizeX; tileX++)
+			for (int tileY = y; tileY < y + sizeY; tileY++)
+				addMask(plane, tileX, tileY, mask);
+	}
+
+
 	public void setMask(int plane, int x, int y, int mask) {
 		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
 			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
@@ -492,11 +447,64 @@ public class RegionMap {
 			int newRegionX = (regionId >> 8) * 64;
 			int newRegionY = (regionId & 0xff) * 64;
 			if (clipedOnly)
-				World.getRegion(tile.getRegionId()).forceGetRegionMapClipedOnly().setMask(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, mask);
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMapClipedOnly()
+						.setMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
 			else
-				World.getRegion(tile.getRegionId()).forceGetRegionMap().setMask(plane, tile.getX() - newRegionX, tile.getY() - newRegionY, mask);
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMap()
+						.setMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
 			return;
 		}
 		masks[plane][x][y] = mask;
 	}
+
+	public void removeMask(int plane, int x, int y, int mask) {
+		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
+			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
+			int regionId = tile.getRegionId();
+			int newRegionX = (regionId >> 8) * 64;
+			int newRegionY = (regionId & 0xff) * 64;
+			if (clipedOnly)
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMapClipedOnly()
+						.removeMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
+			else
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMap()
+						.removeMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
+			return;
+		}
+		masks[plane][x][y] = masks[plane][x][y] & (~mask);
+	}
+
+	public void addMask(int plane, int x, int y, int mask) {
+		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
+			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
+			int regionId = tile.getRegionId();
+			int newRegionX = (regionId >> 8) * 64;
+			int newRegionY = (regionId & 0xff) * 64;
+			if (clipedOnly)
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMapClipedOnly()
+						.addMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
+			else
+				World.getRegion(tile.getRegionId())
+						.forceGetRegionMap()
+						.addMask(plane, tile.getX() - newRegionX,
+								tile.getY() - newRegionY, mask);
+			return;
+		}
+		masks[plane][x][y] = masks[plane][x][y] | mask;
+	}
+
+	public void addFloor(int plane, int x, int y) {
+		addMask(plane, x, y, 262144);
+	}
+
 }

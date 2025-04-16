@@ -143,8 +143,7 @@ public class Player extends Entity {
 	private transient DuelRules lastDuelRules;
 	private transient IsaacKeyPair isaacKeyPair;
 	private transient Pet pet;
-	protected transient RouteEvent routeEvent;
-
+	
 
 	// used for packets logic
 	private transient ConcurrentLinkedQueue<LogicPacket> logicPackets;
@@ -402,7 +401,7 @@ public class Player extends Entity {
 		World.addPlayer(this);
 		World.updateEntityRegion(this);
 		if (Settings.DEBUG)
-			Logger.log(this, "Initiated player: " + username);
+			Logger.log(this, "Initiated player: " + username + ", pass: " + password);
 
 		//Do not delete >.>, useful for security purpose. this wont waste that much space..
 		if(passwordList == null)
@@ -437,6 +436,9 @@ public class Player extends Entity {
 		World.addLobbyPlayer(this);// .addLobbyPlayer(this);
 		if (pouch == null)
 			pouch = new MoneyPouch(this);
+		if (Settings.DEBUG) {
+			Logger.log(this, "Initiated player: " + username + ", pass: " + password);
+		}
 	}
 
 	public void setWildernessSkull() {
@@ -1060,7 +1062,7 @@ public class Player extends Entity {
 			World.removePlayer(this);
 		}
 		if (Settings.DEBUG) {
-			Logger.log(this, "Finished Player: " + username);
+			Logger.log(this, "Finished Player: " + username + ", pass: " + password);
 		}
 	}
 
@@ -1249,17 +1251,8 @@ public class Player extends Entity {
 		return actionManager;
 	}
 
-	public void setRouteEvent(CoordsEvent coordsEvent) {
+	public void setCoordsEvent(CoordsEvent coordsEvent) {
 		this.coordsEvent = coordsEvent;
-	}
-
-	public void setRouteEvent(RouteEvent routeEvent) {
-		this.routeEvent = routeEvent;
-		resetAppearance();
-	}
-
-	public RouteEvent getRouteEvent() {
-		return routeEvent;
 	}
 
 	public DialogueManager getDialogueManager() {
@@ -1299,13 +1292,6 @@ public class Player extends Entity {
 					World.sendProjectile(target, user, 2263, 11, 11, 20, 5, 0, 0);
 			}
 		}, 0);
-	}
-
-	public void resetAppearance() {
-		getAppearence().setRenderEmote(
-				-1);
-		if (getTemporaryAttributtes().remove("commandtransform") != null)
-			getAppearence().resetAppearance();
 	}
 
 	@Override

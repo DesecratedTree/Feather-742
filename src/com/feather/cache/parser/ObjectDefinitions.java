@@ -1,5 +1,6 @@
 package com.feather.cache.parser;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class ObjectDefinitions {
 	public boolean secondBool;
 	public boolean aBoolean3853;
 	int anInt3855;
-	public boolean ignoreClipOnAlternativeRoute;
+	public boolean notCliped;
 	int anInt3857;
 	private byte[] aByteArray3858;
 	int[] anIntArray3859;
@@ -48,7 +49,7 @@ public class ObjectDefinitions {
 	int anInt3865;
 	boolean aBoolean3866;
 	boolean aBoolean3867;
-	public boolean projectileClipped;
+	public boolean projectileCliped;
 	private int[] anIntArray3869;
 	boolean aBoolean3870;
 	public int sizeY;
@@ -73,7 +74,7 @@ public class ObjectDefinitions {
 	boolean aBoolean3895;
 	int anInt3896;
 	int configId;
-	private byte[] shapes;
+	private byte[] aByteArray3899;
 	int anInt3900;
 	public String name;
 	private int anInt3902;
@@ -85,7 +86,7 @@ public class ObjectDefinitions {
 	int anInt3913;
 	private byte aByte3914;
 	private int anInt3915;
-	public int[][] models;
+	public int[][] modelIds;
 	private int anInt3917;
 	/**
 	 * Object anim shit 1
@@ -99,7 +100,7 @@ public class ObjectDefinitions {
 	private HashMap<Integer, Object> parameters;
 	boolean aBoolean3923;
 	boolean aBoolean3924;
-	int accessBlockFlag;
+	int anInt3925;
 	public int id;
 
 	private int[] anIntArray4534;
@@ -107,7 +108,6 @@ public class ObjectDefinitions {
 	private byte[] unknownArray4;
 
 	private byte[] unknownArray3;
-	private boolean notClipped;
 
 
 	public String getFirstOption() {
@@ -159,7 +159,7 @@ public class ObjectDefinitions {
 				if (opcode != 14) {
 					if (opcode != 15) {
 						if (opcode == 17) { // nocliped
-							projectileClipped = false;
+							projectileCliped = false;
 							clipType = 0;
 						} else if (opcode != 18) {
 							if (opcode == 19)
@@ -229,7 +229,8 @@ public class ObjectDefinitions {
 																	else if (opcode != 66) {
 																		if (opcode != 67) {
 																			if (opcode == 69)
-																				accessBlockFlag = stream.readUnsignedByte();
+																				anInt3925 = stream
+																				.readUnsignedByte();
 																			else if (opcode != 70) {
 																				if (opcode == 71)
 																					anInt3889 = stream
@@ -238,7 +239,7 @@ public class ObjectDefinitions {
 																					if (opcode == 73)
 																						secondBool = true;
 																					else if (opcode == 74)
-																						ignoreClipOnAlternativeRoute = true;
+																						notCliped = true;
 																					else if (opcode != 75) {
 																						if (opcode != 77
 																								&& opcode != 92) {
@@ -526,7 +527,7 @@ public class ObjectDefinitions {
 							} else
 								aBoolean3867 = true;
 						} else
-							projectileClipped = false;
+							projectileCliped = false;
 					} else
 						// 15
 						sizeY = stream.readUnsignedByte();
@@ -541,14 +542,14 @@ public class ObjectDefinitions {
 			if (opcode == 5 && aBoolean1162)
 				skipReadModelIds(stream);
 			int i_73_ = stream.readUnsignedByte();
-			models = new int[i_73_][];
-			shapes = new byte[i_73_];
+			modelIds = new int[i_73_][];
+			aByteArray3899 = new byte[i_73_];
 			for (int i_74_ = 0; i_74_ < i_73_; i_74_++) {
-				shapes[i_74_] = (byte) stream.readByte();
+				aByteArray3899[i_74_] = (byte) stream.readByte();
 				int i_75_ = stream.readUnsignedByte();
-				models[i_74_] = new int[i_75_];
+				modelIds[i_74_] = new int[i_75_];
 				for (int i_76_ = 0; i_75_ > i_76_; i_76_++)
-					models[i_74_][i_76_] = stream.readBigSmart();
+					modelIds[i_74_][i_76_] = stream.readBigSmart();
 			}
 			if (opcode == 5 && !aBoolean1162)
 				skipReadModelIds(stream);
@@ -606,8 +607,8 @@ public class ObjectDefinitions {
 		aBoolean3853 = true;
 		secondBool = false;
 		clipType = 2;
-		projectileClipped = true;
-		ignoreClipOnAlternativeRoute = false;
+		projectileCliped = true;
+		notCliped = false;
 		anInt3855 = -1;
 		anInt3878 = 0;
 		anInt3904 = 0;
@@ -629,7 +630,7 @@ public class ObjectDefinitions {
 		anInt3902 = 128;
 		configId = -1;
 		anInt3877 = 0;
-		accessBlockFlag = 0;
+		anInt3925 = 0;
 		anInt3892 = 64;
 		aBoolean3923 = false;
 		aBoolean3924 = false;
@@ -640,8 +641,8 @@ public class ObjectDefinitions {
 	final void method3287() {
 		if (secondInt == -1) {
 			secondInt = 0;
-			if (shapes != null && shapes.length == 1
-					&& shapes[0] == 10)
+			if (aByteArray3899 != null && aByteArray3899.length == 1
+					&& aByteArray3899[0] == 10)
 				secondInt = 1;
 			for (int i_13_ = 0; i_13_ < 5; i_13_++) {
 				if (options[i_13_] != null) {
@@ -670,13 +671,13 @@ public class ObjectDefinitions {
 				def.readValueLoop(new InputStream(data));
 			def.method3287();
 			if (def.name.equalsIgnoreCase("bank booth") || def.name.equalsIgnoreCase("counter")) {
-				def.notClipped = false;
-				def.projectileClipped = true;
+				def.notCliped = false;
+				def.projectileCliped = true;
 				if (def.clipType == 0)
 					def.clipType = 1;
 			}
-			if (def.notClipped) {
-				def.projectileClipped = false;
+			if (def.notCliped) {
+				def.projectileCliped = false;
 				def.clipType = 0;
 			}
 			objectDefinitions.put(id, def);
@@ -688,8 +689,8 @@ public class ObjectDefinitions {
 		return clipType;
 	}
 
-	public boolean isProjectileClipped() {
-		return projectileClipped;
+	public boolean isProjectileCliped() {
+		return projectileCliped;
 	}
 
 	public int getSizeX() {
@@ -743,7 +744,4 @@ public class ObjectDefinitions {
 		return field.get(this);
 	}
 
-	public int getAccessBlockFlag() {
-		return accessBlockFlag;
-	}
 }

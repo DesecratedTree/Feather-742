@@ -75,10 +75,10 @@ public class AnimationDefinitions {
 	}
 
 	private void readValues(InputStream stream, int opcode) {
-		if ((~opcode) == -2) {
+		if ((opcode ^ 0xffffffff) == -2) {
 			int i = stream.readUnsignedShort();
 			anIntArray2153 = new int[i];
-			for (int i_16_ = 0; (~i) < (~i_16_); i_16_++)
+			for (int i_16_ = 0; (i ^ 0xffffffff) < (i_16_ ^ 0xffffffff); i_16_++)
 				anIntArray2153[i_16_] = stream.readUnsignedShort();
 			anIntArray2139 = new int[i];
 			for (int i_17_ = 0; (i_17_ ^ 0xffffffff) > (i ^ 0xffffffff); i_17_++)

@@ -11,7 +11,11 @@ import com.feather.game.item.Item;
 import com.feather.game.minigames.CastleWars;
 import com.feather.game.minigames.Crucible;
 import com.feather.game.minigames.FightPits;
-import com.feather.game.player.*;
+import com.feather.game.player.ClueScrolls;
+import com.feather.game.player.CoordsEvent;
+import com.feather.game.player.OwnedObjectManager;
+import com.feather.game.player.Player;
+import com.feather.game.player.Skills;
 import com.feather.game.player.QuestManager.Quests;
 import com.feather.game.player.actions.Bonfire;
 import com.feather.game.player.actions.Cooking;
@@ -121,33 +125,21 @@ public final class ObjectHandler {
 		switch(option) {
 		case 1:
 			handleOption1(player, object);
-			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 2:
 			handleOption2(player, object);
-			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 3:
 			handleOption3(player, object);
-			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 4:
 			handleOption4(player, object);
-			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case 5:
 			handleOption5(player, object);
-			player.getPackets().sendObjectMessage(0, object, "Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		case -1:
 			handleOptionExamine(player, object);
-			player.getPackets().sendGameMessage("Clicked Object: " + id);
-			player.getPackets().sendGameMessage("Object X: " + mapObject.getX() + " | Y: " + mapObject.getY());
 			break;
 		}
 	}
@@ -157,9 +149,9 @@ public final class ObjectHandler {
 		final int id = object.getId();
 		final int x = object.getX();
 		final int y = object.getY();
-		if(SihponActionNodes.siphon(player, object))
+		if(SihponActionNodes.siphon(player, object)) 
 			return;
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1119,13 +1111,14 @@ public final class ObjectHandler {
 									+ object.getRotation() + ", "
 									+ object.getDefinitions().name);
 			}
-		}, true));
+		}, objectDef.getSizeX(), Wilderness.isDitch(id) ? 4 : objectDef
+				.getSizeY(), object.getRotation()));
 	}
 
 	private static void handleOption2(final Player player, final WorldObject object) {
 		final ObjectDefinitions objectDef = object.getDefinitions();
 		final int id = object.getId();
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1220,13 +1213,13 @@ public final class ObjectHandler {
 							+ ", " + object.getX() + ", " + object.getY()
 							+ ", " + object.getPlane());
 			}
-		}, true));
+		}, objectDef.getSizeX(), objectDef.getSizeY(), object.getRotation()));
 	}
 
 	private static void handleOption3(final Player player, final WorldObject object) {
 		final ObjectDefinitions objectDef = object.getDefinitions();
 		final int id = object.getId();
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1261,13 +1254,13 @@ public final class ObjectHandler {
 							+ ", " + object.getX() + ", " + object.getY()
 							+ ", " + object.getPlane() + ", ");
 			}
-		}, true));
+		}, objectDef.getSizeX(), objectDef.getSizeY(), object.getRotation()));
 	}
 
 	private static void handleOption4(final Player player, final WorldObject object) {
 		final ObjectDefinitions objectDef = object.getDefinitions();
 		final int id = object.getId();
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1292,13 +1285,13 @@ public final class ObjectHandler {
 							+ ", " + object.getX() + ", " + object.getY()
 							+ ", " + object.getPlane() + ", ");
 			}
-		}, true));
+		}, objectDef.getSizeX(), objectDef.getSizeY(), object.getRotation()));
 	}
 
 	private static void handleOption5(final Player player, final WorldObject object) {
 		final ObjectDefinitions objectDef = object.getDefinitions();
 		final int id = object.getId();
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.stopAll();
@@ -1325,7 +1318,7 @@ public final class ObjectHandler {
 							+ ", " + object.getX() + ", " + object.getY()
 							+ ", " + object.getPlane() + ", ");
 			}
-		}, true));
+		}, objectDef.getSizeX(), objectDef.getSizeY(), object.getRotation()));
 	}
 
 	private static void handleOptionExamine(final Player player, final WorldObject object) {
@@ -1632,7 +1625,7 @@ public final class ObjectHandler {
 	public static void handleItemOnObject(final Player player, final WorldObject object, final int interfaceId, final Item item) {
 		final int itemId = item.getId();
 		final ObjectDefinitions objectDef = object.getDefinitions();
-		player.setRouteEvent(new RouteEvent(object, new Runnable() {
+		player.setCoordsEvent(new CoordsEvent(object, new Runnable() {
 			@Override
 			public void run() {
 				player.faceObject(object);
@@ -1709,67 +1702,6 @@ public final class ObjectHandler {
 						System.out.println("Item on object: " + object.getId());
 				}
 			}
-		}, true));
-	}
-
-	public static WorldTile findObjectTile(WorldObject ob, Player player) {
-		int x = player.getX();
-		int y = player.getY();
-		WorldTile to = ob;
-		int offX = ObjectDefinitions.getObjectDefinitions(ob.getId()).sizeX;
-		int offY = ObjectDefinitions.getObjectDefinitions(ob.getId()).sizeY;
-		if (ob.getRotation() == 1 || ob.getRotation() == 3) {
-			offX = ObjectDefinitions.getObjectDefinitions(ob.getId()).sizeY;
-			offY = ObjectDefinitions.getObjectDefinitions(ob.getId()).sizeX;
-		}
-		if (offX == 1 && offY == 1)
-			return ob;
-		offX -= 1;
-		offY -= 1;
-		if (x >= to.getX() && x <= to.getX()+offX
-				&& y > to.getY()+offY) {//if I am north
-			return new WorldTile(x, to.getY()+offY, player.getPlane());
-
-		} else if (x >= to.getX() && x <= to.getX()+offX
-				&& y < to.getY()) {//if I am south
-			return new WorldTile(x, to.getY(), player.getPlane());
-
-		} else if (x > to.getX()+offX
-				&& y >= to.getY() && y <= to.getY()+offY) {//if I am east
-			return new WorldTile(to.getX()+offX, y, player.getPlane());
-
-		} else if (x < to.getX()
-				&& y >= to.getY() && y <= to.getY()+offY) {//if I am west
-			return new WorldTile(to.getX(), y, player.getPlane());
-
-		} else if (x > to.getX()+offX
-				&& y > to.getY()+offY) {//if I am north-east
-			return new WorldTile(to.getX()+offX, to.getY()+offY, player.getPlane());
-
-		} else if (x < to.getX()
-				&& y > to.getY()+offY) {//if I am north-west
-			return new WorldTile(to.getX(), to.getY()+offY, player.getPlane());
-
-		} else if (x > to.getX()+offX
-				&& y < to.getY()) {//if I am south-east
-			return new WorldTile(to.getX()+offX, to.getY(), player.getPlane());
-
-		} else if (x < to.getX()+offX
-				&& y < to.getY()+offY) {//if I am south-west
-			return new WorldTile(to.getX(), to.getY(), player.getPlane());
-
-		}
-		return to;
-	}
-
-	public static int getMinDistance(Player player, WorldObject object) {
-		int id = object.getId();
-		if (id == 45802 || id == 69514 || (id >= 4550 && id <= 4559)) {
-			return 2;
-		}
-		if (id == 3566) {
-			return 3;
-		}
-		return 1;
+		}, objectDef.getSizeX(), objectDef.getSizeY(), object.getRotation()));
 	}
 }
