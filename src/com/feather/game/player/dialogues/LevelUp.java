@@ -67,10 +67,9 @@ public final class LevelUp extends Dialogue {
 			}
 		}
 	}
-		
-	public static final int[] SKILL_LEVEL_UP_MUSIC_EFFECTS = { 37, 37, 37, 37,
-		37, -1, 37, -1, 39, -1, -1, -1, -1, -1, 53, -1, -1, -1, -1, -1, -1,
-		-1, -1, 300, 417 };
+	public static final int[] SKILL_LEVEL_UP_MUSIC_EFFECTS = { 30, 38, 66, 48,
+			58, 56, 52, 34, 70, 44, 42, 40, 36, 64, 54, 46, 28, 68, 61, 10, 60,
+			50, 32, 301, 417 };
 
 	private int skill;
 	
@@ -91,7 +90,7 @@ public final class LevelUp extends Dialogue {
 	   	Configs levelup = Configs.levelup(skill);
 	    	player.getPackets().sendGlobalConfig(1756, levelup.getConfigId());
 		switchFlash(player, skill, true);
-		int musicEffect = SKILL_LEVEL_UP_MUSIC_EFFECTS[skill];
+		final int musicEffect = SKILL_LEVEL_UP_MUSIC_EFFECTS[skill];
 		if (musicEffect != -1)
 			player.getPackets().sendMusicEffect(musicEffect);
 		if (player.getRights() < 2 && (level == 99 || level == 120) && skill > 6 && skill != 23) {
