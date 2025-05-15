@@ -5,32 +5,32 @@ import java.io.Serializable;
 import com.feather.Settings;
 import com.feather.utils.Utils;
 
-public class WorldTile implements Serializable {
+public class Tile implements Serializable {
 
 	private static final long serialVersionUID = -6567346497259686765L;
 
 	private short x, y;
 	private byte plane;
 
-	public WorldTile(int x, int y, int plane) {
+	public Tile(int x, int y, int plane) {
 		this.x = (short) x;
 		this.y = (short) y;
 		this.plane = (byte) plane;
 	}
 
-	public WorldTile(WorldTile tile) {
+	public Tile(Tile tile) {
 		this.x = tile.x;
 		this.y = tile.y;
 		this.plane = tile.plane;
 	}
 
-	public WorldTile(WorldTile tile, int randomize) {
+	public Tile(Tile tile, int randomize) {
 		this.x = (short) (tile.x + Utils.getRandom(randomize * 2) - randomize);
 		this.y = (short) (tile.y + Utils.getRandom(randomize * 2) - randomize);
 		this.plane = tile.plane;
 	}
 
-	public WorldTile(int hash) {
+	public Tile(int hash) {
 		this.x = (short) (hash >> 14 & 0x3fff);
 		this.y = (short) (hash & 0x3fff);
 		this.plane = (byte) (hash >> 28);
@@ -42,7 +42,7 @@ public class WorldTile implements Serializable {
 		plane += planeOffset;
 	}
 
-	public final void setLocation(WorldTile tile) {
+	public final void setLocation(Tile tile) {
 		setLocation(tile.x, tile.y, tile.plane);
 	}
 
@@ -94,19 +94,19 @@ public class WorldTile implements Serializable {
 		return ((getRegionX() << 8) + getRegionY());
 	}
 
-	public int getLocalX(WorldTile tile, int mapSize) {
+	public int getLocalX(Tile tile, int mapSize) {
 		return x - 8 * (tile.getChunkX() - (Settings.MAP_SIZES[mapSize] >> 4));
 	}
 
-	public int getLocalY(WorldTile tile, int mapSize) {
+	public int getLocalY(Tile tile, int mapSize) {
 		return y - 8 * (tile.getChunkY() - (Settings.MAP_SIZES[mapSize] >> 4));
 	}
 
-	public int getLocalX(WorldTile tile) {
+	public int getLocalX(Tile tile) {
 		return getLocalX(tile, 0);
 	}
 
-	public int getLocalY(WorldTile tile) {
+	public int getLocalY(Tile tile) {
 		return getLocalY(tile, 0);
 	}
 
@@ -126,7 +126,7 @@ public class WorldTile implements Serializable {
 		return y + (x << 14) + (plane << 28);
 	}
 
-	public boolean withinDistance(WorldTile tile, int distance) {
+	public boolean withinDistance(Tile tile, int distance) {
 		if (tile.plane != plane)
 			return false;
 		int deltaX = tile.x - x, deltaY = tile.y - y;
@@ -134,7 +134,7 @@ public class WorldTile implements Serializable {
 				&& deltaY >= -distance;
 	}
 
-	public boolean withinDistance(WorldTile tile) {
+	public boolean withinDistance(Tile tile) {
 		if (tile.plane != plane)
 			return false;
 		// int deltaX = tile.x - x, deltaY = tile.y - y;
@@ -180,8 +180,8 @@ public class WorldTile implements Serializable {
 		return y + ((rotation == 1 || rotation == 3 ? sizeX : sizeY) - 1) / 2;
 	}
 	
-	public WorldTile transform(int x, int y, int plane) {
-		return new WorldTile(this.x + x, this.y + y, this.plane + plane);
+	public Tile transform(int x, int y, int plane) {
+		return new Tile(this.x + x, this.y + y, this.plane + plane);
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class WorldTile implements Serializable {
 	 * @param other The world tile to compare with.
 	 * @return {@code True} if so.
 	 */
-	public boolean matches(WorldTile other) {
+	public boolean matches(Tile other) {
 		return x == other.x && y == other.y && plane == other.plane;
 	}
 }

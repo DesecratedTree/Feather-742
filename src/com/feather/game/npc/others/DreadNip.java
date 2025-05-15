@@ -1,6 +1,6 @@
 package com.feather.game.npc.others;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.utils.Utils;
@@ -16,7 +16,7 @@ public class DreadNip extends NPC {
 	private Player owner;
 	private int ticks;
 
-	public DreadNip(Player owner, int id, WorldTile tile, int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
+	public DreadNip(Player owner, int id, Tile tile, int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 		this.owner = owner;
 	}

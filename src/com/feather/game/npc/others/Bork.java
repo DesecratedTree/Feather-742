@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
@@ -16,7 +16,7 @@ public class Bork extends NPC {
 	
 	public static long deadTime;
 
-	public Bork(int id, WorldTile tile, int mapAreaNameHash, boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public Bork(int id, Tile tile, int mapAreaNameHash, boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setLureDelay(0);
 		setForceAgressive(true);
@@ -88,7 +88,7 @@ public class Bork extends NPC {
 		return (int) (deadTime-System.currentTimeMillis()/60000);
 	}
 	
-	public static boolean atBork(WorldTile tile) {
+	public static boolean atBork(Tile tile) {
 		if ((tile.getX() >= 3083 && tile.getX() <= 3120) && (tile.getY() >= 5522 && tile.getY() <= 5550))
 			return true;
 		return false;

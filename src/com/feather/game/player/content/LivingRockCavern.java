@@ -4,30 +4,30 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.cores.CoresManager;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.utils.Utils;
 
 public final class LivingRockCavern {
 
 	private static enum Rocks {
-		COAL_ROCK_1(new WorldObject(5999, 10, 1, 3690, 5146, 0)),
-		COAL_ROCK_2(new WorldObject(5999, 10, 2, 3690, 5125, 0)),
-		COAL_ROCK_3(new WorldObject(5999, 10, 0, 3687, 5107, 0)),
-		COAL_ROCK_4(new WorldObject(5999, 10, 1, 3674, 5098, 0)),
-		COAL_ROCK_5(new WorldObject(5999, 10, 2, 3664, 5090, 0)),
-		COAL_ROCK_6(new WorldObject(5999, 10, 3, 3615, 5090, 0)),
-		COAL_ROCK_7(new WorldObject(5999, 10, 1, 3625, 5107, 0)),
-		COAL_ROCK_8(new WorldObject(5999, 10, 3, 3647, 5142, 0)),
-		GOLD_ROCK_1(new WorldObject(45076, 10, 1, 3667, 5075, 0)),
-		GOLD_ROCK_2(new WorldObject(45076, 10, 0, 3637, 5094, 0)),
-		GOLD_ROCK_3(new WorldObject(45076, 10, 0, 3677, 5160, 0)),
-		GOLD_ROCK_4(new WorldObject(45076, 10, 1, 3629, 5148, 0));
+		COAL_ROCK_1(new GameObject(5999, 10, 1, 3690, 5146, 0)),
+		COAL_ROCK_2(new GameObject(5999, 10, 2, 3690, 5125, 0)),
+		COAL_ROCK_3(new GameObject(5999, 10, 0, 3687, 5107, 0)),
+		COAL_ROCK_4(new GameObject(5999, 10, 1, 3674, 5098, 0)),
+		COAL_ROCK_5(new GameObject(5999, 10, 2, 3664, 5090, 0)),
+		COAL_ROCK_6(new GameObject(5999, 10, 3, 3615, 5090, 0)),
+		COAL_ROCK_7(new GameObject(5999, 10, 1, 3625, 5107, 0)),
+		COAL_ROCK_8(new GameObject(5999, 10, 3, 3647, 5142, 0)),
+		GOLD_ROCK_1(new GameObject(45076, 10, 1, 3667, 5075, 0)),
+		GOLD_ROCK_2(new GameObject(45076, 10, 0, 3637, 5094, 0)),
+		GOLD_ROCK_3(new GameObject(45076, 10, 0, 3677, 5160, 0)),
+		GOLD_ROCK_4(new GameObject(45076, 10, 1, 3629, 5148, 0));
 		
-		private Rocks(WorldObject rock) {
+		private Rocks(GameObject rock) {
 			this.rock = rock;
 		}
 		
-		private WorldObject rock;
+		private GameObject rock;
 		
 	}
 	

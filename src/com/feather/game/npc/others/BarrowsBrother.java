@@ -1,7 +1,7 @@
 package com.feather.game.npc.others;
 
 import com.feather.game.Entity;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.controlers.Barrows;
 import com.feather.utils.Utils;
@@ -11,7 +11,7 @@ public class BarrowsBrother extends NPC {
 
 	private Barrows barrows;
 
-	public BarrowsBrother(int id, WorldTile tile, Barrows barrows) {
+	public BarrowsBrother(int id, Tile tile, Barrows barrows) {
 		super(id, tile, -1, true, true);
 		this.barrows = barrows;
 	}

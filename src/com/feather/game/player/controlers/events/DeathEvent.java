@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
 import com.feather.game.RegionBuilder;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.content.Magic;
 import com.feather.game.player.controlers.Controler;
 import com.feather.game.tasks.WorldTask;
@@ -14,7 +14,7 @@ import com.feather.game.tasks.WorldTasksManager;
 
 public class DeathEvent extends Controler {
 
-	public static final WorldTile RESPAWN = new WorldTile(3214, 3423, 0);
+	public static final Tile RESPAWN = new Tile(3214, 3423, 0);
 
 	
 	private int[] boundChuncks;
@@ -31,7 +31,7 @@ public class DeathEvent extends Controler {
 	}
 	
 	public boolean logout() {
-		player.setLocation(new WorldTile(1978, 5302, 0));
+		player.setLocation(new Tile(1978, 5302, 0));
 		destroyRoom();
 		return false;
 	}
@@ -63,7 +63,7 @@ public class DeathEvent extends Controler {
 				boundChuncks = RegionBuilder.findEmptyChunkBound(2, 2); 
 				RegionBuilder.copyMap(246, 662, boundChuncks[0], boundChuncks[1], 2, 2, new int[1], new int[1]);
 				player.reset();
-				player.setNextWorldTile(new WorldTile(boundChuncks[0] * 8 + 10, boundChuncks[1] * 8 + 6, 0));
+				player.setNextWorldTile(new Tile(boundChuncks[0] * 8 + 10, boundChuncks[1] * 8 + 6, 0));
 				player.setNextAnimation(new Animation(-1));
 				//1delay because player cant walk while teleing :p, + possible issues avoid
 				WorldTasksManager.schedule(new WorldTask()  {
@@ -83,19 +83,19 @@ public class DeathEvent extends Controler {
 	
 
 	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(WorldTile toTile) {
+	public boolean processItemTeleport(Tile toTile) {
 		return false;
 	}
 	
 	/**
 	 * return process normaly
 	 */
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if(object.getId() == 45803) {
 			Magic.sendObjectTeleportSpell(player, true, RESPAWN);
 			return false;

@@ -1,6 +1,6 @@
 package com.feather.game.minigames.creations;
 
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.game.item.Item;
 import com.feather.game.player.content.Magic;
 import com.feather.game.player.controlers.Controler;
@@ -29,7 +29,7 @@ public class StealingCreationGame extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if (object.getId() == 39546) {
 			if (!player.getInventory().containsOneItem(StealingCreation.SACRED_CLAY)) {
 				player.getPackets().sendGameMessage("You try using the processing point, but quickly realize that you have no sacred clay with you.");

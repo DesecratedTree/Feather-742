@@ -16,13 +16,13 @@ import java.util.List;
 
 import com.feather.cache.parser.NPCDefinitions;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 
 public final class NPCSpawns {
 
 	private static final Object lock = new Object();
-	public static boolean addSpawn(String username, int id, WorldTile tile) throws Throwable {
+	public static boolean addSpawn(String username, int id, Tile tile) throws Throwable {
 		synchronized(lock) {
 			File file = new File("data/npcs/spawns.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
@@ -46,7 +46,7 @@ public final class NPCSpawns {
 			String line;
 			boolean removed = false;
 			int id =  npc.getId();
-			WorldTile tile = npc.getRespawnTile();
+			Tile tile = npc.getRespawnTile();
 			while((line = in.readLine()) != null)  {
 				if(line.equals(id+" - "+tile.getX()+" "+tile.getY()+" "+tile.getPlane())) {
 					page.remove(page.get(page.size()-1)); //description
@@ -97,7 +97,7 @@ public final class NPCSpawns {
 				if (splitedLine2.length != 3 && splitedLine2.length != 5)
 					throw new RuntimeException("Invalid NPC Spawn line: "
 							+ line);
-				WorldTile tile = new WorldTile(
+				Tile tile = new Tile(
 						Integer.parseInt(splitedLine2[0]),
 						Integer.parseInt(splitedLine2[1]),
 						Integer.parseInt(splitedLine2[2]));
@@ -138,7 +138,7 @@ public final class NPCSpawns {
 					mapAreaNameHash = buffer.getInt();
 					canBeAttackFromOutOfArea = buffer.get() == 1;
 				}
-				World.spawnNPC(npcId, new WorldTile(x, y, plane),
+				World.spawnNPC(npcId, new Tile(x, y, plane),
 						mapAreaNameHash, canBeAttackFromOutOfArea);
 			}
 			channel.close();
@@ -149,8 +149,8 @@ public final class NPCSpawns {
 	}
 
 	private static final void addNPCSpawn(int npcId, int regionId,
-			WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea) {
+										  Tile tile, int mapAreaNameHash,
+										  boolean canBeAttackFromOutOfArea) {
 		try {
 			DataOutputStream out = new DataOutputStream(new FileOutputStream(
 					"data/npcs/packedSpawns/" + regionId + ".ns", true));

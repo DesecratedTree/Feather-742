@@ -6,11 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.Settings;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.RegionBuilder;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.npc.fightcaves.FightCavesNPC;
 import com.feather.game.npc.fightcaves.TzKekCaves;
@@ -25,7 +21,7 @@ import com.feather.utils.Utils;
 
 public class FightCaves extends Controler {
 
-	public static final WorldTile OUTSIDE = new WorldTile(4610, 5130, 0);
+	public static final Tile OUTSIDE = new Tile(4610, 5130, 0);
 
 	private static final int THHAAR_MEJ_JAL = 2617;
 
@@ -148,7 +144,7 @@ public class FightCaves extends Controler {
 	 * return process normaly
 	 */
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if(object.getId() == 9357) {
 			if(stage != Stages.RUNNING)
 				return false;
@@ -189,7 +185,7 @@ public class FightCaves extends Controler {
 					@Override
 					public void run() {
 						if(!login) {
-							WorldTile walkTo = getWorldTile(32, 32);
+							Tile walkTo = getWorldTile(32, 32);
 							player.addWalkSteps(walkTo.getX(), walkTo.getY());
 						}
 						player.getDialogueManager().startDialogue("SimpleNPCMessage", THHAAR_MEJ_JAL, "You're on your own now, JalYt.<br>Prepare to fight for your life!");
@@ -222,7 +218,7 @@ public class FightCaves extends Controler {
 		});
 	}
 
-	public WorldTile getSpawnTile() {
+	public Tile getSpawnTile() {
 		switch(Utils.random(5)) {
 		case 0:
 			return getWorldTile(11, 16);
@@ -359,7 +355,7 @@ public class FightCaves extends Controler {
 	 */
 	public void exitCave(int type) {
 		stage = Stages.DESTROYING;
-		WorldTile outside = new WorldTile(OUTSIDE, 2); //radomizes alil
+		Tile outside = new Tile(OUTSIDE, 2); //radomizes alil
 		if(type == 0 || type == 2)
 			player.setLocation(outside);
 		else {
@@ -373,17 +369,17 @@ public class FightCaves extends Controler {
 					player.getDialogueManager().startDialogue("SimpleNPCMessage", THHAAR_MEJ_JAL, "You even defeated Tz Tok-Jad, I am most impressed! Please accept this gift as a reward.");
 					player.getPackets().sendGameMessage("You were victorious!!");
 					if(!player.getInventory().addItem(6570, 1)) {
-						World.addGroundItem(new Item(6570, 1), new WorldTile(player), player, true, 180,true);
-						World.addGroundItem(new Item(6529, 16064), new WorldTile(player), player, true, 180,true);
+						World.addGroundItem(new Item(6570, 1), new Tile(player), player, true, 180,true);
+						World.addGroundItem(new Item(6529, 16064), new Tile(player), player, true, 180,true);
 					}else if(!player.getInventory().addItem(6529, 16064)) 
-						World.addGroundItem(new Item(6529, 16064), new WorldTile(player), player, true, 180,true);
+						World.addGroundItem(new Item(6529, 16064), new Tile(player), player, true, 180,true);
 				}else if(getCurrentWave() == 1) 
 					player.getDialogueManager().startDialogue("SimpleNPCMessage", THHAAR_MEJ_JAL, "Well I suppose you tried... better luck next time.");
 				else{
 					int tokkul = getCurrentWave() * 8032 / WAVES.length;
 					tokkul *= Settings.DROP_RATE; //10x more
 					if(!player.getInventory().addItem(6529, tokkul)) 
-						World.addGroundItem(new Item(6529, tokkul), new WorldTile(player), player, true, 180,true);
+						World.addGroundItem(new Item(6529, tokkul), new Tile(player), player, true, 180,true);
 					player.getDialogueManager().startDialogue("SimpleNPCMessage", THHAAR_MEJ_JAL, "Well done in the cave, here, take TokKul as reward.");
 					//TODO tokens
 				}
@@ -404,8 +400,8 @@ public class FightCaves extends Controler {
 	/*
 	 * gets worldtile inside the map
 	 */
-	public WorldTile getWorldTile(int mapX, int mapY) {
-		return new WorldTile(boundChuncks[0]*8 + mapX, boundChuncks[1]*8 + mapY, 0);
+	public Tile getWorldTile(int mapX, int mapY) {
+		return new Tile(boundChuncks[0]*8 + mapX, boundChuncks[1]*8 + mapY, 0);
 	}
 
 

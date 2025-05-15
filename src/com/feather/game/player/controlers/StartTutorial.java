@@ -2,8 +2,8 @@ package com.feather.game.player.controlers;
 
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Skills;
 import com.feather.game.tasks.WorldTask;
@@ -38,7 +38,7 @@ public class StartTutorial extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		int id = object.getId();
 		if ((id == 47120 && getStage() == 1)
 				|| (Wilderness.isDitch(id) && getStage() == 2))
@@ -47,12 +47,12 @@ public class StartTutorial extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick2(WorldObject object) {
+	public boolean processObjectClick2(GameObject object) {
 		return false;
 	}
 
 	@Override
-	public boolean processObjectClick3(WorldObject object) {
+	public boolean processObjectClick3(GameObject object) {
 		return false;
 	}
 
@@ -159,7 +159,7 @@ public class StartTutorial extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		return false;
 	}
 
@@ -179,12 +179,12 @@ public class StartTutorial extends Controler {
 	}
 
 	@Override
-	public boolean processItemTeleport(WorldTile toTile) {
+	public boolean processItemTeleport(Tile toTile) {
 		return false;
 	}
 
 	@Override
-	public boolean processObjectTeleport(WorldTile toTile) {
+	public boolean processObjectTeleport(Tile toTile) {
 		return false;
 	}
 

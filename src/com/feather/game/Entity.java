@@ -20,7 +20,7 @@ import com.feather.game.player.Skills;
 import com.feather.game.player.content.Magic;
 import com.feather.utils.Utils;
 
-public abstract class Entity extends WorldTile {
+public abstract class Entity extends Tile {
 
 	private static final long serialVersionUID = -3372926325008880753L;
 	private final static AtomicInteger hashCodeGenerator = new AtomicInteger();
@@ -29,18 +29,18 @@ public abstract class Entity extends WorldTile {
 	// transient stuff
 	private transient int index;
 	private transient int lastRegionId; // the last region the entity was at
-	private transient WorldTile lastLoadedMapRegionTile;
+	private transient Tile lastLoadedMapRegionTile;
 	private transient CopyOnWriteArrayList<Integer> mapRegionsIds; // called by
 																	// more than
 																	// 1thread
 																	// so
 																	// concurent
 	private transient int direction;
-	private transient WorldTile lastWorldTile;
-	private transient WorldTile nextWorldTile;
+	private transient Tile lastTile;
+	private transient Tile nextTile;
 	private transient int nextWalkDirection;
 	private transient int nextRunDirection;
-	private transient WorldTile nextFaceWorldTile;
+	private transient Tile nextFaceTile;
 	private transient boolean teleported;
 	private transient ConcurrentLinkedQueue<int[]> walkSteps;// called by more
 																// than 1thread
@@ -80,7 +80,7 @@ public abstract class Entity extends WorldTile {
 	private Poison poison;
 
 	// creates Entity and saved classes
-	public Entity(WorldTile tile) {
+	public Entity(Tile tile) {
 		super(tile);
 		poison = new Poison();
 	}
@@ -293,7 +293,7 @@ public abstract class Entity extends WorldTile {
 	public abstract void sendDeath(Entity source);
 
 	public void processMovement() {
-		lastWorldTile = new WorldTile(this);
+		lastTile = new Tile(this);
 		if (lastFaceEntity >= 0) {
 			Entity target = lastFaceEntity >= 32768 ? World.getPlayers().get(
 					lastFaceEntity - 32768) : World.getNPCs().get(
@@ -304,10 +304,10 @@ public abstract class Entity extends WorldTile {
 						target.getCoordFaceY(target.getSize()) - getY());
 		}
 		nextWalkDirection = nextRunDirection = -1;
-		if (nextWorldTile != null) {
+		if (nextTile != null) {
 			int lastPlane = getPlane();
-			setLocation(nextWorldTile);
-			nextWorldTile = null;
+			setLocation(nextTile);
+			nextTile = null;
 			teleported = true;
 			if (this instanceof Player && ((Player) this).getTemporaryMoveType() == -1)
 				((Player) this).setTemporaryMoveType(Player.TELE_MOVE_TYPE);
@@ -397,7 +397,7 @@ public abstract class Entity extends WorldTile {
 	/*
 	 * returns if cliped
 	 */
-	public boolean clipedProjectile(WorldTile tile, boolean checkClose) {
+	public boolean clipedProjectile(Tile tile, boolean checkClose) {
 		if(tile instanceof NPC) {
 			NPC n = (NPC) tile;
 			if(this instanceof Player) 
@@ -513,12 +513,12 @@ public abstract class Entity extends WorldTile {
 	/*
 	 * returns if cliped
 	 */
-	public boolean clipedProjectile(WorldTile tile, boolean checkClose, int size) {
+	public boolean clipedProjectile(Tile tile, boolean checkClose, int size) {
 		int myX = getX();
 		int myY = getY();
 		if(this instanceof NPC && size == 1) {
 			NPC n = (NPC) this;
-			WorldTile thist = n.getMiddleWorldTile();
+			Tile thist = n.getMiddleWorldTile();
 			myX = thist.getX();
 			myY = thist.getY();
 		}
@@ -586,7 +586,7 @@ public abstract class Entity extends WorldTile {
 					if(!checkUnder && target.getNextWalkDirection() == -1) { //means the walk hasnt been processed yet
 						int previewDir = getPreviewNextWalkStep();
 						if(previewDir != -1) {
-							WorldTile tile = target.transform(Utils.DIRECTION_DELTA_X[previewDir],
+							Tile tile = target.transform(Utils.DIRECTION_DELTA_X[previewDir],
 									Utils.DIRECTION_DELTA_Y[previewDir], 0);
 							if(colides(tile.getX(), tile.getY(), targetSize, getX(), getY(), size))
 								continue;
@@ -845,7 +845,7 @@ public abstract class Entity extends WorldTile {
 		return nextFaceEntity != -2 || nextAnimation != null
 				|| nextGraphics1 != null || nextGraphics2 != null
 				|| nextGraphics3 != null || nextGraphics4 != null
-				|| (nextWalkDirection == -1 && nextFaceWorldTile != null)
+				|| (nextWalkDirection == -1 && nextFaceTile != null)
 				|| !nextHits.isEmpty() || nextForceMovement != null
 				|| nextForceTalk != null;
 	}
@@ -861,7 +861,7 @@ public abstract class Entity extends WorldTile {
 		nextGraphics3 = null;
 		nextGraphics4 = null;
 		if (nextWalkDirection == -1)
-			nextFaceWorldTile = null;
+			nextFaceTile = null;
 		nextForceMovement = null;
 		nextForceTalk = null;
 		nextFaceEntity = -2;
@@ -894,7 +894,7 @@ public abstract class Entity extends WorldTile {
 					isAtDynamicRegion = true;
 				mapRegionsIds.add(regionId);
 			}
-		lastLoadedMapRegionTile = new WorldTile(this); // creates a immutable
+		lastLoadedMapRegionTile = new Tile(this); // creates a immutable
 														// copy of this
 	}
 
@@ -1013,19 +1013,19 @@ public abstract class Entity extends WorldTile {
 		return finished;
 	}
 
-	public void setNextWorldTile(WorldTile nextWorldTile) {
-		this.nextWorldTile = nextWorldTile;
+	public void setNextWorldTile(Tile nextTile) {
+		this.nextTile = nextTile;
 	}
 
-	public WorldTile getNextWorldTile() {
-		return nextWorldTile;
+	public Tile getNextWorldTile() {
+		return nextTile;
 	}
 
 	public boolean hasTeleported() {
 		return teleported;
 	}
 
-	public WorldTile getLastLoadedMapRegionTile() {
+	public Tile getLastLoadedMapRegionTile() {
 		return lastLoadedMapRegionTile;
 	}
 
@@ -1045,22 +1045,22 @@ public abstract class Entity extends WorldTile {
 		return run;
 	}
 
-	public WorldTile getNextFaceWorldTile() {
-		return nextFaceWorldTile;
+	public Tile getNextFaceWorldTile() {
+		return nextFaceTile;
 	}
 
-	public void setNextFaceWorldTile(WorldTile nextFaceWorldTile) {
-		if (nextFaceWorldTile.getX() == getX()
-				&& nextFaceWorldTile.getY() == getY())
+	public void setNextFaceWorldTile(Tile nextFaceTile) {
+		if (nextFaceTile.getX() == getX()
+				&& nextFaceTile.getY() == getY())
 			return;
-		this.nextFaceWorldTile = nextFaceWorldTile;
-		if (nextWorldTile != null)
-			direction = Utils.getFaceDirection(nextFaceWorldTile.getX()
-					- nextWorldTile.getX(), nextFaceWorldTile.getY()
-					- nextWorldTile.getY());
+		this.nextFaceTile = nextFaceTile;
+		if (nextTile != null)
+			direction = Utils.getFaceDirection(nextFaceTile.getX()
+					- nextTile.getX(), nextFaceTile.getY()
+					- nextTile.getY());
 		else
-			direction = Utils.getFaceDirection(nextFaceWorldTile.getX()
-					- getX(), nextFaceWorldTile.getY() - getY());
+			direction = Utils.getFaceDirection(nextFaceTile.getX()
+					- getX(), nextFaceTile.getY() - getY());
 	}
 
 	public abstract int getSize();
@@ -1184,14 +1184,14 @@ public abstract class Entity extends WorldTile {
 	}
 
 	public void faceEntity(Entity target) {
-		setNextFaceWorldTile(new WorldTile(target.getCoordFaceX(target
+		setNextFaceWorldTile(new Tile(target.getCoordFaceX(target
 				.getSize()), target.getCoordFaceY(target.getSize()),
 				target.getPlane()));
 	}
 
-	public void faceObject(WorldObject object) {
+	public void faceObject(GameObject object) {
 		ObjectDefinitions objectDef = object.getDefinitions();
-		setNextFaceWorldTile(new WorldTile(object.getCoordFaceX(
+		setNextFaceWorldTile(new Tile(object.getCoordFaceX(
 				objectDef.getSizeX(), objectDef.getSizeY(),
 				object.getRotation()), object.getCoordFaceY(
 				objectDef.getSizeX(), objectDef.getSizeY(),
@@ -1215,8 +1215,8 @@ public abstract class Entity extends WorldTile {
 		checkMultiArea();
 	}
 
-	public WorldTile getLastWorldTile() {
-		return lastWorldTile;
+	public Tile getLastWorldTile() {
+		return lastTile;
 	}
 
 	public ArrayList<Hit> getNextHits() {

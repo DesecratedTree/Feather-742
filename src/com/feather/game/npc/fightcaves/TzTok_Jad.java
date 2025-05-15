@@ -3,7 +3,7 @@ package com.feather.game.npc.fightcaves;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
 import com.feather.game.Graphics;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
 import com.feather.game.player.controlers.FightCaves;
 import com.feather.game.tasks.WorldTask;
@@ -15,7 +15,7 @@ public class TzTok_Jad extends FightCavesNPC {
 	private boolean spawnedMinions;
 	private FightCaves controler;
 	
-	public TzTok_Jad(int id, WorldTile tile, FightCaves controler) {
+	public TzTok_Jad(int id, Tile tile, FightCaves controler) {
 		super(id, tile);
 		this.controler = controler;
 	}

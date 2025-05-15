@@ -1,12 +1,7 @@
 package com.feather.game.minigames.duel;
 
 import com.feather.cache.parser.ItemDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.ForceTalk;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.PlayerCombat;
@@ -27,12 +22,12 @@ public class DuelArena extends Controler {
 
 	private final Item[] FUN_WEAPONS = {new Item(4566)};
 
-	private final WorldTile[] LOBBY_TELEPORTS = { new WorldTile(3367, 3275, 0),
-			new WorldTile(3360, 3275, 0), new WorldTile(3358, 3270, 0),
-			new WorldTile(3363, 3268, 0), new WorldTile(3370, 3268, 0),
-			new WorldTile(3367, 3267, 0), new WorldTile(3376, 3275, 0),
-			new WorldTile(3377, 3271, 0), new WorldTile(3375, 3269, 0),
-			new WorldTile(3381, 3277, 0) };
+	private final Tile[] LOBBY_TELEPORTS = { new Tile(3367, 3275, 0),
+			new Tile(3360, 3275, 0), new Tile(3358, 3270, 0),
+			new Tile(3363, 3268, 0), new Tile(3370, 3268, 0),
+			new Tile(3367, 3267, 0), new Tile(3376, 3275, 0),
+			new Tile(3377, 3271, 0), new Tile(3375, 3269, 0),
+			new Tile(3381, 3277, 0) };
 
 	@Override
 	public void start() {
@@ -289,10 +284,10 @@ public class DuelArena extends Controler {
 	}
 
 	private void startEndingTeleport(Player player) {
-		WorldTile tile = LOBBY_TELEPORTS[Utils.random(LOBBY_TELEPORTS.length)];
-		WorldTile teleTile = tile;
+		Tile tile = LOBBY_TELEPORTS[Utils.random(LOBBY_TELEPORTS.length)];
+		Tile teleTile = tile;
 		for (int trycount = 0; trycount < 10; trycount++) {
-			teleTile = new WorldTile(tile, 2);
+			teleTile = new Tile(tile, 2);
 			if (World.canMoveNPC(tile.getPlane(), teleTile.getX(),
 					teleTile.getY(), player.getSize()))
 				break;
@@ -317,7 +312,7 @@ public class DuelArena extends Controler {
 
 	private void beginBattle(boolean started) {
 		if (started) {
-			WorldTile[] teleports = getPossibleWorldTiles();
+			Tile[] teleports = getPossibleWorldTiles();
 			int random = Utils.getRandom(1);
 			player.setNextWorldTile(random == 0 ? teleports[0] : teleports[1]);
 			target.setNextWorldTile(random == 0 ? teleports[1] : teleports[0]);
@@ -383,13 +378,13 @@ public class DuelArena extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "A magical force prevents you from teleporting from the arena.");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(WorldTile toTile) {
+	public boolean processItemTeleport(Tile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage","A magical force prevents you from teleporting from the arena.");
 		return false;
 	}
@@ -401,7 +396,7 @@ public class DuelArena extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		player.getDialogueManager().startDialogue("ForfeitDialouge");
 		return true;
 	}
@@ -493,9 +488,9 @@ public class DuelArena extends Controler {
 		return true;
 	}
 
-	private WorldTile[] getPossibleWorldTiles() {
+	private Tile[] getPossibleWorldTiles() {
 		final int arenaChoice = Utils.getRandom(2);
-		WorldTile[] locations = new WorldTile[2];
+		Tile[] locations = new Tile[2];
 		int[] arenaBoundariesX = { 3337, 3367, 3336 };
 		int[] arenaBoundariesY = { 3246, 3227, 3208 };
 		int[] maxOffsetX = { 14, 14, 16 };
@@ -504,7 +499,7 @@ public class DuelArena extends Controler {
 				+ Utils.getRandom(maxOffsetX[arenaChoice]);
 		int finalY = arenaBoundariesY[arenaChoice]
 				+ Utils.getRandom(maxOffsetY[arenaChoice]);
-		locations[0] = (new WorldTile(finalX, finalY, 0));
+		locations[0] = (new Tile(finalX, finalY, 0));
 		if (player.getLastDuelRules().getRule(25)) {
 			int direction = Utils.getRandom(1);
 			if (direction == 0) {
@@ -518,7 +513,7 @@ public class DuelArena extends Controler {
 			finalY = arenaBoundariesY[arenaChoice]
 					+ Utils.getRandom(maxOffsetY[arenaChoice]);
 		}
-		locations[1] = (new WorldTile(finalX, finalY, 0));
+		locations[1] = (new Tile(finalX, finalY, 0));
 		return locations;
 	}
 

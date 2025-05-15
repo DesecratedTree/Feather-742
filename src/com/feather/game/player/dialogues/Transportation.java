@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.player.content.Magic;
 
@@ -23,16 +23,16 @@ public class Transportation extends Dialogue {
 		boolean teleported = false;
 		if (componentId == OPTION_1)
 			teleported = Magic.sendItemTeleportSpell(player, true, EMOTE, GFX,
-					4, (WorldTile) parameters[1]);
+					4, (Tile) parameters[1]);
 		else if (componentId == OPTION_2)
 			teleported = Magic.sendItemTeleportSpell(player, true, EMOTE, GFX,
-					4, (WorldTile) parameters[3]);
+					4, (Tile) parameters[3]);
 		else if (componentId == OPTION_3)
 			teleported = Magic.sendItemTeleportSpell(player, true, EMOTE, GFX,
-					4, (WorldTile) parameters[5]);
+					4, (Tile) parameters[5]);
 		else if (componentId == OPTION_4)
 			teleported = Magic.sendItemTeleportSpell(player, true, EMOTE, GFX,
-					4, (WorldTile) parameters[7]);
+					4, (Tile) parameters[7]);
 		if (!teleported) {
 			end();
 			return;

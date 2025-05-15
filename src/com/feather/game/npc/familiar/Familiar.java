@@ -3,11 +3,7 @@ package com.feather.game.npc.familiar;
 import java.io.Serializable;
 
 import com.feather.cache.parser.ItemDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -34,7 +30,7 @@ public abstract class Familiar extends NPC implements Serializable {
 	private BeastOfBurden bob;
 	private Pouches pouch;
 
-	public Familiar(Player owner, Pouches pouch, WorldTile tile,
+	public Familiar(Player owner, Pouches pouch, Tile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(pouch.getNpcId(), tile, mapAreaNameHash,
 				canBeAttackFromOutOfArea, false);
@@ -320,9 +316,9 @@ public abstract class Familiar extends NPC implements Serializable {
 			sendMainConfigs();
 		} else
 			removeTarget();
-		WorldTile teleTile = null;
+		Tile teleTile = null;
 		for (int dir = 0; dir < checkNearDirs[0].length; dir++) {
-			final WorldTile tile = new WorldTile(new WorldTile(owner.getX()
+			final Tile tile = new Tile(new Tile(owner.getX()
 					+ checkNearDirs[0][dir], owner.getY()
 					+ checkNearDirs[1][dir], owner.getPlane()));
 			if (World.canMoveNPC(tile.getPlane(), tile.getX(), tile.getY(),

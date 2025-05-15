@@ -1,11 +1,6 @@
 package com.feather.game.npc.fightpits;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.minigames.FightPits;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -15,7 +10,7 @@ import com.feather.game.tasks.WorldTasksManager;
 @SuppressWarnings("serial")
 public class TzKekPits extends FightPitsNPC {
 
-	public TzKekPits(int id, WorldTile tile) {
+	public TzKekPits(int id, Tile tile) {
 		super(id, tile);
 	}
 
@@ -25,7 +20,7 @@ public class TzKekPits extends FightPitsNPC {
 		resetWalkSteps();
 		getCombat().removeTarget();
 		setNextAnimation(null);
-		final WorldTile tile = this;
+		final Tile tile = this;
 		WorldTasksManager.schedule(new WorldTask() {
 			int loop;
 

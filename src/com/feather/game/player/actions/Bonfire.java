@@ -2,11 +2,7 @@ package com.feather.game.player.actions;
 
 import java.util.ArrayList;
 
-import com.feather.game.Animation;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.npc.others.FireSpirit;
 import com.feather.game.player.Player;
@@ -47,10 +43,10 @@ public class Bonfire extends Action {
 	}
 	
 	private Log log;
-	private WorldObject object;
+	private GameObject object;
 	private int count;
 	
-	public Bonfire(Log log, WorldObject object) {
+	public Bonfire(Log log, GameObject object) {
 		this.log = log;
 		this.object = object;
 	}
@@ -68,7 +64,7 @@ public class Bonfire extends Action {
 		return true;
 	}
 	
-	public static boolean addLog(Player player, WorldObject object, Item item) {
+	public static boolean addLog(Player player, GameObject object, Item item) {
 		for(Log log : Log.values())
 			if(log.logId == item.getId()) {
 				player.getActionManager().setAction(new Bonfire(log, object));
@@ -77,7 +73,7 @@ public class Bonfire extends Action {
 		return false;
 	}
 	
-	public static void addLogs(Player player, WorldObject object) {
+	public static void addLogs(Player player, GameObject object) {
 		
 		ArrayList<Log> possiblities = new ArrayList<Log>();
 		for(Log log : Log.values())
@@ -106,7 +102,7 @@ public class Bonfire extends Action {
 	public boolean process(Player player) {
 		if(checkAll(player)) {
 			if(Utils.random(500) == 0) {
-				new FireSpirit(new WorldTile(object, 1), player);
+				new FireSpirit(new Tile(object, 1), player);
 				player.getPackets().sendGameMessage("<col=ff0000>A fire spirit emerges from the bonfire.");
 			}
 			return true;

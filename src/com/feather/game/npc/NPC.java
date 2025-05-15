@@ -3,19 +3,13 @@ package com.feather.game.npc;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.feather.Settings;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.cache.parser.NPCDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.item.Item;
 import com.feather.game.npc.combat.NPCCombat;
@@ -41,7 +35,7 @@ public class NPC extends Entity implements Serializable {
 	private static final long serialVersionUID = -4794678936277614443L;
 
 	private int id;
-	private WorldTile respawnTile;
+	private Tile respawnTile;
 	private int mapAreaNameHash;
 	private boolean canBeAttackFromOutOfArea;
 	private boolean randomwalk;
@@ -49,7 +43,7 @@ public class NPC extends Entity implements Serializable {
 	// def, blahblah till 9
 	private boolean spawned;
 	private transient NPCCombat combat;
-	public WorldTile forceWalk;
+	public Tile forceWalk;
 
 	private long lastAttackedByTarget;
 	private boolean cantInteract;
@@ -71,19 +65,19 @@ public class NPC extends Entity implements Serializable {
 	private transient boolean changedCombatLevel;
 	private transient boolean locked;
 	
-	public NPC(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea) {
+	public NPC(int id, Tile tile, int mapAreaNameHash,
+			   boolean canBeAttackFromOutOfArea) {
 		this(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
 	}
 
 	/*
 	 * creates and adds npc
 	 */
-	public NPC(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public NPC(int id, Tile tile, int mapAreaNameHash,
+			   boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(tile);
 		this.id = id;
-		this.respawnTile = new WorldTile(tile);
+		this.respawnTile = new Tile(tile);
 		this.mapAreaNameHash = mapAreaNameHash;
 		this.canBeAttackFromOutOfArea = canBeAttackFromOutOfArea;
 		this.setSpawned(spawned);
@@ -197,7 +191,7 @@ public class NPC extends Entity implements Serializable {
 						addWalkSteps(forceWalk.getX(), forceWalk.getY(),
 								getSize(), true);
 					if (!hasWalkSteps()) { // failing finding route
-						setNextWorldTile(new WorldTile(forceWalk)); // force
+						setNextWorldTile(new Tile(forceWalk)); // force
 						// tele
 						// to
 						// the
@@ -658,7 +652,7 @@ public class NPC extends Entity implements Serializable {
 						new Item(drop.getItemId(), (drop.getMinAmount() * Settings.DROP_RATE) + Utils.getRandom(drop.getExtraAmount() *Settings.DROP_RATE))
 		:
 			new Item(drop.getItemId(), drop.getMinAmount() + Utils.getRandom(drop.getExtraAmount()));
-						World.addGroundItem(item, new WorldTile(getCoordFaceX(size), getCoordFaceY(size), getPlane()), player, false, 180, true);
+						World.addGroundItem(item, new Tile(getCoordFaceX(size), getCoordFaceY(size), getPlane()), player, false, 180, true);
 	}
 
 	@Override
@@ -689,7 +683,7 @@ public class NPC extends Entity implements Serializable {
 		return 0;
 	}
 
-	public WorldTile getRespawnTile() {
+	public Tile getRespawnTile() {
 		return respawnTile;
 	}
 
@@ -730,7 +724,7 @@ public class NPC extends Entity implements Serializable {
 		setForceWalk(respawnTile);
 	}
 
-	public void setForceWalk(WorldTile tile) {
+	public void setForceWalk(Tile tile) {
 		resetWalkSteps();
 		forceWalk = tile;
 	}
@@ -917,9 +911,9 @@ public class NPC extends Entity implements Serializable {
 		return changedCombatLevel;
 	}
 
-	public WorldTile getMiddleWorldTile() {
+	public Tile getMiddleWorldTile() {
 		int size = getSize();
-		return new WorldTile(getCoordFaceX(size),getCoordFaceY(size), getPlane());
+		return new Tile(getCoordFaceX(size),getCoordFaceY(size), getPlane());
 	}
 
 	public boolean isSpawned() {

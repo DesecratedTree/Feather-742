@@ -1,8 +1,8 @@
 package com.feather.game.player;
 
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 
-public class PossessedObject extends WorldObject {
+public class PossessedObject extends GameObject {
 
 	/**
 	 * 

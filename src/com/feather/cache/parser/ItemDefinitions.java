@@ -9,10 +9,7 @@ import com.alex.utils.Constants;
 import com.feather.cache.Cache;
 import com.feather.game.item.Item;
 import com.feather.game.player.Equipment;
-import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
-import com.feather.game.player.content.ItemConstants;
-import com.feather.game.player.content.Shop;
 import com.feather.io.InputStream;
 import com.feather.utils.Utils;
 
@@ -104,7 +101,7 @@ public final class ItemDefinitions {
 	public boolean lended;
 
 	public HashMap<Integer, Object> clientScriptData;
-	public HashMap<Integer, Integer> itemRequiriments;
+	public HashMap<Integer, Integer> itemRequirements;
 	public int[] unknownArray5;
 	public int[] unknownArray4;
 	public byte[] unknownArray6;
@@ -118,9 +115,8 @@ public final class ItemDefinitions {
 		return def;
 	}
 
-	public static final void clearItemsDefinitions() {
-		for (int i = 0; i < itemsDefinitions.length; i++)
-			itemsDefinitions[i] = null;
+	public static void clearItemsDefinitions() {
+        Arrays.fill(itemsDefinitions, null);
 	}
 
 	public ItemDefinitions(int id) {
@@ -266,7 +262,7 @@ public final class ItemDefinitions {
 		if (clientScriptData == null)
 			return false;
 		Object specialBar = clientScriptData.get(686);
-		if (specialBar != null && specialBar instanceof Integer)
+		if (specialBar instanceof Integer)
 			return (Integer) specialBar == 1;
 		return false;
 	}
@@ -504,7 +500,7 @@ public final class ItemDefinitions {
 	public HashMap<Integer, Integer> getWearingSkillRequiriments() {
 		if (clientScriptData == null)
 			return null;
-		if (itemRequiriments == null) {
+		if (itemRequirements == null) {
 			HashMap<Integer, Integer> skills = new HashMap<Integer, Integer>();
 			for (int i = 0; i < 10; i++) {
 				Integer skill = (Integer) clientScriptData.get(749 + (i * 2));
@@ -518,21 +514,21 @@ public final class ItemDefinitions {
 			Integer maxedSkill = (Integer) clientScriptData.get(277);
 			if (maxedSkill != null)
 				skills.put(maxedSkill, getId() == 19709 ? 120 : 99);
-			itemRequiriments = skills;
+			itemRequirements = skills;
 			if (getId() == 7462)
-				itemRequiriments.put(Skills.DEFENCE, 40);
+				itemRequirements.put(Skills.DEFENCE, 40);
 			else if (getId() == 19784 || getId() == 22401 || getId() == 19780) { // Korasi
-				itemRequiriments.put(Skills.ATTACK, 78);
-				itemRequiriments.put(Skills.STRENGTH, 78);
+				itemRequirements.put(Skills.ATTACK, 78);
+				itemRequirements.put(Skills.STRENGTH, 78);
 			} else if (getId() == 20822 || getId() == 20823 || getId() == 20824
 					|| getId() == 20825 || getId() == 20826)
-				itemRequiriments.put(Skills.DEFENCE, 99);
+				itemRequirements.put(Skills.DEFENCE, 99);
 			else if (name.equals("Dragon defender")) {
-				itemRequiriments.put(Skills.ATTACK, 60);
-				itemRequiriments.put(Skills.DEFENCE, 60);
+				itemRequirements.put(Skills.ATTACK, 60);
+				itemRequirements.put(Skills.DEFENCE, 60);
 			}
 		}
-		return itemRequiriments;
+		return itemRequirements;
 	}
 
 	public void setDefaultOptions() {

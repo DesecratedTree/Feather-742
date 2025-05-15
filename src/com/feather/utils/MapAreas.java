@@ -1,5 +1,7 @@
 package com.feather.utils;
 
+import com.feather.game.Tile;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -12,8 +14,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.util.HashMap;
-
-import com.feather.game.WorldTile;
 
 public final class MapAreas {
 
@@ -28,11 +28,11 @@ public final class MapAreas {
 			loadUnpackedMapAreas();
 	}
 
-	public static final boolean isAtArea(String areaName, WorldTile tile) {
+	public static final boolean isAtArea(String areaName, Tile tile) {
 		return isAtArea(Utils.getNameHash(areaName), tile);
 	}
 
-	public static final boolean isAtArea(int areaNameHash, WorldTile tile) {
+	public static final boolean isAtArea(int areaNameHash, Tile tile) {
 		int[] coordsList = mapAreas.get(areaNameHash);
 		if (coordsList == null)
 			return false;

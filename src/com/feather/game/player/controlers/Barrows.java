@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.feather.Settings;
-import com.feather.game.Entity;
-import com.feather.game.ForceTalk;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.item.Item;
 import com.feather.game.npc.others.BarrowsBrother;
@@ -32,19 +27,19 @@ public final class Barrows extends Controler {
 	//TORAG
 	//VERAC
 	private static enum Hills {
-		AHRIM_HILL(new WorldTile(3564, 3287, 0), new WorldTile(3557, 9703, 3)),
-		DHAROK_HILL(new WorldTile(3573, 3296, 0), new WorldTile(3556, 9718, 3)),
-		GUTHAN_HILL(new WorldTile(3574, 3279, 0), new WorldTile(3534, 9704, 3)),
-		KARIL_HILL(new WorldTile(3563, 3276, 0), new WorldTile(3546, 9684, 3)),
-		TORAG_HILL(new WorldTile(3553, 3281, 0), new WorldTile(3568, 9683, 3)),
-		VERAC_HILL(new WorldTile(3556, 3296, 0), new WorldTile(3578, 9706, 3));
+		AHRIM_HILL(new Tile(3564, 3287, 0), new Tile(3557, 9703, 3)),
+		DHAROK_HILL(new Tile(3573, 3296, 0), new Tile(3556, 9718, 3)),
+		GUTHAN_HILL(new Tile(3574, 3279, 0), new Tile(3534, 9704, 3)),
+		KARIL_HILL(new Tile(3563, 3276, 0), new Tile(3546, 9684, 3)),
+		TORAG_HILL(new Tile(3553, 3281, 0), new Tile(3568, 9683, 3)),
+		VERAC_HILL(new Tile(3556, 3296, 0), new Tile(3578, 9706, 3));
 
-		private WorldTile outBound;
-		private WorldTile inside;
+		private Tile outBound;
+		private Tile inside;
 		
 		//out bound since it not a full circle
 		
-		private Hills(WorldTile outBound, WorldTile in) {
+		private Hills(Tile outBound, Tile in) {
 			this.outBound = outBound;
 			inside = in;
 		}
@@ -80,7 +75,7 @@ public final class Barrows extends Controler {
 		return true;
 	}
 	
-	private void exit(WorldTile outside) {
+	private void exit(Tile outside) {
 		player.setNextWorldTile(outside);
 		leave(false);
 	}
@@ -204,11 +199,11 @@ public final class Barrows extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1( WorldObject object) {
+	public boolean processObjectClick1( GameObject object) {
 		if(object.getId() >= 6702 && object.getId() <= 6707) {
-			WorldTile out = Hills.values()[object.getId()-6702].outBound;
+			Tile out = Hills.values()[object.getId()-6702].outBound;
 			 //cant make a perfect middle since 3/ 2 wont make a real integer number or wahtever u call it.. 
-			exit(new WorldTile(out.getX() + 1, out.getY() + 1, out.getPlane()));
+			exit(new Tile(out.getX() + 1, out.getY() + 1, out.getPlane()));
 			return false;
 		}else if (object.getId() == 10284) {
 			if(player.getHiddenBrother() == -1) {//reached chest
@@ -224,19 +219,19 @@ public final class Barrows extends Controler {
 			sendReward();
 			player.getPackets().sendCameraShake(3, 12, 25, 12, 25);
 			player.getPackets().closeInterface(player.getInterfaceManager().hasResizableScreen() ? 11 : 0); //removes inter
-			player.getPackets().sendSpawnedObject(new WorldObject(6775, 10, 0, 3551, 9695, 0));
+			player.getPackets().sendSpawnedObject(new GameObject(6775, 10, 0, 3551, 9695, 0));
 			player.resetBarrows();
 			return false;
 		}else if (object.getId() >= 6716 && object.getId() <= 6749) {
-			WorldTile walkTo;
+			Tile walkTo;
 			if(object.getRotation() == 0) 
-				walkTo = new WorldTile(object.getX() + 5, object.getY(), 0);
+				walkTo = new Tile(object.getX() + 5, object.getY(), 0);
 			else if(object.getRotation() == 1)
-				walkTo = new WorldTile(object.getX(), object.getY() - 5, 0);
+				walkTo = new Tile(object.getX(), object.getY() - 5, 0);
 			else if(object.getRotation() == 2) 
-				walkTo = new WorldTile(object.getX() - 5, object.getY(), 0);
+				walkTo = new Tile(object.getX() - 5, object.getY(), 0);
 			else
-				walkTo = new WorldTile(object.getX(), object.getY() + 5, 0);
+				walkTo = new Tile(object.getX(), object.getY() + 5, 0);
 			if(!World.isNotCliped(walkTo.getPlane(), walkTo.getX(), walkTo.getY(), 1))
 				return false;
 			player.addWalkSteps(walkTo.getX(), walkTo.getY(), -1, false);
@@ -291,7 +286,7 @@ public final class Barrows extends Controler {
 		sendBrotherSlain(index, true);
 	}
 	
-	public void sendTarget(int id, WorldTile tile) {
+	public void sendTarget(int id, Tile tile) {
 		if(target != null) 
 			target.disapear();
 		target = new BarrowsBrother(id, tile, this);

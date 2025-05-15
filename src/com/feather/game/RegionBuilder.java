@@ -53,7 +53,7 @@ public final class RegionBuilder {
 			for (int yn = y - ratio; yn < y + ratio; yn++) {
 				if (Math.pow(2, x - xn) + Math.pow(2, y - yn) <= Math.pow(2,
 						ratio)) {
-					int regionId = new WorldTile(xn, yn, 0).getRegionId();
+					int regionId = new Tile(xn, yn, 0).getRegionId();
 					Region region = World.getRegion(regionId);
 					int baseLocalX = xn - ((regionId >> 8) * 64);
 					int baseLocalY = yn - ((regionId & 0xff) * 64);

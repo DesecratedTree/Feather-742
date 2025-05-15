@@ -1,11 +1,6 @@
 package com.feather.game.npc.qbd;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.ForceTalk;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -82,7 +77,7 @@ public final class TorturedSoul extends NPC {
 	 * @param victim The player victim.
 	 * @param spawn The spawn location.
 	 */
-	public TorturedSoul(QueenBlackDragon dragon, Player victim, WorldTile spawn) {
+	public TorturedSoul(QueenBlackDragon dragon, Player victim, Tile spawn) {
 		super(15510, spawn, -1, true, false);
 		super.setHitpoints(500);
 		super.getCombatDefinitions().setHitpoints(500);
@@ -126,7 +121,7 @@ public final class TorturedSoul extends NPC {
 	/**
 	 * Sends the special attack.
 	 */
-	public void specialAttack(WorldTile teleport) {
+	public void specialAttack(Tile teleport) {
 		super.getCombat().addCombatDelay(10);
 		super.setNextWorldTile(teleport);
 		super.setNextGraphics(TELEPORT_GRAPHIC);
@@ -163,7 +158,7 @@ public final class TorturedSoul extends NPC {
 					int x = currentX, y = currentY;
 					@Override
 					public void run() {
-						WorldTile current = new WorldTile(x, y, 1);
+						Tile current = new Tile(x, y, 1);
 						victim.getPackets().sendGraphics(SPECIAL_GRAPHIC, current);
 						Entity target = null;
 						for (TorturedSoul soul : dragon.getSouls()) {

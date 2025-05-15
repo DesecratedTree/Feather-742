@@ -1,10 +1,6 @@
 package com.feather.game.npc.familiar;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.Summoning.Pouches;
@@ -17,7 +13,7 @@ public class Spiritspider extends Familiar {
 	 */
 	private static final long serialVersionUID = 5995661005749498978L;
 
-	public Spiritspider(Player owner, Pouches pouch, WorldTile tile,
+	public Spiritspider(Player owner, Pouches pouch, Tile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(owner, pouch, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 	}
@@ -53,10 +49,10 @@ public class Spiritspider extends Familiar {
 		setNextAnimation(new Animation(8267));
 		player.setNextAnimation(new Animation(7660));
 		player.setNextGraphics(new Graphics(1316));
-		WorldTile tile = this;
+		Tile tile = this;
 		// attemps to randomize tile by 4x4 area
 		for (int trycount = 0; trycount < Utils.getRandom(10); trycount++) {
-			tile = new WorldTile(this, 2);
+			tile = new Tile(this, 2);
 			if (World.canMoveNPC(this.getPlane(), tile.getX(), tile.getY(),
 					player.getSize()))
 				return true;

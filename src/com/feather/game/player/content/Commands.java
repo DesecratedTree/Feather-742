@@ -15,15 +15,7 @@ import com.feather.Settings;
 import com.feather.cache.parser.AnimationDefinitions;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.ForceMovement;
-import com.feather.game.ForceTalk;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.Region;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.item.Item;
 import com.feather.game.item.ItemsContainer;
@@ -101,13 +93,13 @@ public final class Commands {
 				int plane = Integer.valueOf(cmd[0]);
 				int x = Integer.valueOf(cmd[1]) << 6 | Integer.valueOf(cmd[3]);
 				int y = Integer.valueOf(cmd[2]) << 6 | Integer.valueOf(cmd[4]);
-				player.setNextWorldTile(new WorldTile(x, y, plane));
+				player.setNextWorldTile(new Tile(x, y, plane));
 				return true;
 			}
 		} else {
 			String name;
 			Player target;
-			WorldObject object;
+			GameObject object;
 			switch (cmd[0]) {
 
 
@@ -225,12 +217,12 @@ public final class Commands {
 					player.getPackets().sendGameMessage("Region is null!");
 					return true;
 				}
-				List<WorldObject> objects = r.getObjects();
+				List<GameObject> objects = r.getObjects();
 				if (objects == null) {
 					player.getPackets().sendGameMessage("Objects are null!");
 					return true;
 				}
-				for (WorldObject o : objects) {
+				for (GameObject o : objects) {
 					if (o == null || !o.matches(player)) {
 						continue;
 					}
@@ -412,11 +404,11 @@ public final class Commands {
 							loaded.add(regionId);
 							r = World.getRegion(regionId, false);
 							r.loadRegionMap();
-							List<WorldObject> list = r.getObjects();
+							List<GameObject> list = r.getObjects();
 							if (list == null) {
 								continue;
 							}
-							for (WorldObject o : list) {
+							for (GameObject o : list) {
 								if (o.getDefinitions().name
 										.equalsIgnoreCase(name)
 										&& (option == null || o
@@ -756,7 +748,7 @@ public final class Commands {
 
 			case "cwbase":
 				ClanWars cw = player.getCurrentFriendChat().getClanWars();
-				WorldTile base = cw.getBaseLocation();
+				Tile base = cw.getBaseLocation();
 				player.getPackets().sendGameMessage(
 						"Base x=" + base.getX() + ", base y=" + base.getY());
 				base = cw.getBaseLocation()
@@ -780,7 +772,7 @@ public final class Commands {
 						type = 10;
 					}
 					World.spawnObject(
-							new WorldObject(Integer.valueOf(cmd[1]), type, 0,
+							new GameObject(Integer.valueOf(cmd[1]), type, 0,
 									player.getX(), player.getY(), player
 									.getPlane()), true);
 				} catch (NumberFormatException e) {
@@ -915,9 +907,9 @@ public final class Commands {
 				}
 				return true; 
 			case "forcemovement":
-				WorldTile toTile = player.transform(0, 5, 0);
+				Tile toTile = player.transform(0, 5, 0);
 				player.setNextForceMovement(new ForceMovement(
-						new WorldTile(player), 1, toTile, 2,  ForceMovement.NORTH));
+						new Tile(player), 1, toTile, 2,  ForceMovement.NORTH));
 
 				return true;
 			case "configf":
@@ -1011,7 +1003,7 @@ public final class Commands {
 			case "testo2":
 				for (int x = 0; x < 10; x++) {
 
-					object = new WorldObject(62684, 0, 0,
+					object = new GameObject(62684, 0, 0,
 							x * 2 + 1, 0, 0);
 					player.getPackets().sendSpawnedObject(object);
 
@@ -1030,10 +1022,10 @@ public final class Commands {
 			case "objectanim":
 
 				object = cmd.length == 4 ? World
-						.getObject(new WorldTile(Integer.parseInt(cmd[1]),
+						.getObject(new Tile(Integer.parseInt(cmd[1]),
 								Integer.parseInt(cmd[2]), player.getPlane()))
 								: World.getObject(
-										new WorldTile(Integer.parseInt(cmd[1]), Integer
+										new Tile(Integer.parseInt(cmd[1]), Integer
 												.parseInt(cmd[2]), player.getPlane()),
 												Integer.parseInt(cmd[3]));
 						if (object == null) {
@@ -1049,9 +1041,9 @@ public final class Commands {
 			case "loopoanim":
 				int x = Integer.parseInt(cmd[1]);
 				int y = Integer.parseInt(cmd[2]);
-				final WorldObject object1 = World
+				final GameObject object1 = World
 						.getRegion(player.getRegionId()).getSpawnedObject(
-								new WorldTile(x, y, player.getPlane()));
+								new Tile(x, y, player.getPlane()));
 				if (object1 == null) {
 					player.getPackets().sendPanelBoxMessage(
 							"Could not find object at [x=" + x + ", y=" + y
@@ -1532,7 +1524,7 @@ public final class Commands {
 				return true;
 
 			case "home":
-				player.setNextWorldTile(new WorldTile(3093, 3493, 0));
+				player.setNextWorldTile(new Tile(3093, 3493, 0));
 
 			case "reloadfiles":
 				IPBanL.init();
@@ -1547,7 +1539,7 @@ public final class Commands {
 				}
 				try {
 					player.resetWalkSteps();
-					player.setNextWorldTile(new WorldTile(Integer
+					player.setNextWorldTile(new Tile(Integer
 							.valueOf(cmd[1]), Integer.valueOf(cmd[2]),
 							cmd.length >= 4 ? Integer.valueOf(cmd[3]) : player
 									.getPlane()));
@@ -1843,7 +1835,7 @@ public final class Commands {
 				for (Player staff : World.getPlayers()) {
 					if (staff.getRights() == 0)
 						continue;
-					staff.setNextWorldTile(new WorldTile(2675, 10418, 0));
+					staff.setNextWorldTile(new Tile(2675, 10418, 0));
 					staff.getPackets().sendGameMessage("You been teleported for a staff meeting by "+player.getDisplayName());
 				}
 				return true;
@@ -1949,7 +1941,7 @@ public final class Commands {
 					player.getPackets().sendGameMessage("You cannot tele anywhere from here.");
 					return true;
 				}
-				player.setNextWorldTile(new WorldTile(2667, 10396, 0));
+				player.setNextWorldTile(new Tile(2667, 10396, 0));
 				return true;
 
 			case "unnull":

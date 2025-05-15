@@ -2,15 +2,15 @@ package com.feather.game.npc.others;
 
 import com.feather.game.Graphics;
 import com.feather.game.Hit;
-import com.feather.game.WorldTile;
 import com.feather.game.Hit.HitLook;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 
 @SuppressWarnings("serial")
 public class MercenaryMage extends NPC {
 
-	public MercenaryMage(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public MercenaryMage(int id, Tile tile, int mapAreaNameHash,
+						 boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setLureDelay(0);
 		setCapDamage(500);

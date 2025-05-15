@@ -2,7 +2,7 @@ package com.feather.game.npc.others;
 
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
 import com.feather.game.tasks.WorldTask;
@@ -11,8 +11,8 @@ import com.feather.game.tasks.WorldTasksManager;
 @SuppressWarnings("serial")
 public class PestMonsters extends NPC {
 
-	public PestMonsters(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public PestMonsters(int id, Tile tile, int mapAreaNameHash,
+						boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
 

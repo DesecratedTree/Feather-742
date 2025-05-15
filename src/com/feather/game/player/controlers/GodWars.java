@@ -1,12 +1,6 @@
 package com.feather.game.player.controlers;
 
-import java.util.concurrent.TimeUnit;
-
-import com.feather.game.Animation;
-import com.feather.game.Graphics;
-import com.feather.game.WorldObject;
-import com.feather.game.tasks.WorldTask;
-import com.feather.game.tasks.WorldTasksManager;
+import com.feather.game.GameObject;
 
 public class GodWars extends Controler {
 
@@ -28,7 +22,7 @@ public class GodWars extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final WorldObject object) {
+	public boolean processObjectClick1(final GameObject object) {
 		if (object.getId() == 57225) {
 			player.getDialogueManager().startDialogue("NexEntrance");
 			return false;

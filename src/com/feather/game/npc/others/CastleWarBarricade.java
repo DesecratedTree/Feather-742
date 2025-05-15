@@ -1,7 +1,7 @@
 package com.feather.game.npc.others;
 
 import com.feather.game.Entity;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.minigames.CastleWars;
 import com.feather.game.npc.NPC;
 import com.feather.utils.Utils;
@@ -11,7 +11,7 @@ public class CastleWarBarricade extends NPC {
 
 	private int team;
 
-	public CastleWarBarricade(int team, WorldTile tile) {
+	public CastleWarBarricade(int team, Tile tile) {
 		super(1532, tile, -1, true, true);
 		setCantFollowUnderCombat(true);
 		this.team = team;

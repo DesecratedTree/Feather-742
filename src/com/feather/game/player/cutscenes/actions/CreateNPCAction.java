@@ -1,7 +1,7 @@
 package com.feather.game.player.cutscenes.actions;
 
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.cutscenes.Cutscene;
@@ -26,7 +26,7 @@ public class CreateNPCAction extends CutsceneAction {
 			scene.destroyCache(cache[getCachedObjectIndex()]);
 		NPC npc = (NPC) (cache[getCachedObjectIndex()] = World
 				.spawnNPC(id,
-						new WorldTile(scene.getBaseX() + x, scene.getBaseY()
+						new Tile(scene.getBaseX() + x, scene.getBaseY()
 								+ y, plane), -1, true, true));
 		npc.setRandomWalk(false);
 	}

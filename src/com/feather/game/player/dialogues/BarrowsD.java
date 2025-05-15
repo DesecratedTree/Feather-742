@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 
 public class BarrowsD extends Dialogue {
 
@@ -17,7 +17,7 @@ public class BarrowsD extends Dialogue {
 					"Yes, I'm fearless.", "No way, that looks scary!");
 		} else if (stage == 0) {
 			if (componentId == OPTION_1) 
-				player.setNextWorldTile(new WorldTile(3534, 9677, 0));
+				player.setNextWorldTile(new Tile(3534, 9677, 0));
 			end();
 		}
 	}

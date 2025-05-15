@@ -1,7 +1,7 @@
 package com.feather.game.player;
 
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.utils.Utils;
 
@@ -225,7 +225,7 @@ public class ClueScrolls {
 		if (scroll != null){
 		if (hasRiddleClue(p, scroll.id) != null){
 			Riddles riddleclue = hasRiddleClue(p, scroll.id);
-			WorldTile lastloc = p.getLastWorldTile();
+			Tile lastloc = p.getLastWorldTile();
 			if (lastloc.getX() >= riddleclue.locations[0] && lastloc.getY() <= riddleclue.locations[1] && lastloc.getX() <= riddleclue.locations[2] && lastloc.getY() >= riddleclue.locations[3]){
 				if (emoteid == riddleclue.emoteid){
 					p.getPackets().sendGameMessage("You have succesfully completed the riddle and have been awarded a chest!");
@@ -238,12 +238,12 @@ public class ClueScrolls {
 		return false;
 	}
 
-	public static boolean objectSpot(Player p, WorldObject obj){
+	public static boolean objectSpot(Player p, GameObject obj){
 		Scrolls scroll = hasClue(p);
 		if (scroll != null){
 		if (hasObjectMapClue(p, scroll.id) != null){
 			ObjectMaps mapclue = hasObjectMapClue(p, scroll.id);
-			WorldTile lastloc = p.getLastWorldTile();
+			Tile lastloc = p.getLastWorldTile();
 			if (obj.getX() == mapclue.objectx && obj.getY() == mapclue.objecty && obj.getId() == mapclue.objectid){
 					p.getPackets().sendGameMessage("You have succesfully completed the riddle and have been awarded a chest!");
 					p.getInventory().deleteItem(scroll.id, 1);
@@ -259,7 +259,7 @@ public class ClueScrolls {
 		if (scroll != null){
 		if (hasMapClue(p, scroll.id) != null){
 			Maps mapclue = hasMapClue(p, scroll.id);
-			WorldTile lastloc = p.getLastWorldTile();
+			Tile lastloc = p.getLastWorldTile();
 			if (lastloc.getX() == mapclue.xcoord && lastloc.getY() == mapclue.ycoord){
 					p.getPackets().sendGameMessage("You've completed the clue and have been awarded a chest.");
 					p.getInventory().deleteItem(scroll.id, 1);

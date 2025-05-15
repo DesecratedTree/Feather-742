@@ -1,6 +1,6 @@
 package com.feather.game.npc.others;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.RunespanControler;
@@ -11,7 +11,7 @@ public class YellowWizard extends NPC {
 	
 	private RunespanControler controler;
 	private long spawnTime;
-	public YellowWizard(WorldTile tile, RunespanControler controler) {
+	public YellowWizard(Tile tile, RunespanControler controler) {
 		super(15430, tile, -1, true, true);
 		spawnTime = Utils.currentTimeMillis();
 		this.controler = controler;

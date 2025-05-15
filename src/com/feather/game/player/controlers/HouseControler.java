@@ -1,8 +1,8 @@
 package com.feather.game.player.controlers;
 
 import com.feather.game.RegionBuilder;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.content.construction.House;
 import com.feather.game.player.content.construction.House.Room;
 import com.feather.game.player.content.construction.House.RoomReference;
@@ -17,7 +17,7 @@ public class HouseControler extends Controler {
 		house = new House();
 		boundChuncks = RegionBuilder.findEmptyChunkBound(8, 8); 
 		house.constructHouse(boundChuncks, false);
-		player.setNextWorldTile(new WorldTile(boundChuncks[0]*8 + 35, boundChuncks[1]*8 + 35,0));
+		player.setNextWorldTile(new Tile(boundChuncks[0]*8 + 35, boundChuncks[1]*8 + 35,0));
 	}
 	
 	boolean remove = true;
@@ -25,7 +25,7 @@ public class HouseControler extends Controler {
 	 * return process normaly
 	 */
 	@Override
-	public boolean processObjectClick5(WorldObject object) {
+	public boolean processObjectClick5(GameObject object) {
 		house.previewRoom(player, boundChuncks, new RoomReference(Room.PARLOUR, 4, 5, 0, 0), remove = !remove);
 		return true;
 	}

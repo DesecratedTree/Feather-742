@@ -5,13 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.feather.cache.parser.ItemDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.Region;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
@@ -1794,7 +1788,7 @@ public class PlayerCombat extends Action {
 				player.getEquipment().removeAmmo(weaponId, quantity);
 				World.updateGroundItem(
 						new Item(weaponId, quantity),
-						new WorldTile(target.getCoordFaceX(target.getSize()),
+						new Tile(target.getCoordFaceX(target.getSize()),
 								target.getCoordFaceY(target.getSize()), target
 								.getPlane()), player);
 			}
@@ -1814,7 +1808,7 @@ public class PlayerCombat extends Action {
 				player.getEquipment().removeAmmo(ammoId, quantity);
 				World.updateGroundItem(
 						new Item(ammoId, quantity),
-						new WorldTile(target.getCoordFaceX(target.getSize()),
+						new Tile(target.getCoordFaceX(target.getSize()),
 								target.getCoordFaceY(target.getSize()), target
 								.getPlane()), player);
 			}

@@ -5,11 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.cache.parser.NPCDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.RegionBuilder;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
@@ -27,7 +23,7 @@ import com.feather.utils.Utils;
 
 public class FightKiln extends Controler {
 
-	public static final WorldTile OUTSIDE = new WorldTile(4744, 5172, 0);
+	public static final Tile OUTSIDE = new Tile(4744, 5172, 0);
 
 	private static final int TOKHAAR_HOK = 15195, TOKHAAR_HOK_SCENE = 15200;
 
@@ -146,7 +142,7 @@ public class FightKiln extends Controler {
 	 * return process normaly
 	 */
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if(object.getId() == 68111) {
 			if(stage != Stages.RUNNING)
 				return false;
@@ -228,15 +224,15 @@ public class FightKiln extends Controler {
 								@Override
 								public void run() {
 									if(count == 0) {
-										WorldTile lookTo = getWorldTile(29, 39);
+										Tile lookTo = getWorldTile(29, 39);
 										player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 												Cutscene.getY(player, lookTo.getY()), 3500);
-										WorldTile posTile = getWorldTile(27, 30);
+										Tile posTile = getWorldTile(27, 30);
 										player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 												Cutscene.getY(player, posTile.getY()), 3500);
 										run = player.getRun();
 										player.setRun(false);
-										WorldTile walkTo = getWorldTile(31, 39);
+										Tile walkTo = getWorldTile(31, 39);
 										player.addWalkSteps(walkTo.getX(), walkTo.getY(), -1, false);
 									}else if(count == 1) 
 										player.getPackets().sendResetCamera();
@@ -262,10 +258,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(40, 28);
+									Tile lookTo = getWorldTile(40, 28);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 2200);
-									WorldTile posTile = getWorldTile(29, 28);
+									Tile posTile = getWorldTile(29, 28);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 2500);
 									HarAken harAken = new HarAken(15211, getWorldTile(45, 26), kiln);
@@ -294,10 +290,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(40, 28);
+									Tile lookTo = getWorldTile(40, 28);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 2200);
-									WorldTile posTile = getWorldTile(29, 28);
+									Tile posTile = getWorldTile(29, 28);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 2500);
 									player.getDialogueManager().startDialogue("TokHaarHok", 5, TOKHAAR_HOK_SCENE, kiln);
@@ -314,17 +310,17 @@ public class FightKiln extends Controler {
 								@Override
 								public void run() {
 									if(count == 0) {
-										WorldTile lookTo = getWorldTile(32, 41);
+										Tile lookTo = getWorldTile(32, 41);
 										player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 												Cutscene.getY(player, lookTo.getY()), 1000);
-										WorldTile posTile = getWorldTile(32, 38);
+										Tile posTile = getWorldTile(32, 38);
 										player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 												Cutscene.getY(player, posTile.getY()), 1200);
 									}else if (count == 6) {
-										WorldTile lookTo = getWorldTile(64, 30);
+										Tile lookTo = getWorldTile(64, 30);
 										player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 												Cutscene.getY(player, lookTo.getY()), 3000);
-										WorldTile posTile = getWorldTile(42, 36);
+										Tile posTile = getWorldTile(42, 36);
 										player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 												Cutscene.getY(player, posTile.getY()), 3000);
 										player.setNextWorldTile(getWorldTile(33, 39));
@@ -334,10 +330,10 @@ public class FightKiln extends Controler {
 										tokHaarHok = new NPC(TOKHAAR_HOK_SCENE, getWorldTile(28, 38), -1, true, true);
 										tokHaarHok.setDirection(Utils.getFaceDirection(1, 0));
 
-										WorldTile lookTo = getWorldTile(30, 38);
+										Tile lookTo = getWorldTile(30, 38);
 										player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 												Cutscene.getY(player, lookTo.getY()), 2500);
-										WorldTile posTile = getWorldTile(30, 30);
+										Tile posTile = getWorldTile(30, 30);
 										player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 												Cutscene.getY(player, posTile.getY()), 3000);
 										player.getDialogueManager().startDialogue("TokHaarHok", 7, TOKHAAR_HOK_SCENE, kiln);
@@ -356,10 +352,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(20, 17);
+									Tile lookTo = getWorldTile(20, 17);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 2500);
-									WorldTile posTile = getWorldTile(25, 26);
+									Tile posTile = getWorldTile(25, 26);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 3000);
 									player.getDialogueManager().startDialogue("TokHaarHok", 4, TOKHAAR_HOK_SCENE, kiln);
@@ -376,10 +372,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(31, 43);
+									Tile lookTo = getWorldTile(31, 43);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 2500);
-									WorldTile posTile = getWorldTile(31, 34);
+									Tile posTile = getWorldTile(31, 34);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 4000);
 									player.getDialogueManager().startDialogue("TokHaarHok", 3, TOKHAAR_HOK_SCENE, kiln);
@@ -396,10 +392,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(45, 45);
+									Tile lookTo = getWorldTile(45, 45);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 1000);
-									WorldTile posTile = getWorldTile(38, 37);
+									Tile posTile = getWorldTile(38, 37);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 3000);
 									player.getDialogueManager().startDialogue("TokHaarHok", 2, TOKHAAR_HOK_SCENE, kiln);
@@ -423,10 +419,10 @@ public class FightKiln extends Controler {
 
 								@Override
 								public void run() {
-									WorldTile lookTo = getWorldTile(31, 40);
+									Tile lookTo = getWorldTile(31, 40);
 									player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 											Cutscene.getY(player, lookTo.getY()), 1000);
-									WorldTile posTile = getWorldTile(31, 50);
+									Tile posTile = getWorldTile(31, 50);
 									player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 											Cutscene.getY(player, posTile.getY()), 3000);
 									player.getDialogueManager().startDialogue("TokHaarHok", 1, TOKHAAR_HOK_SCENE, kiln);
@@ -458,7 +454,7 @@ public class FightKiln extends Controler {
 			event.run();
 	}
 
-	public WorldTile getMaxTile() {
+	public Tile getMaxTile() {
 		if(getCurrentWave() < 11) 
 			return getWorldTile(49, 49);
 		if(getCurrentWave() < 21) 
@@ -470,7 +466,7 @@ public class FightKiln extends Controler {
 		return getWorldTile(41, 41);
 	}
 
-	public WorldTile getMinTile() {
+	public Tile getMinTile() {
 		if(getCurrentWave() < 11) 
 			return getWorldTile(14, 14);
 		if(getCurrentWave() < 21) 
@@ -493,7 +489,7 @@ public class FightKiln extends Controler {
 	 * 2 - east 
 	 * 3 - west
 	 */
-	public WorldTile getTentacleTile() {
+	public Tile getTentacleTile() {
 		int corner = Utils.random(4);
 		int position = Utils.random(5);
 		while(corner != 0 && position == 2) 
@@ -512,19 +508,19 @@ public class FightKiln extends Controler {
 	}
 
 
-	public WorldTile getSpawnTile(int count, int size) {
+	public Tile getSpawnTile(int count, int size) {
 		int position = count % 4;
 		switch(position) {
 		case 0: //east south
-			WorldTile maxTile = getMaxTile();
-			WorldTile minTile = getMinTile();
-			return new WorldTile(maxTile.getX() - 1 - size, minTile.getY() + 2, 1);
+			Tile maxTile = getMaxTile();
+			Tile minTile = getMinTile();
+			return new Tile(maxTile.getX() - 1 - size, minTile.getY() + 2, 1);
 		case 1: // west south
 			return getMinTile().transform(2, 2, 0);
 		case 2: //west north
 			maxTile = getMaxTile();
 			minTile = getMinTile();
-			return new WorldTile(minTile.getX() + 2, maxTile.getY() - 1 - size, 1);
+			return new Tile(minTile.getX() + 2, maxTile.getY() - 1 - size, 1);
 		case 3: //east north
 		default:
 			return getMaxTile().transform(-1 - size, -1 - size, 0);
@@ -757,7 +753,7 @@ public class FightKiln extends Controler {
 	 */
 	public void exitCave(int type) {
 		stage = Stages.DESTROYING;
-		WorldTile outside = new WorldTile(OUTSIDE, 2); //radomizes alil
+		Tile outside = new Tile(OUTSIDE, 2); //radomizes alil
 		if(type == 0) {
 			player.setLocation(outside);
 			if(getCurrentWave() == 0) //leaves if didnt start
@@ -776,7 +772,7 @@ public class FightKiln extends Controler {
 					Integer reward = (Integer) player.getTemporaryAttributtes().get("FightKilnReward");
 					int itemId = reward != null && reward == 1 ? 6571 : 23659;
 					if(!player.getInventory().addItem(itemId, 1)) 
-						World.addGroundItem(new Item(itemId, 1), new WorldTile(player), player, true, 180,true);
+						World.addGroundItem(new Item(itemId, 1), new Tile(player), player, true, 180,true);
 					player.reset();
 				}
 			}
@@ -811,8 +807,8 @@ public class FightKiln extends Controler {
 	/*
 	 * gets worldtile inside the map
 	 */
-	public WorldTile getWorldTile(int mapX, int mapY) {
-		return new WorldTile(boundChuncks[0]*8 + mapX, boundChuncks[1]*8 + mapY, 1);
+	public Tile getWorldTile(int mapX, int mapY) {
+		return new Tile(boundChuncks[0]*8 + mapX, boundChuncks[1]*8 + mapY, 1);
 	}
 
 

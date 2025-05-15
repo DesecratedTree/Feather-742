@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.game.player.actions.Cooking;
 import com.feather.game.player.actions.Cooking.Cookables;
 import com.feather.game.player.content.SkillsDialogue;
@@ -8,12 +8,12 @@ import com.feather.game.player.content.SkillsDialogue;
 public class CookingD extends Dialogue {
 
 	private Cookables cooking;
-	private WorldObject object;
+	private GameObject object;
 
 	@Override
 	public void start() {
 		this.cooking = (Cookables) parameters[0];
-		this.object = (WorldObject) parameters[1];
+		this.object = (GameObject) parameters[1];
 
 		SkillsDialogue
 				.sendSkillsDialogue(

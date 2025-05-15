@@ -3,12 +3,7 @@ package com.feather.game.npc.combat.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
@@ -49,7 +44,7 @@ public class LucienCombat extends CombatScript {
 				String key = t.getX() + "_" + t.getY();
 				if (!tiles.containsKey(t.getX() + "_" + t.getY())) {
 					tiles.put(key, new int[] { t.getX(), t.getY() });
-					World.sendProjectile(npc, new WorldTile(t.getX(), t.getY(),
+					World.sendProjectile(npc, new Tile(t.getX(), t.getY(),
 							npc.getPlane()), 1900, 34, 0, 30, 35, 16, 0);
 				}
 			}
@@ -61,7 +56,7 @@ public class LucienCombat extends CombatScript {
 					for (int[] tile : tiles.values()) {
 
 						World.sendGraphics(null, new Graphics(1896),
-								new WorldTile(tile[0], tile[1], 0));
+								new Tile(tile[0], tile[1], 0));
 						for (Entity t : possibleTargets)
 							if (t.getX() == tile[0] && t.getY() == tile[1])
 								t.applyHit(new Hit(npc,
@@ -166,7 +161,7 @@ public class LucienCombat extends CombatScript {
 					int size = npc.getSize();
 					int[][] dirs = Utils.getCoordOffsetsNear(size);
 					for (int dir = 0; dir < dirs[0].length; dir++) {
-						final WorldTile tile = new WorldTile(new WorldTile(
+						final Tile tile = new Tile(new Tile(
 								target.getX() + dirs[0][dir], target.getY()
 										+ dirs[1][dir], target.getPlane()));
 						if (World.canMoveNPC(tile.getPlane(), tile.getX(),

@@ -2,7 +2,7 @@ package com.feather.game.player.controlers;
 
 import com.feather.Settings;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Inventory;
@@ -513,7 +513,7 @@ public final class TutorialIsland extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if (object.getId() == 3014 && object.getX() == 3098
 				&& object.getY() == 3107) {
 			int stage = getStage();
@@ -522,7 +522,7 @@ public final class TutorialIsland extends Controler {
 			if (stage == 3) {
 				updateProgress();
 			}
-			WorldObject openedDoor = new WorldObject(object.getId(),
+			GameObject openedDoor = new GameObject(object.getId(),
 					object.getType(), object.getRotation() + 1,
 					object.getX() - 1, object.getY(), object.getPlane());
 			if (World.removeTemporaryObject(object, 1200, false)) {
@@ -558,7 +558,7 @@ public final class TutorialIsland extends Controler {
 				return false;
 			if (stage == 19) 
 				updateProgress();
-			WorldObject openedDoor = new WorldObject(object.getId(),
+			GameObject openedDoor = new GameObject(object.getId(),
 					object.getType(), object.getRotation() + 1,
 					object.getX() - 1, object.getY(), object.getPlane());
 			if (World.removeTemporaryObject(object, 1200, false)) {

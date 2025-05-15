@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.cores.CoresManager;
 import com.feather.game.RegionBuilder;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.others.PestPortal;
 import com.feather.game.player.Player;
@@ -37,7 +37,7 @@ public class PestControl {
 	/**
 	 * Outside area of the first lander.
 	 */
-	public static final WorldTile OUTSIDE_AREA = new WorldTile(2657, 2639, 0);
+	public static final Tile OUTSIDE_AREA = new Tile(2657, 2639, 0);
 
 	/**
 	 * An array of Non-Playable Portal Characters.
@@ -104,8 +104,8 @@ public class PestControl {
 	 * Creates an array of new {@code WorldTile}.
 	 * @return the array of new {@code WorldTile}.
 	 */
-	public WorldTile[] getPortalLocations() {
-		return new WorldTile[] { 
+	public Tile[] getPortalLocations() {
+		return new Tile[] {
 				getWorldTile(4, 31),//purple
 				getWorldTile(56, 28),//blue
 				getWorldTile(45, 10),//yellow
@@ -118,8 +118,8 @@ public class PestControl {
 	 * @param mapY The 'y' coordinate value.
 	 * @return a new {@code WorldTile}
 	 */
-	public WorldTile getWorldTile(int mapX, int mapY) {
-		return new WorldTile(boundChunks[0] * 8 + mapX, boundChunks[1] * 8 + mapY, 0);
+	public Tile getWorldTile(int mapX, int mapY) {
+		return new Tile(boundChunks[0] * 8 + mapX, boundChunks[1] * 8 + mapY, 0);
 	}
 
 	/**

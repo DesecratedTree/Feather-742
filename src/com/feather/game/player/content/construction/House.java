@@ -7,7 +7,7 @@ import com.feather.game.DynamicRegion;
 import com.feather.game.Region;
 import com.feather.game.RegionBuilder;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.game.player.Player;
 
 public class House {
@@ -70,10 +70,10 @@ public class House {
 			}
 		}
 		Region region = World.getRegion(RegionBuilder.getRegionHash(boundChuncks[0]/8, boundChuncks[1]/8));
-		List<WorldObject> spawnedObjects = region.getSpawnedObjects();
+		List<GameObject> spawnedObjects = region.getSpawnedObjects();
 		if(spawnedObjects != null)
 			spawnedObjects.clear();
-		List<WorldObject> removedObjects = region.getRemovedObjects();
+		List<GameObject> removedObjects = region.getRemovedObjects();
 		if(removedObjects != null)
 			removedObjects.clear();
 		for(RoomReference reference : rooms) {
@@ -82,15 +82,15 @@ public class House {
 			int chunkRotation = region.getRotation(reference.plane, boundX, boundY);
 			for(int x = boundX; x < boundX+8; x++) {
 				for(int y = boundY; y < boundY+8; y++) {
-					WorldObject[] objects = region.getObjects(reference.plane, x, y);
+					GameObject[] objects = region.getObjects(reference.plane, x, y);
 					if(objects != null) {
 						
-						for(WorldObject object : objects) {
+						for(GameObject object : objects) {
 							if(!buildMode && object.getDefinitions().containsOption("Build")) {
-								object = new WorldObject(object.getId(), object.getType(), (object.getRotation() + chunkRotation) % 4, x + boundChuncks[0]*8,y + boundChuncks[1]*8, reference.plane);
+								object = new GameObject(object.getId(), object.getType(), (object.getRotation() + chunkRotation) % 4, x + boundChuncks[0]*8,y + boundChuncks[1]*8, reference.plane);
 								World.removeObject(object, true);
 							}else if (object.getDefinitions().name.equals("Window")) {
-								object = new WorldObject(getWindowId(), object.getType(), (object.getRotation() + chunkRotation) % 4, x + boundChuncks[0]*8,y + boundChuncks[1]*8, reference.plane);
+								object = new GameObject(getWindowId(), object.getType(), (object.getRotation() + chunkRotation) % 4, x + boundChuncks[0]*8,y + boundChuncks[1]*8, reference.plane);
 								World.spawnObject(object, false);
 							}
 						}
@@ -110,9 +110,9 @@ public class House {
 		house.getRegionCoords()[reference.plane][reference.x][reference.y][3] = reference.rotation;
 		for(int x = 0; x < 8; x++) {
 			for(int y = 0; y < 8; y++) {
-				WorldObject[] objects = region.getObjects(reference.plane, boundX2+x, boundY2+y);
+				GameObject[] objects = region.getObjects(reference.plane, boundX2+x, boundY2+y);
 				if(objects != null) {
-					for(WorldObject object : objects) {
+					for(GameObject object : objects) {
 						if(object.getDefinitions().containsOption(4, "Build")) {
 							int x2 = x;
 							int y2 = y;
@@ -122,7 +122,7 @@ public class House {
 								x2 = fakeChunckY;
 								y2 = 7 - fakeChunckX;
 							}
-							object = new WorldObject(object.getId(), object.getType(), (object.getRotation() + reference.rotation) % 4, boundX + x2 + boundChuncks[0]*8, boundY + y2 + boundChuncks[1]*8, reference.plane);
+							object = new GameObject(object.getId(), object.getType(), (object.getRotation() + reference.rotation) % 4, boundX + x2 + boundChuncks[0]*8, boundY + y2 + boundChuncks[1]*8, reference.plane);
 							if(remove)
 								player.getPackets().sendDestroyObject(object);
 							else

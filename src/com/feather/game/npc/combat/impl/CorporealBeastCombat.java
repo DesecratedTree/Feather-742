@@ -2,11 +2,7 @@ package com.feather.game.npc.combat.impl;
 
 import java.util.ArrayList;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -124,13 +120,13 @@ public class CorporealBeastCombat extends CombatScript {
 			}
 		} else if (attackStyle == 4) {
 			npc.setNextAnimation(new Animation(10410));
-			final WorldTile tile = new WorldTile(target);
+			final Tile tile = new Tile(target);
 			World.sendProjectile(npc, tile, 1824, 41, 16, 30, 0, 16, 0);
 			WorldTasksManager.schedule(new WorldTask() {
 				@Override
 				public void run() {
 					for (int i = 0; i < 6; i++) {
-						final WorldTile newTile = new WorldTile(tile, 3);
+						final Tile newTile = new Tile(tile, 3);
 						if (!World.canMoveNPC(newTile.getPlane(),
 								newTile.getX(), newTile.getY(), 1))
 							continue;

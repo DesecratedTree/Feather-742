@@ -1,6 +1,6 @@
 package com.feather.game.player.controlers;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 
 public class Kalaboss extends Controler {
@@ -61,7 +61,7 @@ public class Kalaboss extends Controler {
 		}
 	}
 
-	public static boolean isAtKalaboss(WorldTile tile) {
+	public static boolean isAtKalaboss(Tile tile) {
 		return tile.getX() >= 3385 && tile.getX() <= 3513
 				&& tile.getY() >= 3605 && tile.getY() <= 3794;
 	}

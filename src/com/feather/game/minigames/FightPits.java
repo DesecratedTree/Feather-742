@@ -9,8 +9,8 @@ import com.feather.Settings;
 import com.feather.cores.CoresManager;
 import com.feather.game.Hit;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
 import com.feather.game.Hit.HitLook;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.fightpits.FightPitsNPC;
@@ -34,13 +34,13 @@ public final class FightPits {
 	public static String currentChampion;
 	
 	
-	private static WorldTile[] GAME_TELEPORTS = {
-			new WorldTile(4577, 5086, 0),
-			new WorldTile(4571, 5083, 0),
-			new WorldTile(4564, 5086, 0),
-			new WorldTile(4564, 5097, 0),
-			new WorldTile(4571, 5101, 0),
-			new WorldTile(4578, 5097, 0)};
+	private static Tile[] GAME_TELEPORTS = {
+			new Tile(4577, 5086, 0),
+			new Tile(4571, 5083, 0),
+			new Tile(4564, 5086, 0),
+			new Tile(4564, 5097, 0),
+			new Tile(4571, 5101, 0),
+			new Tile(4578, 5097, 0)};
 	
 	
 	private static class GameTask extends TimerTask {
@@ -63,13 +63,13 @@ public final class FightPits {
 							//spawns
 							spawns = new ArrayList<NPC>();
 							for(int i = 0; i < 10; i++)
-								spawns.add(new FightPitsNPC(2734, new WorldTile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
+								spawns.add(new FightPitsNPC(2734, new Tile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
 						}else if (minutes == 6) { //spawn tz-kek
 							for(int i = 0; i < 10; i++)
-								spawns.add(new TzKekPits(2736, new WorldTile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
+								spawns.add(new TzKekPits(2736, new Tile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
 						}else if (minutes == 7) { //spawn tok-xil
 							for(int i = 0; i < 10; i++)
-								spawns.add(new FightPitsNPC(2739, new WorldTile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
+								spawns.add(new FightPitsNPC(2739, new Tile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3)));
 						}else if (minutes == 10) { //spawn tz-kek
 							//alot hits appears on players
 							WorldTasksManager.schedule(new WorldTask() {
@@ -143,7 +143,7 @@ public final class FightPits {
 	public static void enterArena(Player player) {
 		player.lock(5);
 		player.getControlerManager().startControler("FightPitsArena");
-		player.setNextWorldTile(new WorldTile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3));
+		player.setNextWorldTile(new Tile(GAME_TELEPORTS[Utils.random(GAME_TELEPORTS.length)], 3));
 		player.getDialogueManager().startDialogue("SimpleNPCMessage", THHAAR_MEJ_KAH, "Please wait for the signal before fight.");
 		player.setCanPvp(true);
 		player.setCantTrade(true);
@@ -174,13 +174,13 @@ public final class FightPits {
 					int tokkul = (lobby.size() + arena.size()) * 100;
 					tokkul *= Settings.DROP_RATE; //10x more
 					if(!player.getInventory().addItem(6529, tokkul) && type == 1) 
-						World.addGroundItem(new Item(6529, tokkul), new WorldTile(4585, 5076, 0), player, true, 180, true);
+						World.addGroundItem(new Item(6529, tokkul), new Tile(4585, 5076, 0), player, true, 180, true);
 				}
 				if(type == 1) {
 					player.lock(5);
 					player.addWalkSteps(4585, 5076, 5, false);
 				}else if(type == 2)
-					player.setNextWorldTile(new WorldTile(new WorldTile(4592, 5073, 0), 2));
+					player.setNextWorldTile(new Tile(new Tile(4592, 5073, 0), 2));
 			}
 			refreshFoes();
 			checkPlayersAmmount();

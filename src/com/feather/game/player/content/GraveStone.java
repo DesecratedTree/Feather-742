@@ -3,8 +3,8 @@ package com.feather.game.player.content;
 import java.util.TimerTask;
 
 import com.feather.game.World;
-import com.feather.game.WorldTile;
-import com.feather.game.item.FloorItem;
+import com.feather.game.Tile;
+import com.feather.game.item.GroundItem;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -21,7 +21,7 @@ public class GraveStone {
 	private Item[] drops;
 
 	/** The gravestone position */
-	private WorldTile pos;
+	private Tile pos;
 
 	/** The gravestone npc */
 	private NPC gs;
@@ -39,8 +39,8 @@ public class GraveStone {
 	 * @param player
 	 *            the player dying
 	 */
-	public void deploy(WorldTile tile, boolean drop, int gravestoneNpcType, Player player,
-			Item... drops) {
+	public void deploy(Tile tile, boolean drop, int gravestoneNpcType, Player player,
+					   Item... drops) {
 		this.player = player;
 		this.gravestone = gravestoneNpcType;
 		gs = new NPC(gravestone, tile, 0, false);
@@ -62,7 +62,7 @@ public class GraveStone {
 	 */
 	public void collapse() {
 		for (Item items : drops)
-			World.removeGroundItem(player, new FloorItem(items, pos, player,
+			World.removeGroundItem(player, new GroundItem(items, pos, player,
 					true, false));
 		gs.sendDeath(null);
 		World.removeNPC(gs);

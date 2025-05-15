@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import com.feather.Settings;
 import com.feather.game.Entity;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.content.Foods.Food;
@@ -185,25 +185,25 @@ public final class ControlerManager implements Serializable {
 		return controler.useDialogueScript(key);
 	}
 
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processMagicTeleport(toTile);
 	}
 
-	public boolean processItemTeleport(WorldTile toTile) {
+	public boolean processItemTeleport(Tile toTile) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processItemTeleport(toTile);
 	}
 
-	public boolean processObjectTeleport(WorldTile toTile) {
+	public boolean processObjectTeleport(Tile toTile) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processObjectTeleport(toTile);
 	}
 
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processObjectClick1(object);
@@ -239,13 +239,13 @@ public final class ControlerManager implements Serializable {
 			return true;
 		return controler.processNPCClick3(npc);
 	}
-	public boolean processObjectClick2(WorldObject object) {
+	public boolean processObjectClick2(GameObject object) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processObjectClick2(object);
 	}
 
-	public boolean processObjectClick3(WorldObject object) {
+	public boolean processObjectClick3(GameObject object) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processObjectClick3(object);
@@ -288,11 +288,11 @@ public final class ControlerManager implements Serializable {
 		this.lastControlerArguments = lastControlerArguments;
 	}
 
-	public boolean processObjectClick4(WorldObject object) {
+	public boolean processObjectClick4(GameObject object) {
 		return true; //unused atm
 	}
 	
-	public boolean processObjectClick5(WorldObject object) {
+	public boolean processObjectClick5(GameObject object) {
 		if (controler == null || !inited)
 			return true;
 		return controler.processObjectClick5(object);

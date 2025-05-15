@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.cores.CoresManager;
 import com.feather.game.RegionBuilder;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.player.content.FriendChatsManager;
 
@@ -92,7 +92,7 @@ public final class ClanWars implements Serializable {
 	/**
 	 * The wall objects list.
 	 */
-	private transient List<WorldObject> wallObjects;
+	private transient List<GameObject> wallObjects;
 
 	/**
 	 * The victory type for this war.
@@ -122,7 +122,7 @@ public final class ClanWars implements Serializable {
 	/**
 	 * The base location used during this war.
 	 */
-	private transient WorldTile baseLocation;
+	private transient Tile baseLocation;
 
 	/**
 	 * The current clan wars timer instance.
@@ -366,7 +366,7 @@ public final class ClanWars implements Serializable {
 					int[] newCoords = RegionBuilder.findEmptyChunkBound(width, height);
 					RegionBuilder.copyAllPlanesMap(areaType.getSouthWestTile().getChunkX(), areaType.getSouthWestTile().getChunkY(), 
 							newCoords[0], newCoords[1], width, height);
-					baseLocation = new WorldTile(newCoords[0] << 3, newCoords[1] << 3, 0);
+					baseLocation = new Tile(newCoords[0] << 3, newCoords[1] << 3, 0);
 					WallHandler.loadWall(ClanWars.this);
 					CoresManager.fastExecutor.scheduleAtFixedRate(timer = new ClanWarsTimer(ClanWars.this), 600, 600);
 					enter(player);
@@ -411,7 +411,7 @@ public final class ClanWars implements Serializable {
 				c.firstPlayers.add(p);
 				c.timer.refresh(p, true);
 			} else {
-				WorldTile northEast = c.baseLocation.transform(c.areaType.getNorthEastTile().getX() - c.areaType.getSouthWestTile().getX(), 
+				Tile northEast = c.baseLocation.transform(c.areaType.getNorthEastTile().getX() - c.areaType.getSouthWestTile().getX(),
 						c.areaType.getNorthEastTile().getY() - c.areaType.getSouthWestTile().getY(), 0);
 				p.setNextWorldTile(northEast.transform(c.areaType.getSecondSpawnOffsetX(), c.areaType.getSecondSpawnOffsetY(), 0));
 				c.secondPlayers.add(p);
@@ -445,7 +445,7 @@ public final class ClanWars implements Serializable {
 		} else {
 			c.timer.refresh(p, false);
 			c.secondViewers.add(p);
-			WorldTile northEast = c.baseLocation.transform(c.areaType.getNorthEastTile().getX() - c.areaType.getSouthWestTile().getX(), 
+			Tile northEast = c.baseLocation.transform(c.areaType.getNorthEastTile().getX() - c.areaType.getSouthWestTile().getX(),
 					c.areaType.getNorthEastTile().getY() - c.areaType.getSouthWestTile().getY(), 0);
 			p.setNextWorldTile(northEast.transform(c.areaType.getSecondDeathOffsetX(), c.areaType.getSecondDeathOffsetY(), 0));
 		}
@@ -466,7 +466,7 @@ public final class ClanWars implements Serializable {
 		}
 		boolean resized = p.getInterfaceManager().hasResizableScreen();
 		p.getPackets().closeInterface(resized ? 746 : 548, resized ? 11 : 27);
-		p.setNextWorldTile(new WorldTile(2992, 9676, 0));
+		p.setNextWorldTile(new Tile(2992, 9676, 0));
 		p.getControlerManager().startControler("clan_wars_request");
 		p.setForceMultiArea(true);
 		updateWar();
@@ -507,7 +507,7 @@ public final class ClanWars implements Serializable {
 		currentWars.remove(this);
 		firstTeam.setClanWars(null);
 		secondTeam.setClanWars(null);
-		WorldTile target = new WorldTile(2992, 9676, 0);
+		Tile target = new Tile(2992, 9676, 0);
 		int firstType;
 		int secondType;
 		if (timer.isTimeOut()) {
@@ -694,7 +694,7 @@ public final class ClanWars implements Serializable {
 	 * Gets the baseLocation.
 	 * @return The baseLocation.
 	 */
-	public WorldTile getBaseLocation() {
+	public Tile getBaseLocation() {
 		return baseLocation;
 	}
 
@@ -702,7 +702,7 @@ public final class ClanWars implements Serializable {
 	 * Sets the baseLocation.
 	 * @param baseLocation The baseLocation to set.
 	 */
-	public void setBaseLocation(WorldTile baseLocation) {
+	public void setBaseLocation(Tile baseLocation) {
 		this.baseLocation = baseLocation;
 	}
 
@@ -710,7 +710,7 @@ public final class ClanWars implements Serializable {
 	 * Gets the wallObjects.
 	 * @return The wallObjects.
 	 */
-	public List<WorldObject> getWallObjects() {
+	public List<GameObject> getWallObjects() {
 		return wallObjects;
 	}
 
@@ -718,7 +718,7 @@ public final class ClanWars implements Serializable {
 	 * Sets the wallObjects.
 	 * @param wallObjects The wallObjects to set.
 	 */
-	public void setWallObjects(List<WorldObject> wallObjects) {
+	public void setWallObjects(List<GameObject> wallObjects) {
 		this.wallObjects = wallObjects;
 	}
 

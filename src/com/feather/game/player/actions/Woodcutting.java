@@ -3,8 +3,8 @@ package com.feather.game.player.actions;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.utils.Utils;
 
@@ -87,14 +87,14 @@ public final class Woodcutting extends Action {
 		}
 	}
 
-	private WorldObject tree;
+	private GameObject tree;
 	private TreeDefinitions definitions;
 
 	private int emoteId;
 	private boolean usingBeaver = false;
 	private int axeTime;
 
-	public Woodcutting(WorldObject tree, TreeDefinitions definitions) {
+	public Woodcutting(GameObject tree, TreeDefinitions definitions) {
 		this.tree = tree;
 		this.definitions = definitions;
 	}
@@ -327,21 +327,21 @@ public final class Woodcutting extends Action {
 		} else if (Utils.getRandom(definitions.getRandomLifeProbability()) == 0) {
 			long time = definitions.respawnDelay * 600;
 			World.spawnTemporaryObject(
-					new WorldObject(definitions.getStumpId(), tree.getType(),
+					new GameObject(definitions.getStumpId(), tree.getType(),
 							tree.getRotation(), tree.getX(), tree.getY(), tree
 									.getPlane()), time);
 			if (tree.getPlane() < 3 && definitions != TreeDefinitions.IVY) {
-				WorldObject object = World.getObject(new WorldTile(
+				GameObject object = World.getObject(new Tile(
 						tree.getX() - 1, tree.getY() - 1, tree.getPlane() + 1));
 
 				if (object == null) {
-					object = World.getObject(new WorldTile(tree.getX(), tree
+					object = World.getObject(new Tile(tree.getX(), tree
 							.getY() - 1, tree.getPlane() + 1));
 					if (object == null) {
-						object = World.getObject(new WorldTile(tree.getX() - 1,
+						object = World.getObject(new Tile(tree.getX() - 1,
 								tree.getY(), tree.getPlane() + 1));
 						if (object == null) {
-							object = World.getObject(new WorldTile(tree.getX(),
+							object = World.getObject(new Tile(tree.getX(),
 									tree.getY(), tree.getPlane() + 1));
 						}
 					}

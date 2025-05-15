@@ -6,7 +6,7 @@ import java.util.Map;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.cache.parser.NPCDefinitions;
 import com.feather.game.Animation;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.minigames.clanwars.ClanWars;
 import com.feather.game.minigames.clanwars.ClanWars.Rules;
@@ -291,7 +291,7 @@ public class Summoning {
 											.getNpcId())).name.replace(" ", "")
 											.replace("-", ""))
 											.getConstructor(Player.class, Pouches.class,
-													WorldTile.class, int.class, boolean.class)
+													Tile.class, int.class, boolean.class)
 													.newInstance(player, pouch, player, -1, true);
 		} catch (Throwable e) {
 

@@ -1,8 +1,8 @@
 package com.feather.game.player.content;
 
 import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 import com.feather.utils.Utils;
@@ -40,16 +40,16 @@ public class ShootingStar {
 	/**
 	 * Shooting star crash locations.
 	 */
-	public final static WorldTile[] LOCATION =  { 
-		new WorldTile(3031, 3347, 0), // Behind Falador Bank
-		new WorldTile(2974, 3238, 0), // Rimmington Mine
-		new WorldTile(3245, 3509, 0) // Varrock Lodestone
+	public final static Tile[] LOCATION =  {
+		new Tile(3031, 3347, 0), // Behind Falador Bank
+		new Tile(2974, 3238, 0), // Rimmington Mine
+		new Tile(3245, 3509, 0) // Varrock Lodestone
 		};
 	
 	/**
 	 * Used To Save The Star's Location.
 	 */
-	private static WorldTile lastTile = LOCATION[Utils.random(0, 3)];
+	private static Tile lastTile = LOCATION[Utils.random(0, 3)];
 	
 	/**
 	 * Increases The X Position Of The Star.
@@ -99,13 +99,13 @@ public class ShootingStar {
 						|| stardustMined == 160) {
 				starSize++;
 				stage--;
-				World.spawnObject(new WorldObject(-1, 10, 0 , starX, lastTile.getY(), lastTile.getPlane()), true); // Deletes The Pre-Existing Star
+				World.spawnObject(new GameObject(-1, 10, 0 , starX, lastTile.getY(), lastTile.getPlane()), true); // Deletes The Pre-Existing Star
 				starX++;
-				World.spawnObject(new WorldObject(starSize, 10, 0 , starX, lastTile.getY(), lastTile.getPlane()), true); // Spawns A New Star.
+				World.spawnObject(new GameObject(starSize, 10, 0 , starX, lastTile.getY(), lastTile.getPlane()), true); // Spawns A New Star.
 				return;
 			} else if (stardustMined >= 200) { //Fully Mined
 				starX++;
-				World.spawnObject(new WorldObject(-1, 10, 0 , starX, lastTile.getY() + 9, lastTile.getPlane()), true); //Delete's The Last Star
+				World.spawnObject(new GameObject(-1, 10, 0 , starX, lastTile.getY() + 9, lastTile.getPlane()), true); //Delete's The Last Star
 				starSize = 38661; // Object ID
 				stage = 8; // The Size Of The Star (Stage)
 				player.stopAll();

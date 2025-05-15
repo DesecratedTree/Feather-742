@@ -3,7 +3,7 @@ package com.feather.game.player.controlers;
 import com.feather.game.Entity;
 import com.feather.game.ForceTalk;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.content.Magic;
@@ -27,7 +27,7 @@ public class BorkControler extends Controler {
 	public void process() {
 		if (borkStage == 0) {	
 			if (stage == 0) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3114,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3114,
 					5528, 0));
 			}
 			if (stage == 5) {
@@ -45,9 +45,9 @@ public class BorkControler extends Controler {
 				sendInterfaces();
 				bork.setCantInteract(true);
 			} else if (stage == 14) {
-				World.spawnNPC(7135, new WorldTile(bork, 1), -1, true, true);
-				World.spawnNPC(7135, new WorldTile(bork, 1), -1, true, true);
-				World.spawnNPC(7135, new WorldTile(bork, 1), -1, true, true);
+				World.spawnNPC(7135, new Tile(bork, 1), -1, true, true);
+				World.spawnNPC(7135, new Tile(bork, 1), -1, true, true);
+				World.spawnNPC(7135, new Tile(bork, 1), -1, true, true);
 				player.getPackets().closeInterface(
 					player.getInterfaceManager().hasResizableScreen() ? 1 : 11);
 				bork.setCantInteract(false);
@@ -73,7 +73,7 @@ public class BorkControler extends Controler {
 	}
 	
 	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		return true;
 	}
 	

@@ -3,7 +3,7 @@ package com.feather.game.player.cutscenes;
 import com.feather.Settings;
 import com.feather.cores.CoresManager;
 import com.feather.game.RegionBuilder;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.InterfaceManager;
 import com.feather.game.player.Player;
@@ -29,7 +29,7 @@ public abstract class Cutscene {
 
 	}
 
-	private WorldTile endTile;
+	private Tile endTile;
 
 	public final void stopCutscene(Player player) {
 		if (player.getX() != endTile.getX() || player.getY() != endTile.getY()
@@ -84,7 +84,7 @@ public abstract class Cutscene {
 							heightChunks);
 					currentMapData = new int[] { mapBaseChunks[0],
 							mapBaseChunks[1], widthChunks, heightChunks };
-					player.setNextWorldTile(new WorldTile(getBaseX()
+					player.setNextWorldTile(new Tile(getBaseX()
 							+ widthChunks * 4, +getBaseY() + heightChunks * 4,
 							0));
 					constructingRegion = false;
@@ -182,7 +182,7 @@ public abstract class Cutscene {
 
 	public final void createCache(Player player) {
 		actions = getActions(player);
-		endTile = new WorldTile(player);
+		endTile = new Tile(player);
 		int lastIndex = 0;
 		for (CutsceneAction action : actions) {
 			if (action.getCachedObjectIndex() > lastIndex)
@@ -193,12 +193,12 @@ public abstract class Cutscene {
 	}
 
 	public static int getX(Player player, int x) {
-		return new WorldTile(x, 0, 0).getLocalX(
+		return new Tile(x, 0, 0).getLocalX(
 				player.getLastLoadedMapRegionTile(), player.getMapSize());
 	}
 
 	public static int getY(Player player, int y) {
-		return new WorldTile(0, y, 0).getLocalY(
+		return new Tile(0, y, 0).getLocalY(
 				player.getLastLoadedMapRegionTile(), player.getMapSize());
 	}
 }

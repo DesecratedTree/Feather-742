@@ -3,7 +3,7 @@ package com.feather.game.player.content;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 
@@ -31,33 +31,33 @@ public final class Runecrafting {
 	}
 
 	public static void enterAirAltar(Player player) {
-		enterAltar(player, new WorldTile(2841, 4829, 0));
+		enterAltar(player, new Tile(2841, 4829, 0));
 	}
 
-	private static void enterAltar(Player player, WorldTile dest) {
+	private static void enterAltar(Player player, Tile dest) {
 		player.getPackets().sendGameMessage(
 				"A mysterious force grabs hold of you.");
 		player.useStairs(-1, dest, 0, 1);
 	}
 	
 	public static void enterMindAltar(Player player) {
-		enterAltar(player, new WorldTile(2792, 4827, 0));
+		enterAltar(player, new Tile(2792, 4827, 0));
 	}
 
 	public static void enterWaterAltar(Player player) {
-		enterAltar(player, new WorldTile(3482, 4838, 0));
+		enterAltar(player, new Tile(3482, 4838, 0));
 	}
 
 	public static void enterEarthAltar(Player player) {
-		enterAltar(player, new WorldTile(2655, 4830, 0));
+		enterAltar(player, new Tile(2655, 4830, 0));
 	}
 
 	public static void enterFireAltar(Player player) {
-		enterAltar(player, new WorldTile(2574, 4848, 0));
+		enterAltar(player, new Tile(2574, 4848, 0));
 	}
 
 	public static void enterBodyAltar(Player player) {
-		enterAltar(player, new WorldTile(2522, 4825, 0));
+		enterAltar(player, new Tile(2522, 4825, 0));
 	}
 
 	public static void craftEssence(Player player, int rune, int level,

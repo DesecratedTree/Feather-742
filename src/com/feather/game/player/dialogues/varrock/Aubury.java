@@ -1,14 +1,8 @@
 package com.feather.game.player.dialogues.varrock;
 
 import com.feather.cache.parser.NPCDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.ForceTalk;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
-import com.feather.game.player.Player;
-import com.feather.game.player.content.Magic;
 import com.feather.game.player.dialogues.Dialogue;
 import com.feather.utils.ShopsHandler;
 
@@ -81,7 +75,7 @@ public class Aubury extends Dialogue {
 			aubury.faceEntity(player);
 			World.sendProjectile(aubury, player, 110, 1, 1, 1, 1, 1, 1);
 			player.setNextGraphics(new Graphics(110));
-			player.setNextWorldTile(new WorldTile(2910, 4832, 0));
+			player.setNextWorldTile(new Tile(2910, 4832, 0));
 			end();
 			break;
 		}

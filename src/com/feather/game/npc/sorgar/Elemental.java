@@ -3,11 +3,7 @@ package com.feather.game.npc.sorgar;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.content.FadingScreen;
@@ -22,36 +18,36 @@ public class Elemental extends NPC {
 	
 	private Player player;
 
-	private static final WorldTile[][] tiles = { 
-		{new WorldTile(2908, 5460, 0), new WorldTile(2898, 5460, 0)}, 
-		{new WorldTile(2900, 5448, 0), new WorldTile(2900, 5455, 0)},
-		{new WorldTile(2905, 5449, 0), new WorldTile(2899, 5449, 0)},
-		{new WorldTile(2903, 5451, 0), new WorldTile(2903, 5455, 0), new WorldTile(2905, 5455, 0), new WorldTile(2905, 5451, 0)},
-		{new WorldTile(2903, 5457, 0), new WorldTile(2917, 5457, 0)},
-		{new WorldTile(2908, 5455, 0), new WorldTile(2917, 5455, 0)},
-		{new WorldTile(2922, 5471, 0), new WorldTile(2922, 5459, 0)},
-		{new WorldTile(2924, 5463, 0), new WorldTile(2928, 5463, 0), new WorldTile(2928, 5461, 0), new WorldTile(2924, 5461, 0)},
-		{new WorldTile(2924, 5461, 0), new WorldTile(2926, 5461, 0), new WorldTile(2926, 5458, 0), new WorldTile(2924, 5458, 0)},
-		{new WorldTile(2928, 5458, 0), new WorldTile(2928, 5460, 0), new WorldTile(2934, 5460, 0), new WorldTile(2934, 5458, 0)},
-		{new WorldTile(2931, 5477, 0), new WorldTile(2931, 5470, 0)},
-		{new WorldTile(2935, 5469, 0), new WorldTile(2928, 5469, 0)},
-		{new WorldTile(2925, 5464, 0), new WorldTile(2925, 5475, 0)},
-		{new WorldTile(2931, 5477, 0), new WorldTile(2931, 5470, 0)},
-		{new WorldTile(2907, 5488, 0), new WorldTile(2907, 5482, 0)},
-		{new WorldTile(2907, 5490, 0), new WorldTile(2907, 5495, 0)},
-		{new WorldTile(2910, 5493, 0), new WorldTile(2910, 5487, 0)},
-		{new WorldTile(2918, 5483, 0), new WorldTile(2918, 5485, 0), new WorldTile(2915, 5485, 0), new WorldTile(2915, 5483, 0), 
-			new WorldTile(2912, 5483, 0), new WorldTile(2912, 5485, 0), new WorldTile(2915, 5485, 0), new WorldTile(2915, 5483, 0)},
-			{new WorldTile(2921, 5486, 0), new WorldTile(2923, 5486, 0), new WorldTile(2923, 5490, 0), new WorldTile(2923, 5486, 0)},
-			{new WorldTile(2921, 5491, 0), new WorldTile(2923, 5491, 0), new WorldTile(2923, 5495, 0), new WorldTile(2921, 5495, 0)},
-			{new WorldTile(2899, 5466, 0), new WorldTile(2899, 5468, 0), new WorldTile(2897, 5468, 0), new WorldTile(2897, 5466, 0), 
-				new WorldTile(2897, 5468, 0), new WorldTile(2899, 5468, 0)},
-				{new WorldTile(2897, 5470, 0), new WorldTile(2891, 5470, 0)},
-				{new WorldTile(2897, 5471, 0), new WorldTile(2899, 5471, 0), new WorldTile(2899, 5478, 0), new WorldTile(2897, 5478, 0)},
-				{new WorldTile(2896, 5483, 0), new WorldTile(2900, 5483, 0), new WorldTile(2900, 5480, 0), new WorldTile(2897, 5480, 0), 
-					new WorldTile(2896, 5482, 0)},
-					{new WorldTile(2896, 5483, 0), new WorldTile(2896, 5481, 0), new WorldTile(2891, 5481, 0), new WorldTile(2891, 5483, 0)},
-					{new WorldTile(2889, 5485, 0), new WorldTile(2900, 5485, 0)}	
+	private static final Tile[][] tiles = {
+		{new Tile(2908, 5460, 0), new Tile(2898, 5460, 0)},
+		{new Tile(2900, 5448, 0), new Tile(2900, 5455, 0)},
+		{new Tile(2905, 5449, 0), new Tile(2899, 5449, 0)},
+		{new Tile(2903, 5451, 0), new Tile(2903, 5455, 0), new Tile(2905, 5455, 0), new Tile(2905, 5451, 0)},
+		{new Tile(2903, 5457, 0), new Tile(2917, 5457, 0)},
+		{new Tile(2908, 5455, 0), new Tile(2917, 5455, 0)},
+		{new Tile(2922, 5471, 0), new Tile(2922, 5459, 0)},
+		{new Tile(2924, 5463, 0), new Tile(2928, 5463, 0), new Tile(2928, 5461, 0), new Tile(2924, 5461, 0)},
+		{new Tile(2924, 5461, 0), new Tile(2926, 5461, 0), new Tile(2926, 5458, 0), new Tile(2924, 5458, 0)},
+		{new Tile(2928, 5458, 0), new Tile(2928, 5460, 0), new Tile(2934, 5460, 0), new Tile(2934, 5458, 0)},
+		{new Tile(2931, 5477, 0), new Tile(2931, 5470, 0)},
+		{new Tile(2935, 5469, 0), new Tile(2928, 5469, 0)},
+		{new Tile(2925, 5464, 0), new Tile(2925, 5475, 0)},
+		{new Tile(2931, 5477, 0), new Tile(2931, 5470, 0)},
+		{new Tile(2907, 5488, 0), new Tile(2907, 5482, 0)},
+		{new Tile(2907, 5490, 0), new Tile(2907, 5495, 0)},
+		{new Tile(2910, 5493, 0), new Tile(2910, 5487, 0)},
+		{new Tile(2918, 5483, 0), new Tile(2918, 5485, 0), new Tile(2915, 5485, 0), new Tile(2915, 5483, 0),
+			new Tile(2912, 5483, 0), new Tile(2912, 5485, 0), new Tile(2915, 5485, 0), new Tile(2915, 5483, 0)},
+			{new Tile(2921, 5486, 0), new Tile(2923, 5486, 0), new Tile(2923, 5490, 0), new Tile(2923, 5486, 0)},
+			{new Tile(2921, 5491, 0), new Tile(2923, 5491, 0), new Tile(2923, 5495, 0), new Tile(2921, 5495, 0)},
+			{new Tile(2899, 5466, 0), new Tile(2899, 5468, 0), new Tile(2897, 5468, 0), new Tile(2897, 5466, 0),
+				new Tile(2897, 5468, 0), new Tile(2899, 5468, 0)},
+				{new Tile(2897, 5470, 0), new Tile(2891, 5470, 0)},
+				{new Tile(2897, 5471, 0), new Tile(2899, 5471, 0), new Tile(2899, 5478, 0), new Tile(2897, 5478, 0)},
+				{new Tile(2896, 5483, 0), new Tile(2900, 5483, 0), new Tile(2900, 5480, 0), new Tile(2897, 5480, 0),
+					new Tile(2896, 5482, 0)},
+					{new Tile(2896, 5483, 0), new Tile(2896, 5481, 0), new Tile(2891, 5481, 0), new Tile(2891, 5483, 0)},
+					{new Tile(2889, 5485, 0), new Tile(2900, 5485, 0)}
 	};
 
 	/**
@@ -62,8 +58,8 @@ public class Elemental extends NPC {
 	 * @param canBeAttackFromOutOfArea true
 	 * @param spawned false
 	 */
-	public Elemental(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public Elemental(int id, Tile tile, int mapAreaNameHash,
+					 boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setCantFollowUnderCombat(true);
 		setCantInteract(true);
@@ -135,10 +131,10 @@ public class Elemental extends NPC {
 							} else if (i == 2) {
 								player.getPackets().sendGameMessage("You've been spotted by an elemental and teleported out of its garden.");
 								player.setNextWorldTile(
-										SorceressGarden.inAutumnGarden(player) ? new WorldTile(2913, 5467, 0) : 
-										(SorceressGarden.inSpringGarden(player) ? new WorldTile(2916, 5473, 0) :
-										(SorceressGarden.inSummerGarden(player) ? new WorldTile(2910, 5476, 0) : 
-											new WorldTile(2906, 5470, 0))));
+										SorceressGarden.inAutumnGarden(player) ? new Tile(2913, 5467, 0) :
+										(SorceressGarden.inSpringGarden(player) ? new Tile(2916, 5473, 0) :
+										(SorceressGarden.inSummerGarden(player) ? new Tile(2910, 5476, 0) :
+											new Tile(2906, 5470, 0))));
 								beingTeleported = false;
 								stop();
 							}

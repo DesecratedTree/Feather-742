@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import com.feather.Launcher;
 import com.feather.Settings;
 import com.feather.cores.CoresManager;
-import com.feather.game.item.FloorItem;
+import com.feather.game.item.GroundItem;
 import com.feather.game.item.Item;
 import com.feather.game.minigames.GodWarsBosses;
 import com.feather.game.minigames.ZarosGodwars;
@@ -329,7 +329,7 @@ public final class World {
 		npcs.remove(npc);
 	}
 
-	public static final NPC spawnNPC(int id, WorldTile tile,
+	public static final NPC spawnNPC(int id, Tile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea,
 			boolean spawned) {
 		NPC n = null;
@@ -432,7 +432,7 @@ public final class World {
 		return n;
 	}
 
-	public static final NPC spawnNPC(int id, WorldTile tile,
+	public static final NPC spawnNPC(int id, Tile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		return spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
 	}
@@ -516,7 +516,7 @@ public final class World {
 	}
 
 	public static int getMask(int plane, int x, int y) {
-		WorldTile tile = new WorldTile(x, y, plane);
+		Tile tile = new Tile(x, y, plane);
 		int regionId = tile.getRegionId();
 		Region region = getRegion(regionId);
 		if (region == null)
@@ -527,7 +527,7 @@ public final class World {
 	}
 
 	public static void setMask(int plane, int x, int y, int mask) {
-		WorldTile tile = new WorldTile(x, y, plane);
+		Tile tile = new Tile(x, y, plane);
 		int regionId = tile.getRegionId();
 		Region region = getRegion(regionId);
 		if (region == null)
@@ -538,7 +538,7 @@ public final class World {
 	}
 
 	public static int getRotation(int plane, int x, int y) {
-		WorldTile tile = new WorldTile(x, y, plane);
+		Tile tile = new Tile(x, y, plane);
 		int regionId = tile.getRegionId();
 		Region region = getRegion(regionId);
 		if (region == null)
@@ -549,7 +549,7 @@ public final class World {
 	}
 
 	private static int getClipedOnlyMask(int plane, int x, int y) {
-		WorldTile tile = new WorldTile(x, y, plane);
+		Tile tile = new Tile(x, y, plane);
 		int regionId = tile.getRegionId();
 		Region region = getRegion(regionId);
 		if (region == null)
@@ -913,19 +913,19 @@ public final class World {
 	/*
 	 * by default doesnt changeClipData
 	 */
-	public static final void spawnTemporaryObject(final WorldObject object,
+	public static final void spawnTemporaryObject(final GameObject object,
 			long time) {
 		spawnTemporaryObject(object, time, false);
 	}
 
-	public static final void spawnTemporaryObject(final WorldObject object,
+	public static final void spawnTemporaryObject(final GameObject object,
 			long time, final boolean clip) {
 		final int regionId = object.getRegionId();
-		WorldObject realMapObject = getRegion(regionId).getRealObject(object);
+		GameObject realMapObject = getRegion(regionId).getRealObject(object);
 		// remakes object, has to be done because on static region coords arent
 		// same of real
-		final WorldObject realObject = realMapObject == null ? null
-				: new WorldObject(realMapObject.getId(),
+		final GameObject realObject = realMapObject == null ? null
+				: new GameObject(realMapObject.getId(),
 						realMapObject.getType(), realMapObject.getRotation(),
 						object.getX(), object.getY(), object.getPlane());
 		spawnObject(object, clip);
@@ -968,21 +968,21 @@ public final class World {
 		}, time, TimeUnit.MILLISECONDS);
 	}
 
-	public static final boolean isSpawnedObject(WorldObject object) {
+	public static final boolean isSpawnedObject(GameObject object) {
 		final int regionId = object.getRegionId();
-		WorldObject spawnedObject = getRegion(regionId)
+		GameObject spawnedObject = getRegion(regionId)
 				.getSpawnedObject(object);
 		if (spawnedObject != null && object.getId() == spawnedObject.getId())
 			return true;
 		return false;
 	}
 
-	public static final boolean removeTemporaryObject(final WorldObject object,
+	public static final boolean removeTemporaryObject(final GameObject object,
 			long time, final boolean clip) {
 		final int regionId = object.getRegionId();
 		// remakes object, has to be done because on static region coords arent
 		// same of real
-		final WorldObject realObject = object == null ? null : new WorldObject(
+		final GameObject realObject = object == null ? null : new GameObject(
 				object.getId(), object.getType(), object.getRotation(),
 				object.getX(), object.getY(), object.getPlane());
 		if (realObject == null)
@@ -1016,7 +1016,7 @@ public final class World {
 		return true;
 	}
 
-	public static final void removeObject(WorldObject object, boolean clip) {
+	public static final void removeObject(GameObject object, boolean clip) {
 		int regionId = object.getRegionId();
 		getRegion(regionId).addRemovedObject(object);
 		if (clip) {
@@ -1034,7 +1034,7 @@ public final class World {
 		}
 	}
 
-	public static final WorldObject getObject(WorldTile tile) {
+	public static final GameObject getObject(Tile tile) {
 		int regionId = tile.getRegionId();
 		int baseLocalX = tile.getX() - ((regionId >> 8) * 64);
 		int baseLocalY = tile.getY() - ((regionId & 0xff) * 64);
@@ -1042,7 +1042,7 @@ public final class World {
 				baseLocalY);
 	}
 
-	public static final WorldObject getObject(WorldTile tile, int type) {
+	public static final GameObject getObject(Tile tile, int type) {
 		int regionId = tile.getRegionId();
 		int baseLocalX = tile.getX() - ((regionId >> 8) * 64);
 		int baseLocalY = tile.getY() - ((regionId & 0xff) * 64);
@@ -1050,7 +1050,7 @@ public final class World {
 				baseLocalY, type);
 	}
 
-	public static final void spawnObject(WorldObject object, boolean clip) {
+	public static final void spawnObject(GameObject object, boolean clip) {
 		int regionId = object.getRegionId();
 		getRegion(regionId).addObject(object);
 		if (clip) {
@@ -1068,8 +1068,8 @@ public final class World {
 		}
 	}
 
-	public static final void addGroundItem(final Item item, final WorldTile tile) {
-		final FloorItem floorItem = new FloorItem(item, tile, null, false,
+	public static final void addGroundItem(final Item item, final Tile tile) {
+		final GroundItem floorItem = new GroundItem(item, tile, null, false,
 				false);
 		final Region region = getRegion(tile.getRegionId());
 		region.forceGetFloorItems().add(floorItem);
@@ -1084,23 +1084,23 @@ public final class World {
 	}
 
 	public static final void addGroundItem(final Item item,
-			final WorldTile tile, final Player owner/* null for default */,
-			final boolean underGrave, long hiddenTime/* default 3minutes */,
-			boolean invisible) {
+										   final Tile tile, final Player owner/* null for default */,
+										   final boolean underGrave, long hiddenTime/* default 3minutes */,
+										   boolean invisible) {
 		addGroundItem(item, tile, owner, underGrave, hiddenTime, invisible, false, 180);
 	}
 
 	public static final void addGroundItem(final Item item,
-			final WorldTile tile, final Player owner/* null for default */,
-			final boolean underGrave, long hiddenTime/* default 3minutes */,
-			boolean invisible, boolean intoGold) {
+										   final Tile tile, final Player owner/* null for default */,
+										   final boolean underGrave, long hiddenTime/* default 3minutes */,
+										   boolean invisible, boolean intoGold) {
 		addGroundItem(item, tile, owner, underGrave, hiddenTime, invisible, intoGold, 180);
 	}
 
 	public static final void addGroundItem(final Item item,
-			final WorldTile tile, final Player owner/* null for default */,
-			final boolean underGrave, long hiddenTime/* default 3minutes */,
-			boolean invisible, boolean intoGold, final int publicTime) {
+										   final Tile tile, final Player owner/* null for default */,
+										   final boolean underGrave, long hiddenTime/* default 3minutes */,
+										   boolean invisible, boolean intoGold, final int publicTime) {
 		if(intoGold) {
 			if(!ItemConstants.isTradeable(item)) {
 				int price = item.getDefinitions().getValue();
@@ -1110,7 +1110,7 @@ public final class World {
 				item.setAmount(price);
 			}
 		}
-		final FloorItem floorItem = new FloorItem(item, tile, owner,
+		final GroundItem floorItem = new GroundItem(item, tile, owner,
 				owner == null ? false : underGrave, invisible);
 		final Region region = getRegion(tile.getRegionId());
 		region.forceGetFloorItems().add(floorItem);
@@ -1164,9 +1164,9 @@ public final class World {
 		removeGroundItem(floorItem, publicTime);
 	}
 
-	public static final void updateGroundItem(Item item, final WorldTile tile,
+	public static final void updateGroundItem(Item item, final Tile tile,
 			final Player owner) {
-		final FloorItem floorItem = World.getRegion(tile.getRegionId())
+		final GroundItem floorItem = World.getRegion(tile.getRegionId())
 				.getGroundItem(item.getId(), tile, owner);
 		if (floorItem == null) {
 			addGroundItem(item, tile, owner, false, 360, true);
@@ -1178,7 +1178,7 @@ public final class World {
 
 	}
 
-	private static final void removeGroundItem(final FloorItem floorItem, long publicTime) {
+	private static final void removeGroundItem(final GroundItem floorItem, long publicTime) {
 		if (publicTime < 0) {
 			return;
 		}
@@ -1210,12 +1210,12 @@ public final class World {
 	}
 
 	public static final boolean removeGroundItem(Player player,
-			FloorItem floorItem) {
+			GroundItem floorItem) {
 		return removeGroundItem(player, floorItem, true);
 	}
 
 	public static final boolean removeGroundItem(Player player,
-			FloorItem floorItem, boolean add) {
+                                                 GroundItem floorItem, boolean add) {
 		int regionId = floorItem.getTile().getRegionId();
 		Region region = getRegion(regionId);
 		if (!region.forceGetFloorItems().contains(floorItem))
@@ -1244,11 +1244,11 @@ public final class World {
 		}
 	}
 
-	public static final void sendObjectAnimation(WorldObject object, Animation animation) {
+	public static final void sendObjectAnimation(GameObject object, Animation animation) {
 		sendObjectAnimation(null, object, animation);
 	}
 
-	public static final void sendObjectAnimation(Entity creator, WorldObject object, Animation animation) {
+	public static final void sendObjectAnimation(Entity creator, GameObject object, Animation animation) {
 		if (creator == null) {
 			for (Player player : World.getPlayers()) {
 				if (player == null || !player.hasStarted()
@@ -1276,7 +1276,7 @@ public final class World {
 
 
 	public static final void sendGraphics(Entity creator, Graphics graphics,
-			WorldTile tile) {
+			Tile tile) {
 		if (creator == null) {
 			for (Player player : World.getPlayers()) {
 				if (player == null || !player.hasStarted()
@@ -1303,9 +1303,9 @@ public final class World {
 	}
 
 	public static final void sendProjectile(Entity shooter,
-			WorldTile startTile, WorldTile receiver, int gfxId,
-			int startHeight, int endHeight, int speed, int delay, int curve,
-			int startDistanceOffset) {
+											Tile startTile, Tile receiver, int gfxId,
+											int startHeight, int endHeight, int speed, int delay, int curve,
+											int startDistanceOffset) {
 		for (int regionId : shooter.getMapRegionsIds()) {
 			List<Integer> playersIndexes = getRegion(regionId)
 					.getPlayerIndexes();
@@ -1326,9 +1326,9 @@ public final class World {
 		}
 	}
 
-	public static final void sendProjectile(WorldTile shooter, Entity receiver,
-			int gfxId, int startHeight, int endHeight, int speed, int delay,
-			int curve, int startDistanceOffset) {
+	public static final void sendProjectile(Tile shooter, Entity receiver,
+											int gfxId, int startHeight, int endHeight, int speed, int delay,
+											int curve, int startDistanceOffset) {
 		for (int regionId : receiver.getMapRegionsIds()) {
 			List<Integer> playersIndexes = getRegion(regionId)
 					.getPlayerIndexes();
@@ -1349,7 +1349,7 @@ public final class World {
 		}
 	}
 
-	public static final void sendProjectile(Entity shooter, WorldTile receiver,
+	public static final void sendProjectile(Entity shooter, Tile receiver,
 			int gfxId, int startHeight, int endHeight, int speed, int delay,
 			int curve, int startDistanceOffset) {
 		for (int regionId : shooter.getMapRegionsIds()) {
@@ -1391,7 +1391,7 @@ public final class World {
 				int size = shooter.getSize();
 				player.getPackets().sendProjectile(
 						receiver,
-						new WorldTile(shooter.getCoordFaceX(size), shooter
+						new Tile(shooter.getCoordFaceX(size), shooter
 								.getCoordFaceY(size), shooter.getPlane()),
 								receiver, gfxId, startHeight, endHeight, speed, delay,
 								curve, startDistanceOffset, size);
@@ -1399,7 +1399,7 @@ public final class World {
 		}
 	}
 
-	public static final boolean isMultiArea(WorldTile tile) {
+	public static final boolean isMultiArea(Tile tile) {
 		int destX = tile.getX();
 		int destY = tile.getY();
 		return  (destX >= 3462 && destX <= 3511 && destY >= 9481 && destY <= 9521 && tile.getPlane() == 0) //kalphite queen lair
@@ -1442,15 +1442,15 @@ public final class World {
 		// multi
 	}
 
-	public static final boolean isPvpArea(WorldTile tile) {
+	public static final boolean isPvpArea(Tile tile) {
 		return Wilderness.isAtWild(tile);
 	}
 
-	public static void destroySpawnedObject(WorldObject object, boolean clip) {
+	public static void destroySpawnedObject(GameObject object, boolean clip) {
 		int regionId = object.getRegionId();
 		int baseLocalX = object.getX() - ((regionId >> 8) * 64);
 		int baseLocalY = object.getY() - ((regionId & 0xff) * 64);
-		WorldObject realMapObject = getRegion(regionId).getRealObject(object);
+		GameObject realMapObject = getRegion(regionId).getRealObject(object);
 
 		World.getRegion(regionId).removeObject(object);
 		if (clip)
@@ -1467,7 +1467,7 @@ public final class World {
 		}
 	}
 
-	public static void destroySpawnedObject(WorldObject object) {
+	public static void destroySpawnedObject(GameObject object) {
 		int regionId = object.getRegionId();
 		int baseLocalX = object.getX() - ((regionId >> 8) * 64);
 		int baseLocalY = object.getY() - ((regionId & 0xff) * 64);
@@ -1481,12 +1481,12 @@ public final class World {
 		}
 	}
 
-	public static final void spawnTempGroundObject(final WorldObject object,
+	public static final void spawnTempGroundObject(final GameObject object,
 			final int replaceId, long time) {
 		final int regionId = object.getRegionId();
-		WorldObject realMapObject = getRegion(regionId).getRealObject(object);
-		final WorldObject realObject = realMapObject == null ? null
-				: new WorldObject(realMapObject.getId(),
+		GameObject realMapObject = getRegion(regionId).getRealObject(object);
+		final GameObject realObject = realMapObject == null ? null
+				: new GameObject(realMapObject.getId(),
 						realMapObject.getType(), realMapObject.getRotation(),
 						object.getX(), object.getY(), object.getPlane());
 		spawnObject(object, false);
@@ -1522,9 +1522,9 @@ public final class World {
 		}
 	}
 
-	public static final void sendProjectile(WorldObject object, WorldTile startTile,
-			WorldTile endTile, int gfxId, int startHeight, int endHeight, int speed, int delay,
-			int curve, int startOffset) {
+	public static final void sendProjectile(GameObject object, Tile startTile,
+											Tile endTile, int gfxId, int startHeight, int endHeight, int speed, int delay,
+											int curve, int startOffset) {
 		for(Player pl : players) {
 			if(pl == null || !pl.withinDistance(object, 20))
 				continue;

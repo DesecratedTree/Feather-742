@@ -1,6 +1,6 @@
 package com.feather.game.minigames.clanwars;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 
 /**
  * Represents the possible area types.
@@ -12,37 +12,37 @@ public enum AreaType {
 	/**
 	 * The classic area type.
 	 */
-	CLASSIC_AREA(new WorldTile(2752, 5888, 0), new WorldTile(2815, 6015, 0), 35, 10, -36, -9, 56, 58, -7, -58),
+	CLASSIC_AREA(new Tile(2752, 5888, 0), new Tile(2815, 6015, 0), 35, 10, -36, -9, 56, 58, -7, -58),
 	
 	/**
 	 * The plateau area type.
 	 */
-	PLATEAU(new WorldTile(2831, 5888, 0), new WorldTile(2928, 5951, 0), 59, 12, -38, -10, 27, 21, -70, -20),
+	PLATEAU(new Tile(2831, 5888, 0), new Tile(2928, 5951, 0), 59, 12, -38, -10, 27, 21, -70, -20),
 	
 	/**
 	 * The forsaken quarry area type.
 	 */
-	FORSAKEN_QUARRY(new WorldTile(2880, 5504, 0), new WorldTile(2943, 5567, 0), 11, 11, -10, -10, 28, 32, -28, -30),
+	FORSAKEN_QUARRY(new Tile(2880, 5504, 0), new Tile(2943, 5567, 0), 11, 11, -10, -10, 28, 32, -28, -30),
 	
 	/**
 	 * The blasted forest area type.
 	 */
-	BLASTED_FOREST(new WorldTile(2880, 5632, 0), new WorldTile(2942, 5695, 0), 12, 9, -12, -9, 13, 29, -13, -28),
+	BLASTED_FOREST(new Tile(2880, 5632, 0), new Tile(2942, 5695, 0), 12, 9, -12, -9, 13, 29, -13, -28),
 	
 	/**
 	 * The turrets area type.
 	 */
-	TURRETS(new WorldTile(2689, 5505, 0), new WorldTile(2750, 5630, 0), 42, 7, -40, -5, 2, 3, 0, -1);
+	TURRETS(new Tile(2689, 5505, 0), new Tile(2750, 5630, 0), 42, 7, -40, -5, 2, 3, 0, -1);
 	
 	/**
 	 * The south west tile of the area.
 	 */
-	private final WorldTile southWestTile;
+	private final Tile southWestTile;
 	
 	/**
 	 * The north east tile of the area.
 	 */
-	private final WorldTile northEastTile;
+	private final Tile northEastTile;
 	
 	/**
 	 * The first team's x spawn offset.
@@ -97,7 +97,7 @@ public enum AreaType {
 	 * @param secondDeathOffsetX The second team's x death offset.
 	 * @param secondDeathOffsetY The second team's y death offset.
 	 */
-	private AreaType(WorldTile southWestTile, WorldTile northEastTile, int firstSpawnOffsetX, int firstSpawnOffsetY, int secondSpawnOffsetX, int secondSpawnOffsetY, int firstDeathOffsetX, int firstDeathOffsetY, int secondDeathOffsetX, int secondDeathOffsetY) {
+	private AreaType(Tile southWestTile, Tile northEastTile, int firstSpawnOffsetX, int firstSpawnOffsetY, int secondSpawnOffsetX, int secondSpawnOffsetY, int firstDeathOffsetX, int firstDeathOffsetY, int secondDeathOffsetX, int secondDeathOffsetY) {
 		this.southWestTile = southWestTile;
 		this.northEastTile = northEastTile;
 		this.firstSpawnOffsetX = firstSpawnOffsetX;
@@ -114,7 +114,7 @@ public enum AreaType {
 	 * Gets the southWestTile.
 	 * @return The southWestTile.
 	 */
-	public WorldTile getSouthWestTile() {
+	public Tile getSouthWestTile() {
 		return southWestTile;
 	}
 
@@ -122,7 +122,7 @@ public enum AreaType {
 	 * Gets the northEastTile.
 	 * @return The northEastTile.
 	 */
-	public WorldTile getNorthEastTile() {
+	public Tile getNorthEastTile() {
 		return northEastTile;
 	}
 

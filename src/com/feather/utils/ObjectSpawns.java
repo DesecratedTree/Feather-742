@@ -13,8 +13,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 
 import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 
 public final class ObjectSpawns {
 
@@ -50,7 +50,7 @@ public final class ObjectSpawns {
 				int type = Integer.parseInt(splitedLine2[1]);
 				int rotation = Integer.parseInt(splitedLine2[2]);
 
-				WorldTile tile = new WorldTile(
+				Tile tile = new Tile(
 						Integer.parseInt(splitedLine3[0]),
 						Integer.parseInt(splitedLine3[1]),
 						Integer.parseInt(splitedLine3[2]));
@@ -80,7 +80,7 @@ public final class ObjectSpawns {
 				int x = buffer.getShort() & 0xffff;
 				int y = buffer.getShort() & 0xffff;
 				boolean cliped = buffer.get() == 1;
-				World.spawnObject(new WorldObject(objectId, type, rotation, x,
+				World.spawnObject(new GameObject(objectId, type, rotation, x,
 						y, plane), cliped);
 			}
 			channel.close();
@@ -93,7 +93,7 @@ public final class ObjectSpawns {
 	}
 
 	private static final void addObjectSpawn(int objectId, int type,
-			int rotation, int regionId, WorldTile tile, boolean cliped) {
+											 int rotation, int regionId, Tile tile, boolean cliped) {
 		try {
 			DataOutputStream out = new DataOutputStream(new FileOutputStream(
 					"data/map/packedSpawns/" + regionId + ".os", true));

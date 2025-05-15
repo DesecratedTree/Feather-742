@@ -8,13 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.RegionBuilder;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
@@ -41,7 +35,7 @@ public final class RefugeOfFear extends Controler {
 	/**
 	 * The spawn coordinates for the 'lower' bosses..
 	 */
-	private final WorldTile [] spawnCoordinates = new WorldTile[4];
+	private final Tile[] spawnCoordinates = new Tile[4];
 	
 	/**
 	 * The npcs.
@@ -56,7 +50,7 @@ public final class RefugeOfFear extends Controler {
 	/**
 	 * The outside area ('lobby') coordinates.
 	 */
-	public static final WorldTile OUTSIDE_AREA = new WorldTile(3149, 4664, 0);
+	public static final Tile OUTSIDE_AREA = new Tile(3149, 4664, 0);
 	
 	/**
 	 * The keys used to open the gates for each boss.
@@ -67,7 +61,7 @@ public final class RefugeOfFear extends Controler {
 	/**
 	 * A list of spawned world objects, used for cleaning up the dynamic mapregion.
 	 */
-	private final List<WorldObject> spawnedObjects = new ArrayList<WorldObject>();
+	private final List<GameObject> spawnedObjects = new ArrayList<GameObject>();
 
 	/**
 	 * The cutscene used.
@@ -100,24 +94,24 @@ public final class RefugeOfFear extends Controler {
 				player.setNextWorldTile(getWorldTile(13, 18));
 				player.setForceMultiArea(true);
 				//Spawn objects.
-				WorldTile base = getWorldTile(0, 0);
+				Tile base = getWorldTile(0, 0);
 				/* North-east chamber */
-				spawnedObjects.add(new WorldObject(40194, 0, 0, base.getX() + 19, base.getY() + 14, 0));
-				spawnedObjects.add(new WorldObject(40186, 0, 0, base.getX() + 19, base.getY() + 13, 0));
-				spawnedObjects.add(new WorldObject(40194, 0, 0, base.getX() + 19, base.getY() + 12, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 0, base.getX() + 19, base.getY() + 14, 0));
+				spawnedObjects.add(new GameObject(40186, 0, 0, base.getX() + 19, base.getY() + 13, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 0, base.getX() + 19, base.getY() + 12, 0));
 				/* South-east chamber */
-				spawnedObjects.add(new WorldObject(40194, 0, 0, base.getX() + 19, base.getY() + 8, 0));
-				spawnedObjects.add(new WorldObject(40186, 0, 0, base.getX() + 19, base.getY() + 7, 0));
-				spawnedObjects.add(new WorldObject(40194, 0, 0, base.getX() + 19, base.getY() + 6, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 0, base.getX() + 19, base.getY() + 8, 0));
+				spawnedObjects.add(new GameObject(40186, 0, 0, base.getX() + 19, base.getY() + 7, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 0, base.getX() + 19, base.getY() + 6, 0));
 				/* North-west chamber */
-				spawnedObjects.add(new WorldObject(40194, 0, 2, base.getX() + 7, base.getY() + 14, 0));
-				spawnedObjects.add(new WorldObject(40186, 0, 2, base.getX() + 7, base.getY() + 13, 0));
-				spawnedObjects.add(new WorldObject(40194, 0, 2, base.getX() + 7, base.getY() + 12, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 2, base.getX() + 7, base.getY() + 14, 0));
+				spawnedObjects.add(new GameObject(40186, 0, 2, base.getX() + 7, base.getY() + 13, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 2, base.getX() + 7, base.getY() + 12, 0));
 				/* South-west chamber */
-				spawnedObjects.add(new WorldObject(40194, 0, 2, base.getX() + 7, base.getY() + 8, 0));
-				spawnedObjects.add(new WorldObject(40186, 0, 2, base.getX() + 7, base.getY() + 7, 0));
-				spawnedObjects.add(new WorldObject(40194, 0, 2, base.getX() + 7, base.getY() + 6, 0));
-				for (WorldObject object : spawnedObjects) {
+				spawnedObjects.add(new GameObject(40194, 0, 2, base.getX() + 7, base.getY() + 8, 0));
+				spawnedObjects.add(new GameObject(40186, 0, 2, base.getX() + 7, base.getY() + 7, 0));
+				spawnedObjects.add(new GameObject(40194, 0, 2, base.getX() + 7, base.getY() + 6, 0));
+				for (GameObject object : spawnedObjects) {
 					World.spawnObject(object, true);
 				}
 				spawnBosses();
@@ -161,8 +155,8 @@ public final class RefugeOfFear extends Controler {
 	 * @param mapY The y offset.
 	 * @return The constructed world tile.
 	 */
-	public WorldTile getWorldTile(int mapX, int mapY) {
-		return new WorldTile((boundChunks[0] << 3) + mapX, (boundChunks[1] << 3) + mapY, 0);
+	public Tile getWorldTile(int mapX, int mapY) {
+		return new Tile((boundChunks[0] << 3) + mapX, (boundChunks[1] << 3) + mapY, 0);
 	}
 
 	@Override
@@ -198,7 +192,7 @@ public final class RefugeOfFear extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final WorldObject object) {
+	public boolean processObjectClick1(final GameObject object) {
 		if(object.getId() == 20573) {
 			return false;
 		} else if(object.getId() == 20572) {
@@ -289,7 +283,7 @@ public final class RefugeOfFear extends Controler {
 	 * Spawns all the lower bosses.
 	 */
 	public void spawnBosses() {
-		WorldTile[] coords = getSpawnCoordinates();
+		Tile[] coords = getSpawnCoordinates();
 		int i = 0;
 		for (Bosses monster : Bosses.values()) {
 			NPC npc = new NPC(monster.getId(), coords[i++], -1, false, false);
@@ -307,7 +301,7 @@ public final class RefugeOfFear extends Controler {
 	 * Gets the default spawn coordinates for the bosses.
 	 * @return The spawn coordinates.
 	 */
-	private WorldTile[] getSpawnCoordinates() {
+	private Tile[] getSpawnCoordinates() {
 		spawnCoordinates[0] = getWorldTile(4, 7);
 		spawnCoordinates[1] = getWorldTile(4, 13);
 		spawnCoordinates[2] = getWorldTile(22, 7);
@@ -320,7 +314,7 @@ public final class RefugeOfFear extends Controler {
 	 * @param tile The world tile.
 	 * @return {@code True} if so.
 	 */
-	public static boolean isInRefugeOfFear(WorldTile tile) {
+	public static boolean isInRefugeOfFear(Tile tile) {
 		return tile.getX() >= 3135 && tile.getX() <= 3160 && tile.getY() >= 4640 && tile.getY() <= 4660;
 	}
 
@@ -355,7 +349,7 @@ public final class RefugeOfFear extends Controler {
 			@Override
 			public void run() {
 				RegionBuilder.destroyMap(boundChunks[0], boundChunks[1], 4, 3);
-				for (WorldObject object : spawnedObjects) {
+				for (GameObject object : spawnedObjects) {
 					World.removeObject(object, true);
 				}
 			}			

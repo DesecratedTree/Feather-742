@@ -1,6 +1,6 @@
 package com.feather.game.player.controlers.fightpits;
 
-import com.feather.game.WorldObject;
+import com.feather.game.GameObject;
 import com.feather.game.minigames.FightPits;
 import com.feather.game.player.actions.FightPitsViewingOrb;
 import com.feather.game.player.controlers.Controler;
@@ -27,7 +27,7 @@ public class FightPitsLobby extends Controler {
 	//fuck it dont dare touching here again or dragonkk(me) kills u irl :D btw nice code it keeps nulling, fixed
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if(object.getId() == 68223) {
 			FightPits.leaveLobby(player, 1);
 			return false;

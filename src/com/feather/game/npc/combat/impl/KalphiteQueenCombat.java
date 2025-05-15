@@ -5,11 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -44,7 +40,7 @@ public class KalphiteQueenCombat extends CombatScript {
 	}
 
 	
-	private Player getTarget(List<Player> list, final Entity fromEntity, WorldTile startTile) {
+	private Player getTarget(List<Player> list, final Entity fromEntity, Tile startTile) {
 		if (fromEntity == null) {
 			return null;
 		}

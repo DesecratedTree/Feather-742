@@ -2,8 +2,8 @@ package com.feather.game.npc.fightkiln;
 
 import com.feather.game.Entity;
 import com.feather.game.Hit;
-import com.feather.game.WorldTile;
 import com.feather.game.Hit.HitLook;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.FightKiln;
 
@@ -12,7 +12,7 @@ public class TokHaarKetDill extends FightKilnNPC {
 
 	private int receivedHits;
 	
-	public TokHaarKetDill(int id, WorldTile tile, FightKiln controler) {
+	public TokHaarKetDill(int id, Tile tile, FightKiln controler) {
 		super(id, tile, controler);
 	}
 	

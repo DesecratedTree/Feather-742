@@ -7,8 +7,8 @@ import java.util.TimerTask;
 import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
 import com.feather.game.ForceMovement;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 import com.feather.game.player.controlers.Controler;
@@ -76,12 +76,12 @@ public final class BrimhavenAgility extends Controler {
 
 	private static class PlayingGame extends TimerTask {
 
-		private static WorldTile taggedDispenser;
+		private static Tile taggedDispenser;
 
 
-		private static WorldTile getNextDispenser() {
+		private static Tile getNextDispenser() {
 			while(true) {
-				WorldTile tile = new WorldTile(2761 + 11 * Utils.random(5) , 9546 + 11 * Utils.random(5) , 3);
+				Tile tile = new Tile(2761 + 11 * Utils.random(5) , 9546 + 11 * Utils.random(5) , 3);
 				if(!(tile.getX() == 2805 && tile.getY() == 9590) && !(taggedDispenser != null && tile.equals(taggedDispenser)))
 					return tile;
 			}
@@ -112,7 +112,7 @@ public final class BrimhavenAgility extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final WorldObject object) {
+	public boolean processObjectClick1(final GameObject object) {
 		if(object.getId() == 3581 || object.getId() == 3608) {
 			if(PlayingGame.taggedDispenser == null || PlayingGame.taggedDispenser.getTileHash() != object.getTileHash()) {
 				return false;
@@ -136,7 +136,7 @@ public final class BrimhavenAgility extends Controler {
 		} else if (object.getId() == 3583) {
 			final int rotationY = object.getY() == 9559 ? -1 : 1;
 			player.lock();
-			player.setNextFaceWorldTile(new WorldTile(player.getX(), player.getY() -1, 3));
+			player.setNextFaceWorldTile(new Tile(player.getX(), player.getY() -1, 3));
 			player.setNextAnimation(new Animation(1121));
 			WorldTasksManager.schedule(new WorldTask() {
 				int index = 0;
@@ -150,12 +150,12 @@ public final class BrimhavenAgility extends Controler {
 						return;
 					}
 					player.setNextAnimation(new Animation(1122));
-					final WorldTile tile = new WorldTile(player.getX(), player.getY() - rotationY, player.getPlane());
+					final Tile tile = new Tile(player.getX(), player.getY() - rotationY, player.getPlane());
 					player.setNextForceMovement(new ForceMovement(tile, 1, 1));
 					WorldTasksManager.schedule(new WorldTask() {
 						@Override
 						public void run() {
-							player.setNextWorldTile(new WorldTile(tile));
+							player.setNextWorldTile(new Tile(tile));
 							this.stop();
 							return;
 						}
@@ -165,7 +165,7 @@ public final class BrimhavenAgility extends Controler {
 			return false;
 		} else if (object.getId() == 3553) {
 			player.getAppearence().setRenderEmote(155);
-			final WorldTile tile = new WorldTile(player.getX(), player.getY() - object.getRotation(), player.getPlane());
+			final Tile tile = new Tile(player.getX(), player.getY() - object.getRotation(), player.getPlane());
 			player.setNextForceMovement(new ForceMovement(tile, 1, 1));
 			return false;
 		} else if (object.getId() == 3551) {
@@ -181,7 +181,7 @@ public final class BrimhavenAgility extends Controler {
 						this.stop();
 						return;
 					}
-					final WorldTile tile = new WorldTile(player.getX(), player.getY() - object.getRotation(), player.getPlane());
+					final Tile tile = new Tile(player.getX(), player.getY() - object.getRotation(), player.getPlane());
 					player.addWalkStep(tile.getX(), tile.getY(), player.getX(), player.getY(), false);
 				}
 			}, 0, 0);

@@ -1,10 +1,6 @@
 package com.feather.game.npc.combat;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.ForceMovement;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
 import com.feather.game.npc.godwars.zaros.Nex;
@@ -218,14 +214,14 @@ public final class NPCCombat {
 					if (!npc.hasWalkSteps()) {
 						int[][] dirs = Utils.getCoordOffsetsNear(size);
 						for (int dir = 0; dir < dirs[0].length; dir++) {
-							final WorldTile tile = new WorldTile(new WorldTile(
+							final Tile tile = new Tile(new Tile(
 									target.getX() + dirs[0][dir], target.getY()
 											+ dirs[1][dir], target.getPlane()));
 							if (World.canMoveNPC(tile.getPlane(), tile.getX(),
 									tile.getY(), size)) { // if found done
 								nex.setFlyTime(4);
 								npc.setNextForceMovement(new ForceMovement(
-										new WorldTile(npc), 0, tile, 1, Utils
+										new Tile(npc), 0, tile, 1, Utils
 												.getMoveDirection(
 														tile.getX() - npc.getX(),
 														tile.getY() - npc.getY())));

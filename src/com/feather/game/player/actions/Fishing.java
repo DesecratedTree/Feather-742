@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.feather.game.Animation;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -158,7 +158,7 @@ public class Fishing extends Action {
 	private FishingSpots spot;
 
 	private NPC npc;
-	private WorldTile tile;
+	private Tile tile;
 	private int fishId;
 
 	private final int[] BONUS_FISH = { 341, 349, 401, 407 };
@@ -168,7 +168,7 @@ public class Fishing extends Action {
 	public Fishing(FishingSpots spot, NPC npc) {
 		this.spot = spot;
 		this.npc = npc;
-		tile = new WorldTile(npc);
+		tile = new Tile(npc);
 	}
 
 	@Override

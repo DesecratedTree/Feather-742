@@ -1,15 +1,13 @@
 package com.feather.game.npc.familiar;
 
 import java.io.Serializable;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.item.ItemsContainer;
 import com.feather.game.player.Player;
 import com.feather.game.player.content.ItemConstants;
-import com.feather.game.player.content.Lend;
 
 public class BeastOfBurden implements Serializable {
 
@@ -43,12 +41,12 @@ public class BeastOfBurden implements Serializable {
 
 	public void dropBob() {
 		int size = familiar.getSize();
-		WorldTile WorldTile = new WorldTile(familiar.getCoordFaceX(size),
+		Tile Tile = new Tile(familiar.getCoordFaceX(size),
 				familiar.getCoordFaceY(size), familiar.getPlane());
 		for (int i = 0; i < beastItems.getSize(); i++) {
 			Item item = beastItems.get(i);
 			if (item != null)
-				World.addGroundItem(item, WorldTile, player, false, -1, false);
+				World.addGroundItem(item, Tile, player, false, -1, false);
 		}
 		beastItems.reset();
 	}

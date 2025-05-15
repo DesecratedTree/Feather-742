@@ -3,11 +3,7 @@ package com.feather.game.npc.fightkiln;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
 import com.feather.game.player.Player;
@@ -20,7 +16,7 @@ public class FightKilnNPC extends NPC {
 
 	private FightKiln controler;
 
-	public FightKilnNPC(int id, WorldTile tile, FightKiln controler) {
+	public FightKilnNPC(int id, Tile tile, FightKiln controler) {
 		super(id, tile, -1, true, true);
 		setForceMultiArea(true);
 		setNoDistanceCheck(true);

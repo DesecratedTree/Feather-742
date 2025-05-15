@@ -1,12 +1,8 @@
 package com.feather.net.decoders;
 
 import com.feather.Settings;
-import com.feather.game.Animation;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
-import com.feather.game.item.FloorItem;
+import com.feather.game.*;
+import com.feather.game.item.GroundItem;
 import com.feather.game.item.Item;
 import com.feather.game.minigames.clanwars.ClanWars;
 import com.feather.game.minigames.creations.StealingCreation;
@@ -326,14 +322,14 @@ public final class WorldPacketsDecoder extends Decoder {
 			long currentTime = Utils.currentTimeMillis();
 			if (player.getLockDelay() >= currentTime || player.getEmotesManager().getNextEmoteEnd() >= currentTime)
 				return;
-			final WorldTile tile = new WorldTile(x, y, player.getPlane());
+			final Tile tile = new Tile(x, y, player.getPlane());
 			int regionId = tile.getRegionId();
 			if (!player.getMapRegionsIds().contains(regionId))
 				return;
-			WorldObject mapObject = World.getRegion(regionId).getObject(objectId, tile);
+			GameObject mapObject = World.getRegion(regionId).getObject(objectId, tile);
 			if (mapObject == null || mapObject.getId() != objectId)
 				return;
-			final WorldObject object = !player.isAtDynamicRegion() ? mapObject : new WorldObject(objectId, mapObject.getType(), mapObject.getRotation(), x, y, player.getPlane());
+			final GameObject object = !player.isAtDynamicRegion() ? mapObject : new GameObject(objectId, mapObject.getType(), mapObject.getRotation(), x, y, player.getPlane());
 			final Item item = player.getInventory().getItem(slot);
 			if (player.isDead() || Utils.getInterfaceDefinitionsSize() <= interfaceId)
 				return;
@@ -615,7 +611,7 @@ public final class WorldPacketsDecoder extends Decoder {
 				case 27:
 				case 23:
 					if (Magic.checkCombatSpell(player, componentId, 1, false)) {
-						player.setNextFaceWorldTile(new WorldTile(p2
+						player.setNextFaceWorldTile(new Tile(p2
 								.getCoordFaceX(p2.getSize()), p2
 								.getCoordFaceY(p2.getSize()), p2.getPlane()));
 						if (!player.getControlerManager().canAttack(p2))
@@ -693,7 +689,7 @@ public final class WorldPacketsDecoder extends Decoder {
 				case 55: // snare
 				case 81: // entangle
 					if (Magic.checkCombatSpell(player, componentId, 1, false)) {
-						player.setNextFaceWorldTile(new WorldTile(p2
+						player.setNextFaceWorldTile(new Tile(p2
 								.getCoordFaceX(p2.getSize()), p2
 								.getCoordFaceY(p2.getSize()), p2.getPlane()));
 						if (!player.getControlerManager().canAttack(p2))
@@ -849,7 +845,7 @@ public final class WorldPacketsDecoder extends Decoder {
 				case 27:
 				case 23:
 					if (Magic.checkCombatSpell(player, componentId, 1, false)) {
-						player.setNextFaceWorldTile(new WorldTile(npc
+						player.setNextFaceWorldTile(new Tile(npc
 								.getCoordFaceX(npc.getSize()), npc
 								.getCoordFaceY(npc.getSize()), npc.getPlane()));
 						if (!player.getControlerManager().canAttack(npc))
@@ -920,7 +916,7 @@ public final class WorldPacketsDecoder extends Decoder {
 				case 55: // snare
 				case 81: // entangle
 					if (Magic.checkCombatSpell(player, componentId, 1, false)) {
-						player.setNextFaceWorldTile(new WorldTile(npc
+						player.setNextFaceWorldTile(new Tile(npc
 								.getCoordFaceX(npc.getSize()), npc
 								.getCoordFaceY(npc.getSize()), npc.getPlane()));
 						if (!player.getControlerManager().canAttack(npc))
@@ -992,11 +988,11 @@ public final class WorldPacketsDecoder extends Decoder {
 			int x = stream.readUnsignedShortLE();
 			final int id = stream.readUnsignedShort();
 			boolean forceRun = stream.read128Byte() == 1;
-			final WorldTile tile = new WorldTile(x, y, player.getPlane());
+			final Tile tile = new Tile(x, y, player.getPlane());
 			final int regionId = tile.getRegionId();
 			if (!player.getMapRegionsIds().contains(regionId))
 				return;
-			final FloorItem item = World.getRegion(regionId).getGroundItem(id,
+			final GroundItem item = World.getRegion(regionId).getGroundItem(id,
 					tile, player);
 			if (item == null)
 				return;
@@ -1006,7 +1002,7 @@ public final class WorldPacketsDecoder extends Decoder {
 			player.setCoordsEvent(new CoordsEvent(tile, new Runnable() {
 				@Override
 				public void run() {
-					final FloorItem item = World.getRegion(regionId)
+					final GroundItem item = World.getRegion(regionId)
 							.getGroundItem(id, tile, player);
 					if (item == null)
 						return;

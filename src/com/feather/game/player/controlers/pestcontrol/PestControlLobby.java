@@ -1,7 +1,7 @@
 package com.feather.game.player.controlers.pestcontrol;
 
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.minigames.pest.Lander;
 import com.feather.game.player.controlers.Controler;
 
@@ -24,13 +24,13 @@ public final class PestControlLobby extends Controler {
 	}
 	
 	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
+	public boolean processMagicTeleport(Tile toTile) {
 		this.forceClose();
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(WorldTile toTile) {
+	public boolean processItemTeleport(Tile toTile) {
 		this.forceClose();
 		return false;
 	}
@@ -52,7 +52,7 @@ public final class PestControlLobby extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		switch (object.getId()) {
 		case 14314:
 			player.getDialogueManager().startDialogue("LanderD");

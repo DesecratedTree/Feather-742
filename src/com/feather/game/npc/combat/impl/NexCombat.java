@@ -4,15 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.feather.cache.parser.NPCDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.ForceMovement;
-import com.feather.game.ForceTalk;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
@@ -31,10 +23,10 @@ public class NexCombat extends CombatScript {
 		return new Object[] { "Nex" };
 	}
 
-	public WorldTile[] NO_ESCAPE_TELEPORTS = { new WorldTile(2924, 5213, 0), // north
-			new WorldTile(2934, 5202, 0), // east,
-			new WorldTile(2924, 5192, 0), // south
-			new WorldTile(2913, 5202, 0), }; // west
+	public Tile[] NO_ESCAPE_TELEPORTS = { new Tile(2924, 5213, 0), // north
+			new Tile(2934, 5202, 0), // east,
+			new Tile(2924, 5192, 0), // south
+			new Tile(2913, 5202, 0), }; // west
 
 	@Override
 	public int attack(final NPC npc, final Entity target) {
@@ -71,8 +63,8 @@ public class NexCombat extends CombatScript {
 				npc.setCantInteract(true);
 				npc.getCombat().removeTarget();
 				final int idx = Utils.random(NO_ESCAPE_TELEPORTS.length);
-				final WorldTile dir = NO_ESCAPE_TELEPORTS[idx];
-				final WorldTile center = new WorldTile(2924, 5202, 0);
+				final Tile dir = NO_ESCAPE_TELEPORTS[idx];
+				final Tile center = new Tile(2924, 5202, 0);
 				WorldTasksManager.schedule(new WorldTask() {
 					private int count;
 
@@ -237,7 +229,7 @@ public class NexCombat extends CombatScript {
 						String key = t.getX() + "_" + t.getY();
 						if (!tiles.containsKey(t.getX() + "_" + t.getY())) {
 							tiles.put(key, new int[] { t.getX(), t.getY() });
-							World.spawnTemporaryObject(new WorldObject(57261,
+							World.spawnTemporaryObject(new GameObject(57261,
 									10, 0, t.getX(), t.getY(), 0), 2400);
 						}
 					}
@@ -251,7 +243,7 @@ public class NexCombat extends CombatScript {
 										.getPossibleTargets();
 								for (int[] tile : tiles.values()) {
 									World.sendGraphics(null, new Graphics(383),
-											new WorldTile(tile[0], tile[1], 0));
+											new Tile(tile[0], tile[1], 0));
 									for (Entity t : possibleTargets)
 										if (t.getX() == tile[0]
 												&& t.getY() == tile[1])
@@ -357,7 +349,7 @@ public class NexCombat extends CombatScript {
 						int[][] dirs = Utils
 								.getCoordOffsetsNear(bloodReaverSize);
 						for (int dir = 0; dir < dirs[0].length; dir++) {
-							final WorldTile tile = new WorldTile(new WorldTile(
+							final Tile tile = new Tile(new Tile(
 									target.getX() + dirs[0][dir], target.getY()
 											+ dirs[1][dir], target.getPlane()));
 							if (World.canMoveNPC(tile.getPlane(), tile.getX(),

@@ -1,10 +1,6 @@
 package com.feather.game.npc.combat.impl;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -46,9 +42,9 @@ public class Kreearra extends CombatScript {
 								getRandomMaxHit(npc, 720,
 										NPCCombatDefinitions.RANGE, t)));
 				World.sendProjectile(npc, t, 1197, 41, 16, 41, 35, 16, 0);
-				WorldTile teleTile = t;
+				Tile teleTile = t;
 				for (int trycount = 0; trycount < 10; trycount++) {
-					teleTile = new WorldTile(t, 2);
+					teleTile = new Tile(t, 2);
 					if (World.canMoveNPC(t.getPlane(), teleTile.getX(),
 							teleTile.getY(), t.getSize()))
 						break;

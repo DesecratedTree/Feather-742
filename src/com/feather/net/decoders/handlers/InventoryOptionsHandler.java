@@ -7,7 +7,7 @@ import com.feather.content.utils.ToyHorsey;
 import com.feather.cores.WorldThread;
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar.SpecialAttack;
@@ -121,7 +121,7 @@ public class InventoryOptionsHandler {
 						return;
 					}
 					//mole
-					player.setNextWorldTile(new WorldTile(1752, 5137, 0));
+					player.setNextWorldTile(new Tile(1752, 5137, 0));
 					player.getPackets().sendGameMessage("You seem to have dropped down into a network of mole tunnels.");
 					return;
 				}
@@ -430,10 +430,10 @@ public class InventoryOptionsHandler {
 		else if (itemId <= 1712 && itemId >= 1706 || itemId >= 10354
 				&& itemId <= 10362)
 			player.getDialogueManager().startDialogue("Transportation",
-					"Edgeville", new WorldTile(3087, 3496, 0), "Karamja",
-					new WorldTile(2918, 3176, 0), "Draynor Village",
-					new WorldTile(3105, 3251, 0), "Al Kharid",
-					new WorldTile(3293, 3163, 0), itemId);
+					"Edgeville", new Tile(3087, 3496, 0), "Karamja",
+					new Tile(2918, 3176, 0), "Draynor Village",
+					new Tile(3105, 3251, 0), "Al Kharid",
+					new Tile(3293, 3163, 0), itemId);
 		else if (itemId == 995) {
 			if (item.getAmount() < 0) {
 				return;
@@ -447,10 +447,10 @@ public class InventoryOptionsHandler {
 							"The amulet has ran out of charges. You need to recharge it if you wish it use it once more.");
 		else if (itemId >= 3853 && itemId <= 3867)
 			player.getDialogueManager().startDialogue("Transportation",
-					"Burthrope Games Room", new WorldTile(2880, 3559, 0),
-					"Barbarian Outpost", new WorldTile(2519, 3571, 0),
-					"Gamers' Grotto", new WorldTile(2970, 9679, 0),
-					"Corporeal Beast", new WorldTile(2886, 4377, 0), itemId);
+					"Burthrope Games Room", new Tile(2880, 3559, 0),
+					"Barbarian Outpost", new Tile(2519, 3571, 0),
+					"Gamers' Grotto", new Tile(2970, 9679, 0),
+					"Corporeal Beast", new Tile(2886, 4377, 0), itemId);
 	}
 
 	public static void handleItemOption7(Player player, int slotId, int itemId,
@@ -489,7 +489,7 @@ public class InventoryOptionsHandler {
 		player.getInventory().deleteItem(slotId, item);
 		if (player.getCharges().degradeCompletly(item))
 			return;
-		World.addGroundItem(item, new WorldTile(player), player, false, 180,
+		World.addGroundItem(item, new Tile(player), player, false, 180,
 				true);
 		player.getPackets().sendSound(2739, 0, 1);
 	}

@@ -2,8 +2,8 @@ package com.feather.game.player.controlers;
 
 import com.feather.Settings;
 import com.feather.game.Animation;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
@@ -16,11 +16,11 @@ public class CorpBeastControler extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(WorldObject object) {
+	public boolean processObjectClick1(GameObject object) {
 		if (object.getId() == 37929 || object.getId() == 38811) {
 			removeControler();
 			player.stopAll();
-			player.setNextWorldTile(new WorldTile(2970, 4384, player.getPlane()));
+			player.setNextWorldTile(new Tile(2970, 4384, player.getPlane()));
 			return false;
 		}
 		return true;
@@ -52,7 +52,7 @@ public class CorpBeastControler extends Controler {
 					player.getEquipment().init();
 					player.getInventory().init();
 					player.reset();
-					player.setNextWorldTile(new WorldTile(Settings.RESPAWN_PLAYER_LOCATION));
+					player.setNextWorldTile(new Tile(Settings.RESPAWN_PLAYER_LOCATION));
 					player.setNextAnimation(new Animation(-1));
 				} else if (loop == 4) {
 					removeControler();

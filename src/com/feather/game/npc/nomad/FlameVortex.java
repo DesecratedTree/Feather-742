@@ -2,11 +2,7 @@ package com.feather.game.npc.nomad;
 
 import java.util.List;
 
-import com.feather.game.Animation;
-import com.feather.game.ForceTalk;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -19,12 +15,12 @@ public class FlameVortex extends NPC {
 
 	private long explodeTime;
 	
-	public FlameVortex(WorldTile tile) {
+	public FlameVortex(Tile tile) {
 		this(9441, tile, -1, true, true);
 	}
 	
-	public FlameVortex(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public FlameVortex(int id, Tile tile, int mapAreaNameHash,
+					   boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		explodeTime = Utils.currentTimeMillis() + 60000;
 		setNextAnimation(new Animation(12720));

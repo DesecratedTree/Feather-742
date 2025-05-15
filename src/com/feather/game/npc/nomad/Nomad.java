@@ -2,12 +2,7 @@ package com.feather.game.npc.nomad;
 
 import java.util.ArrayList;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.ForceTalk;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
 import com.feather.game.player.Player;
@@ -23,14 +18,14 @@ public class Nomad extends NPC {
 	
 	private int nextMove;
 	private long nextMovePerform;
-	private WorldTile throneTile;
+	private Tile throneTile;
 	private ArrayList<NPC> copies;
 	private boolean healed;
 	private int notAttacked;
 	private Player target;
 	
-	public Nomad(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public Nomad(int id, Tile tile, int mapAreaNameHash,
+				 boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setForceMultiArea(true);
 		setRun(true);
@@ -139,7 +134,7 @@ public class Nomad extends NPC {
 		return nextMove++; 
 	}
 	
-	public void sendTeleport(final WorldTile tile) {
+	public void sendTeleport(final Tile tile) {
 		setNextAnimation(new Animation(12729));
 		setNextGraphics(new Graphics(1576));
 		WorldTasksManager.schedule(new WorldTask() {
@@ -161,14 +156,14 @@ public class Nomad extends NPC {
 		this.nextMove = nextMove;
 	}
 
-	public WorldTile getThroneTile() {
+	public Tile getThroneTile() {
 		/*
 		 * if no throne returns middle of area
 		 */
-		return throneTile == null ? new WorldTile((getRegionX() << 6) + 32, (getRegionY() << 6) + 32, getPlane()) : throneTile;
+		return throneTile == null ? new Tile((getRegionX() << 6) + 32, (getRegionY() << 6) + 32, getPlane()) : throneTile;
 	}
 
-	public void setThroneTile(WorldTile throneTile) {
+	public void setThroneTile(Tile throneTile) {
 		this.throneTile = throneTile;
 	}
 	
@@ -201,8 +196,8 @@ public class Nomad extends NPC {
 		}, 3);
 	}
 	
-	public WorldTile getCopySpot(int index) {
-		WorldTile throneTile = getThroneTile();
+	public Tile getCopySpot(int index) {
+		Tile throneTile = getThroneTile();
 		switch(index) {
 		case 0:
 			return throneTile;

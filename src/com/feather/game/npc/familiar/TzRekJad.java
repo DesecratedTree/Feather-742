@@ -1,6 +1,6 @@
 package com.feather.game.npc.familiar;
 
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.player.Player;
 
 /**
@@ -20,7 +20,7 @@ public final class TzRekJad extends Familiar {
 	 * @param owner The owner.
 	 * @param tile The world tile to spawn on.
 	 */
-	public TzRekJad(Player owner, WorldTile tile) {
+	public TzRekJad(Player owner, Tile tile) {
 		super(owner, null, tile, -1, true);
 	}
 

@@ -8,7 +8,7 @@ import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.minigames.GodWarsBosses;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -20,8 +20,8 @@ import com.feather.utils.Utils;
 @SuppressWarnings("serial")
 public class CommanderZilyana extends NPC {
 
-	public CommanderZilyana(int id, WorldTile tile, int mapAreaNameHash,
-			boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public CommanderZilyana(int id, Tile tile, int mapAreaNameHash,
+							boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
 

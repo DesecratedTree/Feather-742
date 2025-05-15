@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import com.feather.cache.parser.NPCDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.Animation;
-import com.feather.game.ForceTalk;
-import com.feather.game.RegionBuilder;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.cutscenes.Cutscene;
@@ -231,10 +227,10 @@ public final class DominionTower implements Serializable {
 	}
 
 	private void teleportToArena(int mode) {
-		player.setNextFaceWorldTile(new WorldTile(getBaseX() + 11, getBaseY() + 29, 0));
+		player.setNextFaceWorldTile(new Tile(getBaseX() + 11, getBaseY() + 29, 0));
 		player.getControlerManager().startControler("DTControler", mode);
 		player.unlock();
-		player.setNextWorldTile(new WorldTile(getBaseX() + 10, getBaseY() + 29,
+		player.setNextWorldTile(new Tile(getBaseX() + 10, getBaseY() + 29,
 				2));
 		player.getMusicsManager().playMusic(
 				MUSICS[Utils.getRandom(MUSICS.length - 1)]);
@@ -262,13 +258,13 @@ public final class DominionTower implements Serializable {
 	public void startFight(final NPC[] bosses) {
 		for (NPC boss : bosses) {
 			boss.setCantInteract(true);
-			boss.setNextFaceWorldTile(new WorldTile(boss.getX() - 1, boss
+			boss.setNextFaceWorldTile(new Tile(boss.getX() - 1, boss
 					.getY(), 0));
 		}
 		player.lock();
-		player.setNextWorldTile(new WorldTile(getBaseX() + 25, getBaseY() + 32,
+		player.setNextWorldTile(new Tile(getBaseX() + 25, getBaseY() + 32,
 				2));
-		player.setNextFaceWorldTile(new WorldTile(getBaseX() + 26, getBaseY() + 32, 0));
+		player.setNextFaceWorldTile(new Tile(getBaseX() + 26, getBaseY() + 32, 0));
 		final int index = getNextBossIndex();
 		WorldTasksManager.schedule(new WorldTask() {
 
@@ -336,7 +332,7 @@ public final class DominionTower implements Serializable {
 				} else if (count == 8) {
 					if (nextBossIndex != -1 && BOSSES[index].item != null)
 						World.addGroundItem(BOSSES[index].item,
-								new WorldTile(getBaseX() + 26, getBaseY() + 33,
+								new Tile(getBaseX() + 26, getBaseY() + 33,
 										2));
 					player.closeInterfaces();
 					player.getPackets().sendResetCamera();
@@ -376,9 +372,9 @@ public final class DominionTower implements Serializable {
 		removeItem();
 		nextBossIndex = -1;
 		player.lock();
-		player.setNextWorldTile(new WorldTile(getBaseX() + 35, getBaseY() + 31,
+		player.setNextWorldTile(new Tile(getBaseX() + 35, getBaseY() + 31,
 				2));
-		player.setNextFaceWorldTile(new WorldTile(player.getX() + 1, player
+		player.setNextFaceWorldTile(new Tile(player.getX() + 1, player
 				.getY(), 0));
 
 		WorldTasksManager.schedule(new WorldTask() {
@@ -451,9 +447,9 @@ public final class DominionTower implements Serializable {
 		DTRank.checkRank(player, mode, BOSSES[getNextBossIndex()].name);
 		nextBossIndex = -1;
 		player.lock();
-		player.setNextWorldTile(new WorldTile(getBaseX() + 35, getBaseY() + 31,
+		player.setNextWorldTile(new Tile(getBaseX() + 35, getBaseY() + 31,
 				2));
-		player.setNextFaceWorldTile(new WorldTile(getBaseX() + 36, getBaseY() + 31, 0));
+		player.setNextFaceWorldTile(new Tile(getBaseX() + 36, getBaseY() + 31, 0));
 
 		WorldTasksManager.schedule(new WorldTask() {
 
@@ -507,7 +503,7 @@ public final class DominionTower implements Serializable {
 	 */
 
 	public void destroyArena(final boolean logout, int mode) {
-		WorldTile tile = new WorldTile(3744, 6425, 0);
+		Tile tile = new Tile(3744, 6425, 0);
 		if (logout)
 			player.setLocation(tile);
 		else {
@@ -545,7 +541,7 @@ public final class DominionTower implements Serializable {
 		NPC[] bosses = new NPC[BOSSES[getNextBossIndex()].ids.length];
 		for (int i = 0; i < BOSSES[getNextBossIndex()].ids.length; i++)
 			bosses[i] = World
-					.spawnNPC(BOSSES[getNextBossIndex()].ids[i], new WorldTile(
+					.spawnNPC(BOSSES[getNextBossIndex()].ids[i], new Tile(
 							getBaseX() + 37 + (i * 2), getBaseY() + 31, 2), -1,
 							true, true);
 		return bosses;

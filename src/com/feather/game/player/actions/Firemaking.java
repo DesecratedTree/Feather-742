@@ -2,9 +2,9 @@ package com.feather.game.player.actions;
 
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
-import com.feather.game.item.FloorItem;
+import com.feather.game.GameObject;
+import com.feather.game.Tile;
+import com.feather.game.item.GroundItem;
 import com.feather.game.item.Item;
 import com.feather.game.minigames.duel.DuelArena;
 import com.feather.game.minigames.duel.DuelControler;
@@ -87,7 +87,7 @@ public class Firemaking extends Action {
 				true);
 		player.getInventory().deleteItem(fire.getLogId(), 1);
 		World.addGroundItem(new Item(fire.getLogId(), 1),
-				new WorldTile(player), player, false, 180, true);
+				new Tile(player), player, false, 180, true);
 		Long time = (Long) player.getTemporaryAttributtes().remove("Fire");
 		boolean quickFire = time != null && time > Utils.currentTimeMillis();
 		setActionDelay(player, quickFire ? 1 : 2);
@@ -159,7 +159,7 @@ public class Firemaking extends Action {
 
 	@Override
 	public int processWithDelay(final Player player) {
-		final WorldTile tile = new WorldTile(player);
+		final Tile tile = new Tile(player);
 		if (!player.addWalkSteps(player.getX() - 1, player.getY(), 1))
 			if (!player.addWalkSteps(player.getX() + 1, player.getY(), 1))
 				if (!player.addWalkSteps(player.getX(), player.getY() + 1, 1))
@@ -169,14 +169,14 @@ public class Firemaking extends Action {
 		WorldTasksManager.schedule(new WorldTask() {
 			@Override
 			public void run() {
-				final FloorItem item = World.getRegion(tile.getRegionId())
+				final GroundItem item = World.getRegion(tile.getRegionId())
 						.getGroundItem(fire.getLogId(), tile, player);
 				if (item == null)
 					return;
 				if (!World.removeGroundItem(player, item, false))
 					return;
 				//player.getPackets().sendSound(2594, 0, 1); //TODO find fire sound
-				World.spawnTempGroundObject(new WorldObject(fire.getFireId(),
+				World.spawnTempGroundObject(new GameObject(fire.getFireId(),
 						10, 0, tile.getX(), tile.getY(), tile.getPlane()), 592,
 						fire.getLife());
 				player.getSkills().addXp(Skills.FIREMAKING, increasedExperience(player, fire.getExperience()));

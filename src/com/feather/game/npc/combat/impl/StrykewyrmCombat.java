@@ -1,11 +1,6 @@
 package com.feather.game.npc.combat.impl;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Hit;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.Hit.HitLook;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
@@ -74,7 +69,7 @@ public class StrykewyrmCombat extends CombatScript {
 				}, 1);
 			}
 		} else if (attackStyle == 10) { // bury
-			final WorldTile tile = new WorldTile(target);
+			final Tile tile = new Tile(target);
 			tile.moveLocation(-1, -1, 0);
 			npc.setNextAnimation(new Animation(12796));
 			npc.setCantInteract(true);

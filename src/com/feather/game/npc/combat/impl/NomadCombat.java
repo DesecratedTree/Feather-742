@@ -1,10 +1,6 @@
 package com.feather.game.npc.combat.impl;
 
-import com.feather.game.Animation;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.*;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.CombatScript;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -25,7 +21,7 @@ public class NomadCombat extends CombatScript {
 	}
 
 	
-	private void spawnFlameVortex(WorldTile tile) {
+	private void spawnFlameVortex(Tile tile) {
 		if(!World.isNotCliped(tile.getPlane(), tile.getX(), tile.getY(), 1))
 			return;
 		new FlameVortex(tile);
@@ -82,7 +78,7 @@ public class NomadCombat extends CombatScript {
 					npc.setNextAnimation(new Animation(12701));
 					Dialogue.sendNPCDialogueNoContinue(player, nomad.getId(), 9842, "Let's make things interesting!");
 					player.getPackets().sendVoice(8039);
-					final WorldTile middle = new WorldTile(player);
+					final Tile middle = new Tile(player);
 					WorldTasksManager.schedule(new WorldTask() {
 						int count;
 						@Override
@@ -136,7 +132,7 @@ public class NomadCombat extends CombatScript {
 				break;
 				case 1:
 					nomad.setCantFollowUnderCombat(true);
-					WorldTile throne = nomad.getThroneTile();
+					Tile throne = nomad.getThroneTile();
 					if(nomad.getX() != throne.getX() || nomad.getY() != throne.getY())
 						nomad.sendTeleport(nomad.getThroneTile());
 					WorldTasksManager.schedule(new WorldTask() {
@@ -194,7 +190,7 @@ public class NomadCombat extends CombatScript {
 								player.addFreezeDelay(17000);
 								Dialogue.sendNPCDialogueNoContinue(player, nomad.getId(), 9790, "Let's see how much punishment you can take!");
 								player.getPackets().sendVoice(8001);
-								player.setNextFaceWorldTile(new WorldTile(player.getX(), player.getY()+1, 0));
+								player.setNextFaceWorldTile(new Tile(player.getX(), player.getY()+1, 0));
 								player.setNextGraphics(new Graphics(369));
 								player.unlock();
 								secondLoop = true;

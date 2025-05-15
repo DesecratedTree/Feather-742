@@ -1,19 +1,12 @@
 package com.feather.net.encoders;
 
+import com.feather.game.*;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
 
 import com.feather.Settings;
 import com.feather.cache.parser.ObjectDefinitions;
-import com.feather.game.Animation;
-import com.feather.game.DynamicRegion;
-import com.feather.game.Entity;
-import com.feather.game.Graphics;
-import com.feather.game.Region;
-import com.feather.game.World;
-import com.feather.game.WorldObject;
-import com.feather.game.WorldTile;
-import com.feather.game.item.FloorItem;
+import com.feather.game.item.GroundItem;
 import com.feather.game.item.Item;
 import com.feather.game.item.ItemsContainer;
 import com.feather.game.npc.NPC;
@@ -199,7 +192,7 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(stream);
 	}
 
-	public void sendRemoveGroundItem(FloorItem item) {
+	public void sendRemoveGroundItem(GroundItem item) {
 		OutputStream stream = createWorldTileStream(item.getTile());
 		int localX = item.getTile().getLocalX(
 				player.getLastLoadedMapRegionTile(), player.getMapSize());
@@ -214,7 +207,7 @@ public class WorldPacketsEncoder extends Encoder {
 
 	}
 
-	public void sendGroundItem(FloorItem item) {
+	public void sendGroundItem(GroundItem item) {
 		OutputStream stream = createWorldTileStream(item.getTile());
 		int localX = item.getTile().getLocalX(
 				player.getLastLoadedMapRegionTile(), player.getMapSize());
@@ -229,10 +222,10 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(stream);
 	}
 
-	public void sendProjectile(Entity receiver, WorldTile startTile,
-			WorldTile endTile, int gfxId, int startHeight, int endHeight,
-			int speed, int delay, int curve, int startDistanceOffset,
-			int creatorSize) {
+	public void sendProjectile(Entity receiver, Tile startTile,
+							   Tile endTile, int gfxId, int startHeight, int endHeight,
+							   int speed, int delay, int curve, int startDistanceOffset,
+							   int creatorSize) {
 		OutputStream stream = createWorldTileStream(startTile);
 		stream.writePacket(player, 20);
 		int localX = startTile.getLocalX(player.getLastLoadedMapRegionTile(),
@@ -469,11 +462,11 @@ public class WorldPacketsEncoder extends Encoder {
 			sendNPCOnIComponent(interfaceId, componentId, entityId);
 	}
 
-	public void sendWorldTile(WorldTile tile) {
+	public void sendWorldTile(Tile tile) {
 		session.write(createWorldTileStream(tile));
 	}
 	
-	public OutputStream createWorldTileStream(WorldTile tile) {
+	public OutputStream createWorldTileStream(Tile tile) {
 		OutputStream stream = new OutputStream(4);
 		stream.writePacket(player, 158);
 		stream.writeByte128(tile.getLocalY(player.getLastLoadedMapRegionTile(),
@@ -484,7 +477,7 @@ public class WorldPacketsEncoder extends Encoder {
 		return stream;
 	}
 
-	public void sendObjectAnimation(WorldObject object, Animation animation) {
+	public void sendObjectAnimation(GameObject object, Animation animation) {
 		OutputStream stream = new OutputStream(10);
 		stream.writePacket(player, 76);
 		stream.writeInt(animation.getIds()[0]);
@@ -494,12 +487,12 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(stream);
 	}
 
-	public void sendTileMessage(String message, WorldTile tile, int color) {
+	public void sendTileMessage(String message, Tile tile, int color) {
 		sendTileMessage(message, tile, 5000, 255, color);
 	}
 
-	public void sendTileMessage(String message, WorldTile tile, int delay,
-			int height, int color) {
+	public void sendTileMessage(String message, Tile tile, int delay,
+								int height, int color) {
 		OutputStream stream = createWorldTileStream(tile);
 		stream.writePacketVarByte(player, 107);
 		stream.skip(1);
@@ -517,15 +510,15 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.endPacketVarByte();
 		session.write(stream);
 	}
-	public void sendSpawnedObject(WorldObject object) {
+	public void sendSpawnedObject(GameObject object) {
 		int chunkRotation = World.getRotation(object.getPlane(), object.getX(), object.getY());
 		if(chunkRotation == 1) {
-			object = new WorldObject(object);
+			object = new GameObject(object);
 			ObjectDefinitions defs = ObjectDefinitions
 					.getObjectDefinitions(object.getId());
 			object.moveLocation(0, - (defs.getSizeY() - 1), 0);
 		}else if(chunkRotation == 2) {
-			object = new WorldObject(object);
+			object = new GameObject(object);
 			ObjectDefinitions defs = ObjectDefinitions
 					.getObjectDefinitions(object.getId());
 			object.moveLocation(- (defs.getSizeY() - 1), 0, 0);
@@ -548,15 +541,15 @@ public class WorldPacketsEncoder extends Encoder {
 
 	}
 
-	public void sendDestroyObject(WorldObject object) {
+	public void sendDestroyObject(GameObject object) {
 		int chunkRotation = World.getRotation(object.getPlane(), object.getX(), object.getY());
 		if(chunkRotation == 1) {
-			object = new WorldObject(object);
+			object = new GameObject(object);
 			ObjectDefinitions defs = ObjectDefinitions
 					.getObjectDefinitions(object.getId());
 			object.moveLocation(0, - (defs.getSizeY() - 1), 0);
 		}else if(chunkRotation == 2) {
-			object = new WorldObject(object);
+			object = new GameObject(object);
 			ObjectDefinitions defs = ObjectDefinitions
 					.getObjectDefinitions(object.getId());
 			object.moveLocation(- (defs.getSizeY() - 1), 0, 0);
@@ -988,7 +981,7 @@ public class WorldPacketsEncoder extends Encoder {
 			NPC n = (NPC) target;
 			hash = n.getIndex() & 0xffff | 1 << 29;
 		} else {
-			WorldTile tile = (WorldTile) target;
+			Tile tile = (Tile) target;
 			hash = tile.getPlane() << 28 | tile.getX() << 14 | tile.getY()
 					& 0x3fff | 1 << 30;
 		}
@@ -1002,7 +995,7 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(stream);
 	}
 
-	public void sendDelayedGraphics(Graphics graphics, int delay, WorldTile tile) {
+	public void sendDelayedGraphics(Graphics graphics, int delay, Tile tile) {
 
 	}
 
@@ -1457,7 +1450,7 @@ public class WorldPacketsEncoder extends Encoder {
 		sendNPCInterface(npc, true, 746, 1, 1177);
 	}
 
-	public void sendObjectMessage(int border, WorldObject object, String message) {
+	public void sendObjectMessage(int border, GameObject object, String message) {
 		sendGameMessage(message);
 		sendGlobalString(306, message);
 		sendGlobalConfig(1699, 15263739);
@@ -1466,7 +1459,7 @@ public class WorldPacketsEncoder extends Encoder {
 		sendObjectInterface(object, true, 746, 1, 1177);
 	}
 
-	public void sendObjectInterface(WorldObject object, boolean nocliped, int windowId, int windowComponentId,
+	public void sendObjectInterface(GameObject object, boolean nocliped, int windowId, int windowComponentId,
 									int interfaceId) {
 		int[] xteas = new int[4];
 		OutputStream stream = new OutputStream(33);
@@ -1521,10 +1514,10 @@ public class WorldPacketsEncoder extends Encoder {
 		sendGlobalConfig(1699, colour); //"color" - Default; 1 - Black
 		sendGlobalConfig(1700, border); //"border" - Default; 0 - White; 1 - Red; 2 - No Border
 		sendGlobalConfig(1695, 1);
-		sendItemInterface(new Item(id), new WorldTile(x, y, player.getPlane()), true, 746, 0, 1177);
+		sendItemInterface(new Item(id), new Tile(x, y, player.getPlane()), true, 746, 0, 1177);
 	}
 
-	public void sendItemInterface(Item item, WorldTile tile, boolean noclipped, int windowId, int windowComponentId, int interfaceId) {
+	public void sendItemInterface(Item item, Tile tile, boolean noclipped, int windowId, int windowComponentId, int interfaceId) {
 		int[] xteas = new int[4];
 		OutputStream stream = new OutputStream(30);
 		stream.writePacket(player, 36);

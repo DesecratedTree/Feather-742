@@ -1,13 +1,13 @@
 package com.feather.game.npc.others;
 
 import com.feather.game.Entity;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 
 @SuppressWarnings("serial")
 public class PestPortal extends NPC {
 
-	public PestPortal(int id, WorldTile tile) {
+	public PestPortal(int id, Tile tile) {
 		super(id, tile, -1, true, true);
 		setCantFollowUnderCombat(true);
 	}

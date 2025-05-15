@@ -8,7 +8,7 @@ import com.feather.cache.parser.NPCDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
 import com.feather.game.World;
-import com.feather.game.WorldTile;
+import com.feather.game.Tile;
 import com.feather.game.npc.NPC;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
@@ -446,15 +446,15 @@ public final class EmotesManager implements Serializable {
 						return;
 					}
 					int size = NPCDefinitions.getNPCDefinitions(1224).size;
-					WorldTile spawnTile = new WorldTile(
-							new WorldTile(player.getX() + 1, player.getY(),
+					Tile spawnTile = new Tile(
+							new Tile(player.getX() + 1, player.getY(),
 									player.getPlane()));
 					if (!World.canMoveNPC(spawnTile.getPlane(),
 							spawnTile.getX(), spawnTile.getY(), size)) {
 						spawnTile = null;
 						int[][] dirs = Utils.getCoordOffsetsNear(size);
 						for (int dir = 0; dir < dirs[0].length; dir++) {
-							final WorldTile tile = new WorldTile(new WorldTile(
+							final Tile tile = new Tile(new Tile(
 									player.getX() + dirs[0][dir], player.getY()
 									+ dirs[1][dir], player.getPlane()));
 							if (World.canMoveNPC(tile.getPlane(), tile.getX(),
@@ -471,7 +471,7 @@ public final class EmotesManager implements Serializable {
 						return;
 					}
 					nextEmoteEnd = Utils.currentTimeMillis() + (25 * 600);
-					final WorldTile npcTile = spawnTile;
+					final Tile npcTile = spawnTile;
 					WorldTasksManager.schedule(new WorldTask() {
 						private int step;
 						private NPC npc;
