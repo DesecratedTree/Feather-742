@@ -1637,13 +1637,18 @@ public final class WorldPacketsDecoder extends Decoder {
 						.fixChatMessage(message), effects));
 			player.setLastMsg(message);
 		} else if (packetId == COMMANDS_PACKET) {
-			if (!player.isRunning())
+			if (!player.isRunning()) {
 				return;
+			}
 			boolean clientCommand = stream.readUnsignedByte() == 1;
-			@SuppressWarnings("unused")
 			boolean unknown = stream.readUnsignedByte() == 1;
 			String command = stream.readString();
-		} else if (packetId == COLOR_ID_PACKET) {
+			if (unknown) {
+				Logger.log("Client", "Processing client command : "+command
+						+ " player: "+player.getDisplayName());
+			}
+            Commands.processCommand(player, command, true, clientCommand);
+        } else if (packetId == COLOR_ID_PACKET) {
 			if (!player.hasStarted())
 				return;
 			int colorId = stream.readUnsignedShort();
