@@ -24,6 +24,7 @@ import com.feather.game.player.content.PlayerLook;
 import com.feather.game.player.dialogues.FremennikShipmaster;
 import com.feather.io.InputStream;
 import com.feather.utils.Logger;
+import com.feather.utils.NPCExamines;
 import com.feather.utils.NPCSpawns;
 import com.feather.utils.ShopsHandler;
 
@@ -40,9 +41,8 @@ public class NPCHandler {
 			return;
 		if (player.getRights() > 1) {
 			player.getPackets().sendGameMessage(
-					"FeatherNPC - ID is " + npc.getId() + ", location is " + npc.getX() + " - " + npc.getY() + " - " + npc.getPlane() + ".");
-		}
-		player.getPackets().sendNPCMessage(npc, "It's a " + npc.getDefinitions().name + ".");
+					"FeatherNPC - ID is " + npc.getId() + ", location is " + npc.getX() + " - " + npc.getY() + " - " + npc.getPlane() + ".");}
+        player.getPackets().sendGameMessage(NPCExamines.getExamine(npc));
 		if(player.isSpawnsMode()) {
 			try {
 				if(NPCSpawns.removeSpawn(npc)) {

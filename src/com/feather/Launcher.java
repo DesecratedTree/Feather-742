@@ -24,23 +24,7 @@ import com.feather.game.player.cutscenes.CutscenesHandler;
 import com.feather.game.player.dialogues.DialogueHandler;
 import com.feather.game.worldlist.WorldList;
 import com.feather.net.ServerChannelHandler;
-import com.feather.utils.DTRank;
-import com.feather.utils.DisplayNames;
-import com.feather.utils.IPBanL;
-import com.feather.utils.ItemExamines;
-import com.feather.utils.Logger;
-import com.feather.utils.MapArchiveKeys;
-import com.feather.utils.MapAreas;
-import com.feather.utils.MusicHints;
-import com.feather.utils.NPCBonuses;
-import com.feather.utils.NPCCombatDefinitionsL;
-import com.feather.utils.NPCDrops;
-import com.feather.utils.NPCSpawns;
-import com.feather.utils.ObjectSpawns;
-import com.feather.utils.PkRank;
-import com.feather.utils.SerializableFilesManager;
-import com.feather.utils.ShopsHandler;
-import com.feather.utils.Utils;
+import com.feather.utils.*;
 import com.feather.utils.huffman.Huffman;
 
 public final class Launcher {
@@ -71,6 +55,7 @@ public final class Launcher {
 		ItemExamines.init();
 		MusicHints.init();
 		ShopsHandler.init();
+		NPCExamines.init();
 		Logger.log("Launcher", "Initing WorldList...");
 		WorldList.init();
 		Logger.log("Launcher", "Initing Lent Items...");

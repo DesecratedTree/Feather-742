@@ -17,6 +17,7 @@ import com.feather.game.minigames.ZarosGodwars;
 import com.feather.game.minigames.clanwars.FfaZone;
 import com.feather.game.minigames.clanwars.RequestController;
 import com.feather.game.minigames.duel.DuelControler;
+import com.feather.game.npc.EntityDirection;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.corp.CorporealBeast;
 import com.feather.game.npc.dragons.KingBlackDragon;
@@ -432,9 +433,17 @@ public final class World {
 		return n;
 	}
 
-	public static final NPC spawnNPC(int id, WorldTile tile,
-			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
-		return spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+	public static void spawnNPC(int id, WorldTile tile,
+								int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
+		spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+	}
+
+	public static void spawnNPC(int id, WorldTile tile,
+								int mapAreaNameHash, boolean canBeAttackFromOutOfArea, EntityDirection faceDirection) {
+		NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+		if (returnValue != null) {
+			returnValue.setDirection(faceDirection.getValue());
+		}
 	}
 
 	/*
