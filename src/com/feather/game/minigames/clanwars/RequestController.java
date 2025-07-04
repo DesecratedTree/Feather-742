@@ -6,6 +6,7 @@ import com.feather.game.Tile;
 import com.feather.game.minigames.clanwars.ClanWars.Rules;
 import com.feather.game.player.CoordsEvent;
 import com.feather.game.player.Player;
+import com.feather.game.player.RouteEvent;
 import com.feather.game.player.controlers.Controler;
 
 /**
@@ -201,35 +202,32 @@ public final class RequestController extends Controler {
 	@Override
 	public boolean canPlayerOption1(final Player target) {
 		player.stopAll(false);
-		player.setCoordsEvent(new CoordsEvent(target, new Runnable() {
-			@Override
-			public void run() {
-				if (!canRequest(player, target, true)) {
-					return;
-				}
-				if (target == null || target.hasFinished() || !target.withinDistance(player, 14)
-						|| !(target.getControlerManager().getControler() instanceof RequestController)) {
-					player.getPackets().sendGameMessage("Unable to find " 
-						+ (target == null ? "your target" : target.getDisplayName()));
-					return;
-				}
-				if (target.getInterfaceManager().containsScreenInter()) {
-					player.getPackets().sendGameMessage("The other player is busy.");
-					return;
-				}
-				player.getTemporaryAttributtes().put("clan_request_p", target);
-				if (target.getTemporaryAttributtes().get("clan_request_p") == player) {
-					ClanWars clanWars = new ClanWars(target.getCurrentFriendChat(), player.getCurrentFriendChat());
-					if (canRequest(target, player, false)) { //Make sure the target can still challenge.
-						clanWars.sendInterface(player, target);
-						clanWars.sendInterface(target, player);
-						return;
-					}
-				}
-				target.getPackets().sendClanWarsRequestMessage(player);
-				player.getPackets().sendGameMessage("Sending challenge request...");
-			}			
-		}, player.getSize()));
+		player.setRouteEvent(new RouteEvent(target, () -> {
+            if (!canRequest(player, target, true)) {
+                return;
+            }
+            if (target == null || target.hasFinished() || !target.withinDistance(player, 14)
+                    || !(target.getControlerManager().getControler() instanceof RequestController)) {
+                player.getPackets().sendGameMessage("Unable to find "
+                    + (target == null ? "your target" : target.getDisplayName()));
+                return;
+            }
+            if (target.getInterfaceManager().containsScreenInter()) {
+                player.getPackets().sendGameMessage("The other player is busy.");
+                return;
+            }
+            player.getTemporaryAttributtes().put("clan_request_p", target);
+            if (target.getTemporaryAttributtes().get("clan_request_p") == player) {
+                ClanWars clanWars = new ClanWars(target.getCurrentFriendChat(), player.getCurrentFriendChat());
+                if (canRequest(target, player, false)) { //Make sure the target can still challenge.
+                    clanWars.sendInterface(player, target);
+                    clanWars.sendInterface(target, player);
+                    return;
+                }
+            }
+            target.getPackets().sendClanWarsRequestMessage(player);
+            player.getPackets().sendGameMessage("Sending challenge request...");
+        }, false));
 		return true;
 	}
 	

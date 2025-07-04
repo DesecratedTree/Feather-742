@@ -1,6 +1,5 @@
 package com.feather.cache.parser;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -100,7 +99,7 @@ public class ObjectDefinitions {
 	private HashMap<Integer, Object> parameters;
 	boolean aBoolean3923;
 	boolean aBoolean3924;
-	int anInt3925;
+	int accessBlockFlag;
 	public int id;
 
 	private int[] anIntArray4534;
@@ -229,7 +228,7 @@ public class ObjectDefinitions {
 																	else if (opcode != 66) {
 																		if (opcode != 67) {
 																			if (opcode == 69)
-																				anInt3925 = stream
+																				accessBlockFlag = stream
 																				.readUnsignedByte();
 																			else if (opcode != 70) {
 																				if (opcode == 71)
@@ -630,7 +629,7 @@ public class ObjectDefinitions {
 		anInt3902 = 128;
 		configId = -1;
 		anInt3877 = 0;
-		anInt3925 = 0;
+		accessBlockFlag = 0;
 		anInt3892 = 64;
 		aBoolean3923 = false;
 		aBoolean3924 = false;
@@ -743,5 +742,7 @@ public class ObjectDefinitions {
 		}
 		return field.get(this);
 	}
-
+	public int getAccessBLockFlag() {
+		return accessBlockFlag;
+	}
 }

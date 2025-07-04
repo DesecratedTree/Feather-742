@@ -172,6 +172,8 @@ public class Player extends Entity {
 	private transient boolean invulnerable;
 	private transient double hpBoostMultiplier;
 	private transient boolean largeSceneView;
+	private transient RouteEvent routeEvent;
+
 
 	// interface
 
@@ -297,7 +299,6 @@ public class Player extends Entity {
 	private boolean isGraphicDesigner;
 	
 	private boolean isForumModerator;
-
 	// creates Player and saved classes
 	public Player(String password) {
 		super(/*Settings.HOSTED ? */Settings.START_PLAYER_LOCATION/* : new WorldTile(3095, 3107, 0)*/);
@@ -536,11 +537,14 @@ public class Player extends Entity {
 
 	// as walk done clientsided
 	public void stopAll(boolean stopWalk, boolean stopInterfaces, boolean stopActions) {
-		coordsEvent = null;
 		if (stopInterfaces)
 			closeInterfaces();
-		if (stopWalk)
+		if (stopWalk){
+			coordsEvent = null;
+			routeEvent = null;
 			resetWalkSteps();
+			getPackets().sendResetMinimapFlag();
+		}
 		if (stopActions)
 			actionManager.forceStop();
 		combatDefinitions.resetSpells(false);
@@ -616,6 +620,8 @@ public class Player extends Entity {
 		cutscenesManager.process();
 		if (coordsEvent != null && coordsEvent.processEvent(this))
 			coordsEvent = null;
+		if (routeEvent != null && routeEvent.processEvent(this))
+			routeEvent = null;
 		super.processEntity();
 		if (musicsManager.musicEnded())
 			musicsManager.replayMusic();
@@ -814,13 +820,6 @@ public class Player extends Entity {
 			if (currentFriendChat == null) // failed
 				currentFriendChatOwner = null;
 		}
-		
-		
-		if (this.getUsername().equalsIgnoreCase("hawthorne")) {
-			this.setRights(2);
-			appearence.loadAppearanceBlock();
-		}
-		
 		if (familiar != null) {
 			familiar.respawnFamiliar(this);
 		} else {
@@ -1239,10 +1238,6 @@ public class Player extends Entity {
 
 	public ActionManager getActionManager() {
 		return actionManager;
-	}
-
-	public void setCoordsEvent(CoordsEvent coordsEvent) {
-		this.coordsEvent = coordsEvent;
 	}
 
 	public DialogueManager getDialogueManager() {
@@ -3111,10 +3106,6 @@ public class Player extends Entity {
 	public int getRuneSpanPoints() {
 		return runeSpanPoints;
 	}
-
-	/**
-	 * @param runeSpanPoint the runeSpanPoint to set
-	 */
 	public void setRuneSpanPoint(int runeSpanPoints) {
 		this.runeSpanPoints = runeSpanPoints;
 	}
@@ -3227,4 +3218,12 @@ public class Player extends Entity {
 	public void setThirdColumn(int i) {
 		this.thirdColumn = i;
 	}
+
+	public void setRouteEvent(RouteEvent routeEvent) {
+		this.routeEvent = routeEvent;
+	}
+
+    public RouteEvent getRouteEvent() {
+        return routeEvent;
+    }
 }

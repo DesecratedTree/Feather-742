@@ -12,12 +12,7 @@ import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar.SpecialAttack;
 import com.feather.game.npc.pet.Pet;
-import com.feather.game.player.ClueScrolls;
-import com.feather.game.player.CoordsEvent;
-import com.feather.game.player.Equipment;
-import com.feather.game.player.Inventory;
-import com.feather.game.player.LendingManager;
-import com.feather.game.player.Player;
+import com.feather.game.player.*;
 import com.feather.game.player.actions.BoxAction;
 import com.feather.game.player.actions.Firemaking;
 import com.feather.game.player.actions.Fletching;
@@ -503,25 +498,21 @@ public class InventoryOptionsHandler {
 		if (item == null) {
 			return;
 		}
-		player.setCoordsEvent(new CoordsEvent(npc, new Runnable() {
-			@Override
-			public void run() {
-				if (!player.getInventory().containsItem(item.getId(), item.getAmount())) {
-					return;
-				}
-				if (npc instanceof Pet) {
-					player.faceEntity(npc);
-					player.getPetManager().eat(item.getId(), (Pet) npc);
-					return;
-				}
-			}
-		}, npc.getSize()));
+		player.setRouteEvent(new RouteEvent(npc, () -> {
+            if (!player.getInventory().containsItem(item.getId(), item.getAmount())) {
+                return;
+            }
+            if (npc instanceof Pet) {
+                player.faceEntity(npc);
+                player.getPetManager().eat(item.getId(), (Pet) npc);
+                return;
+            }
+        }, false));
 	}
 
 public static void handleItemOnPlayer(final Player player,
 		final Player usedOn, final int itemId) {
-	player.setCoordsEvent(new CoordsEvent(usedOn, new Runnable() {
-		public void run() {
+		player.setRouteEvent(new RouteEvent(usedOn, () -> {
 			player.faceEntity(usedOn);
 			if (usedOn.getInterfaceManager().containsScreenInter()) {
 				player.getPackets().sendGameMessage(usedOn.getDisplayName() + " is busy at the moment.");
@@ -549,7 +540,6 @@ public static void handleItemOnPlayer(final Player player,
 				player.getPackets().sendGameMessage("Nothing interesting happens.");
 				break;
 			}
-		}
-	}, usedOn.getSize()));
+		}, false));
 }
 }
