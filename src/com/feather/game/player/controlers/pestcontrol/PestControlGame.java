@@ -2,8 +2,8 @@ package com.feather.game.player.controlers.pestcontrol;
 
 import com.feather.game.Entity;
 import com.feather.game.Hit;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.pest.PestControl;
 import com.feather.game.player.controlers.Controler;
 import com.feather.game.tasks.WorldTask;
@@ -57,13 +57,13 @@ public class PestControlGame extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "You can't leave the pest control area like this.");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "You can't leave the pest control area like this.");
 		return false;
 	}
@@ -88,7 +88,7 @@ public class PestControlGame extends Controler {
 	 *         not.
 	 */
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		switch (object.getId()) {
 		}
 		return true;

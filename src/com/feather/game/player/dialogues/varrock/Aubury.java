@@ -75,7 +75,7 @@ public class Aubury extends Dialogue {
 			aubury.faceEntity(player);
 			World.sendProjectile(aubury, player, 110, 1, 1, 1, 1, 1, 1);
 			player.setNextGraphics(new Graphics(110));
-			player.setNextWorldTile(new Tile(2910, 4832, 0));
+			player.setNextWorldTile(new WorldTile(2910, 4832, 0));
 			end();
 			break;
 		}

@@ -1,7 +1,7 @@
 package com.feather.game.npc.corp;
 
 import com.feather.game.Entity;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 
 @SuppressWarnings("serial")
@@ -9,8 +9,8 @@ public class CorporealBeast extends NPC {
 
 	private DarkEnergyCore core;
 
-	public CorporealBeast(int id, Tile tile, int mapAreaNameHash,
-						  boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public CorporealBeast(int id, WorldTile tile, int mapAreaNameHash,
+                          boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setCapDamage(1000);
 		setLureDelay(3000);

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TimerTask;
 
 import com.feather.cores.CoresManager;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.utils.Logger;
 
@@ -107,17 +107,17 @@ public class Lander {
 	 *
 	 */
 	public static enum LanderRequirement {
-		EASY(1, 40, new Tile(2661, 2639, 0), new Tile(0, 0, 0),
+		EASY(1, 40, new WorldTile(2661, 2639, 0), new WorldTile(0, 0, 0),
 				new int[] { 3772, 3762, 3742, 3732, 3747, 3727, 3752, 3773,
 			3764, 3743, 3734, 3748, 3728, 3754, 3774, 3766, 3744,
 			3736, 3749, 3729, 3756, 3775, 3768, 3745, 3738, 3750,
 			3730, 3758, 3776, 3770, 3746, 3740, 3751, 3731, 3760 },
 			2),
 
-			INTERMEDIATE(2, 70, new Tile(0, 0, 0), new Tile(0, 0, 0),
+			INTERMEDIATE(2, 70, new WorldTile(0, 0, 0), new WorldTile(0, 0, 0),
 					new int[] {}, 4),
 
-					HARD(3, 100, new Tile(0, 0, 0), new Tile(0, 0, 0),
+					HARD(3, 100, new WorldTile(0, 0, 0), new WorldTile(0, 0, 0),
 							new int[] {}, 6);
 
 		private static Map<Integer, LanderRequirement> landers = new HashMap<Integer, LanderRequirement>();
@@ -133,9 +133,9 @@ public class Lander {
 
 		int id, requirement, reward;
 		int[] pests;
-		Tile tile, exit;
+		WorldTile tile, exit;
 
-		private LanderRequirement(int id, int requirement, Tile tile, Tile exit, int[] pests, int reward){
+		private LanderRequirement(int id, int requirement, WorldTile tile, WorldTile exit, int[] pests, int reward){
 			this.id = id;
 			this.requirement = requirement;
 			this.tile = tile;
@@ -160,11 +160,11 @@ public class Lander {
 			return pests;
 		}
 
-		public Tile getWorldTile() {
+		public WorldTile getWorldTile() {
 			return tile;
 		}
 
-		public Tile getExitTile() {
+		public WorldTile getExitTile() {
 			return exit;
 		}
 	}

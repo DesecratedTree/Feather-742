@@ -120,13 +120,13 @@ public class CorporealBeastCombat extends CombatScript {
 			}
 		} else if (attackStyle == 4) {
 			npc.setNextAnimation(new Animation(10410));
-			final Tile tile = new Tile(target);
+			final WorldTile tile = new WorldTile(target);
 			World.sendProjectile(npc, tile, 1824, 41, 16, 30, 0, 16, 0);
 			WorldTasksManager.schedule(new WorldTask() {
 				@Override
 				public void run() {
 					for (int i = 0; i < 6; i++) {
-						final Tile newTile = new Tile(tile, 3);
+						final WorldTile newTile = new WorldTile(tile, 3);
 						if (!World.canMoveNPC(newTile.getPlane(),
 								newTile.getX(), newTile.getY(), 1))
 							continue;

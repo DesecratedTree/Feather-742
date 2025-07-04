@@ -1,10 +1,9 @@
 package com.feather.game.minigames.clanwars;
 
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.clanwars.ClanWars.Rules;
-import com.feather.game.player.CoordsEvent;
 import com.feather.game.player.Player;
 import com.feather.game.player.RouteEvent;
 import com.feather.game.player.controlers.Controler;
@@ -243,7 +242,7 @@ public final class RequestController extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		switch (object.getId()) {
 		case 28213:
 			if (player.getCurrentFriendChat() == null || player.getCurrentFriendChat().getClanWars() == null) {
@@ -253,11 +252,11 @@ public final class RequestController extends Controler {
 			ClanWars.enter(player);
 			return false;
 		case 38698: //Safe FFA portal.
-			player.setNextWorldTile(new Tile(2815, 5511, 0));
+			player.setNextWorldTile(new WorldTile(2815, 5511, 0));
 			player.getControlerManager().startControler("clan_wars_ffa", false);
 			return false;
 		case 38699: //Risk FFA portal.
-			player.setNextWorldTile(new Tile(3007, 5511, 0));
+			player.setNextWorldTile(new WorldTile(3007, 5511, 0));
 			player.getControlerManager().startControler("clan_wars_ffa", true);
 			return false;
 		}

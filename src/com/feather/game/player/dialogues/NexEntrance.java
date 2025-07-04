@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.ZarosGodwars;
 
 public final class NexEntrance extends Dialogue {
@@ -23,7 +23,7 @@ public final class NexEntrance extends Dialogue {
 					"Climb down.", "Stay here.");
 		} else if (stage == 0) {
 			if (componentId == OPTION_1) {
-				player.setNextWorldTile(new Tile(2911, 5204, 0));
+				player.setNextWorldTile(new WorldTile(2911, 5204, 0));
 				player.getControlerManager().startControler("ZGDControler");
 			}
 			end();

@@ -2,14 +2,14 @@ package com.feather.game.npc.others;
 
 import com.feather.game.Hit;
 import com.feather.game.Hit.HitLook;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 
 @SuppressWarnings("serial")
 public class Lucien extends NPC {
 
-	public Lucien(int id, Tile tile, int mapAreaNameHash,
-				  boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public Lucien(int id, WorldTile tile, int mapAreaNameHash,
+                  boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setLureDelay(0);
 		setCapDamage(300);

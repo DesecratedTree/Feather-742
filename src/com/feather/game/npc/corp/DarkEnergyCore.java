@@ -6,7 +6,7 @@ import com.feather.game.Entity;
 import com.feather.game.Hit;
 import com.feather.game.World;
 import com.feather.game.Hit.HitLook;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.utils.Utils;
@@ -45,7 +45,7 @@ public class DarkEnergyCore extends NPC {
 				}
 				target = possibleTarget.get(Utils.getRandom(possibleTarget
 						.size() - 1));
-				setNextWorldTile(new Tile(target));
+				setNextWorldTile(new WorldTile(target));
 				World.sendProjectile(this, this, target, 1828, 0, 0, 40, 40,
 						20, 0);
 			}

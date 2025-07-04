@@ -27,7 +27,7 @@ public class MercenaryMageCombat extends CombatScript {
 		int attackStyle = Utils.random(5);
 		if(attackStyle == 0) {
 			npc.setNextAnimation(new Animation(1979));
-			final Tile center = new Tile(target);
+			final WorldTile center = new WorldTile(target);
 			World.sendGraphics(npc, new Graphics(2929), center);
 			npc.setNextForceTalk(new ForceTalk("Obliterate!"));
 			WorldTasksManager.schedule(new WorldTask() {
@@ -48,7 +48,7 @@ public class MercenaryMageCombat extends CombatScript {
 			}, 4);
 		}else if(attackStyle == 1) {
 			npc.setNextAnimation(new Animation(1979));
-			final Tile center = new Tile(target);
+			final WorldTile center = new WorldTile(target);
 			World.sendGraphics(npc, new Graphics(2191), center);
 			npc.setNextForceTalk(new ForceTalk("How are the burns?"));
 			WorldTasksManager.schedule(new WorldTask() {
@@ -71,7 +71,7 @@ public class MercenaryMageCombat extends CombatScript {
 		}else if(attackStyle == 2) {
 			npc.setNextAnimation(new Animation(1979));
 			final int dir = Utils.random(Utils.DIRECTION_DELTA_X.length);
-			final Tile center = new Tile(npc.getX() + Utils.DIRECTION_DELTA_X[dir] * 5, npc.getY() + Utils.DIRECTION_DELTA_Y[dir] * 5, 0);
+			final WorldTile center = new WorldTile(npc.getX() + Utils.DIRECTION_DELTA_X[dir] * 5, npc.getY() + Utils.DIRECTION_DELTA_Y[dir] * 5, 0);
 			npc.setNextForceTalk(new ForceTalk("I think it's time to clean my room!"));
 			WorldTasksManager.schedule(new WorldTask() {
 				int count = 0;

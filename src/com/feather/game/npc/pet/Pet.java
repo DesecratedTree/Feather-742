@@ -1,7 +1,7 @@
 package com.feather.game.npc.pet;
 
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.familiar.Familiar;
 import com.feather.game.player.Player;
@@ -58,7 +58,7 @@ public final class Pet extends NPC {
 	 * @param owner The owner.
 	 * @param tile The world tile.
 	 */
-	public Pet(int id, int itemId, Player owner, Tile tile, PetDetails details) {
+	public Pet(int id, int itemId, Player owner, WorldTile tile, PetDetails details) {
 		super(id, tile, -1, false);
 		this.owner = owner;
 		this.itemId = itemId;
@@ -154,9 +154,9 @@ public final class Pet extends NPC {
 	 */
 	public void call() {
 		int size = getSize();
-		Tile teleTile = null;
+		WorldTile teleTile = null;
 		for (int dir = 0; dir < checkNearDirs[0].length; dir++) {
-			final Tile tile = new Tile(new Tile(owner.getX() + checkNearDirs[0][dir], owner.getY()
+			final WorldTile tile = new WorldTile(new WorldTile(owner.getX() + checkNearDirs[0][dir], owner.getY()
 					+ checkNearDirs[1][dir], owner.getPlane()));
 			if (World.canMoveNPC(tile.getPlane(), tile.getX(), tile.getY(), size)) {
 				teleTile = tile;

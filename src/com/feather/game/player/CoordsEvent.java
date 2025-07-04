@@ -1,16 +1,16 @@
 package com.feather.game.player;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 
 public final class CoordsEvent {
 
-	private Tile tile;
+	private WorldTile tile;
 	private Runnable event;
 	private int sizeX;
 	private int sizeY;
 
-	public CoordsEvent(Tile tile, Runnable event, int sizeX, int sizeY,
-					   int rotation) {
+	public CoordsEvent(WorldTile tile, Runnable event, int sizeX, int sizeY,
+                       int rotation) {
 		this.tile = tile;
 		this.event = event;
 		if (rotation == 1 || rotation == 3) {
@@ -22,11 +22,11 @@ public final class CoordsEvent {
 		}
 	}
 
-	public CoordsEvent(Tile tile, Runnable event, int sizeX, int sizeY) {
+	public CoordsEvent(WorldTile tile, Runnable event, int sizeX, int sizeY) {
 		this(tile, event, sizeX, sizeY, -1);
 	}
 
-	public CoordsEvent(Tile tile, Runnable event, int size) {
+	public CoordsEvent(WorldTile tile, Runnable event, int size) {
 		this(tile, event, size, size);
 	}
 

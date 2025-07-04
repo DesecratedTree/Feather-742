@@ -1,9 +1,10 @@
 package com.feather.game.player;
 
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
-import com.feather.game.item.GroundItem;
+import com.feather.game.World;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
+import com.feather.game.item.FloorItem;
 import com.feather.game.npc.NPC;
 import com.feather.game.route.RouteFinder;
 import com.feather.game.route.RouteStrategy;
@@ -43,7 +44,7 @@ public class RouteEvent {
     }
 
     public boolean instanceOfWorldObject() {
-        return object instanceof GameObject;
+        return object instanceof WorldObject;
     }
 
     public boolean instanceOfEntity() {
@@ -51,7 +52,7 @@ public class RouteEvent {
     }
 
     public boolean instanceOfFloorItem() {
-        return object instanceof GroundItem;
+        return object instanceof FloorItem;
     }
 
     public Object getObject() {
@@ -62,9 +63,9 @@ public class RouteEvent {
         if (this.instanceOfEntity())
             player.faceEntity((Entity) object);
         else if (this.instanceOfWorldObject())
-            player.faceObject((GameObject) object);
+            player.faceObject((WorldObject) object);
         else if (this.instanceOfFloorItem())
-            player.setNextFaceWorldTile(((GroundItem) object).getTile());
+            player.setNextFaceWorldTile(((FloorItem) object).getTile());
         player.setNextFaceEntity(null);
         player.getAppearence().getAppearanceBlock();
     }
@@ -155,7 +156,7 @@ public class RouteEvent {
                 int[] bufferX = RouteFinder.getLastPathBufferX();
                 int[] bufferY = RouteFinder.getLastPathBufferY();
 
-                Tile last = new Tile(bufferX[0], bufferY[0], player.getPlane());
+                WorldTile last = new WorldTile(bufferX[0], bufferY[0], player.getPlane());
                 player.resetWalkSteps();
                 //player.getPackets().sendMinimapFlag(last.getLocalX(player.getLastLoadedMapRegionTile(), player.getMapSize()), last.getLocalY(player.getLastLoadedMapRegionTile(), player.getMapSize()));
                 if (player.getFreezeDelay() > Utils.currentTimeMillis())
@@ -180,10 +181,12 @@ public class RouteEvent {
             return false;
         } else if (object instanceof Entity) {
             return player.getPlane() == ((Entity) object).getPlane();
-        } else if (object instanceof GameObject) {
-            return player.getPlane() == ((GameObject) object).getPlane();
-        } else if (object instanceof GroundItem) {
-            return player.getPlane() == ((GroundItem) object).getTile().getPlane();
+        } else if (object instanceof WorldObject) {
+            return player.getPlane() == ((WorldObject) object).getPlane();
+        } else if (object instanceof FloorItem) {
+            return player.getPlane() == ((FloorItem) object).getTile().getPlane();
+        } else if (object instanceof WorldTile) {
+            return player.getPlane() == ((WorldTile) object).getPlane();
         }
 
         else {
@@ -196,11 +199,14 @@ public class RouteEvent {
             return last;
         if (object instanceof Entity) {
             return new RouteStrategy[] { new EntityStrategy((Entity) object) };
-        } else if (object instanceof GameObject) {
-            return new RouteStrategy[] { new ObjectStrategy((GameObject) object) };
-        } else if (object instanceof GroundItem) {
-            GroundItem item = (GroundItem) object;
+        } else if (object instanceof WorldObject) {
+            return new RouteStrategy[] { new ObjectStrategy((WorldObject) object) };
+        } else if (object instanceof FloorItem) {
+            FloorItem item = (FloorItem) object;
             return new RouteStrategy[] { new FixedTileStrategy(item.getTile().getX(), item.getTile().getY()), new FloorItemStrategy(item) };
+        } else if (object instanceof WorldTile) {
+            WorldTile tile = (WorldTile) object;
+            return new RouteStrategy[] { new FixedTileStrategy(tile.getX(), tile.getY())};
         } else {
             throw new RuntimeException(object + " is not instanceof any reachable entity.");
         }

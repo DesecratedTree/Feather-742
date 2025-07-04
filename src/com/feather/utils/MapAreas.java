@@ -1,6 +1,6 @@
 package com.feather.utils;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,11 +28,11 @@ public final class MapAreas {
 			loadUnpackedMapAreas();
 	}
 
-	public static final boolean isAtArea(String areaName, Tile tile) {
+	public static final boolean isAtArea(String areaName, WorldTile tile) {
 		return isAtArea(Utils.getNameHash(areaName), tile);
 	}
 
-	public static final boolean isAtArea(int areaNameHash, Tile tile) {
+	public static final boolean isAtArea(int areaNameHash, WorldTile tile) {
 		int[] coordsList = mapAreas.get(areaNameHash);
 		if (coordsList == null)
 			return false;

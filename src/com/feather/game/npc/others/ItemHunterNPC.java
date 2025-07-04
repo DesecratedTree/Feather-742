@@ -3,8 +3,8 @@ package com.feather.game.npc.others;
 import java.util.List;
 
 import com.feather.game.World;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.OwnedObjectManager;
 import com.feather.game.player.Player;
@@ -17,7 +17,7 @@ import com.feather.utils.Utils;
 @SuppressWarnings("serial")
 public class ItemHunterNPC extends NPC {
 
-	public ItemHunterNPC(int id, Tile tile, int mapAreaNameHash,
+	public ItemHunterNPC(int id, WorldTile tile, int mapAreaNameHash,
 						 boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
@@ -25,14 +25,14 @@ public class ItemHunterNPC extends NPC {
 	@Override
 	public void processNPC() {
 		super.processNPC();
-		List<GameObject> objects = World.getRegion(getRegionId()).getSpawnedObjects();
+		List<WorldObject> objects = World.getRegion(getRegionId()).getSpawnedObjects();
 		if (objects != null) {
 			final HunterNPC info = HunterNPC.forId(getId());
 			int objectId = info.getEquipment().getObjectId();
-			for (final GameObject object : objects) {
+			for (final WorldObject object : objects) {
 				if (object.getId() == objectId) {
 					if (OwnedObjectManager.convertIntoObject(object,
-							new GameObject(info.getSuccessfulTransformObjectId(), 10, 0,
+							new WorldObject(info.getSuccessfulTransformObjectId(), 10, 0,
 									this.getX(), this.getY(), this.getPlane()),
 									new ConvertEvent() {
 						@Override
@@ -61,10 +61,10 @@ public class ItemHunterNPC extends NPC {
 		}
 	}
 
-	private void failedAttempt(GameObject object, HunterNPC info) {
+	private void failedAttempt(WorldObject object, HunterNPC info) {
 		setNextAnimation(info.getFailCatchAnim());
 		if (OwnedObjectManager.convertIntoObject(object,
-				new GameObject(info.getFailedTransformObjectId(), 10, 0,
+				new WorldObject(info.getFailedTransformObjectId(), 10, 0,
 						this.getX(), this.getY(), this.getPlane()),
 						new ConvertEvent() {
 			@Override

@@ -8,8 +8,8 @@ import java.util.TimerTask;
 
 import com.feather.cores.CoresManager;
 import com.feather.game.World;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.others.CastleWarBarricade;
 import com.feather.game.player.Equipment;
@@ -30,11 +30,11 @@ public final class CastleWars {
 	@SuppressWarnings("unchecked")
 	private static final List<Player>[] playing = new List[2];
 	private static int[] seasonWins = new int[2];
-	public static final Tile LOBBY = new Tile(2442, 3090, 0),
-			SARA_WAITING = new Tile(2381, 9489, 0),
-			ZAMO_WAITING = new Tile(2421, 9523, 0),
-			SARA_BASE = new Tile(2426, 3076, 1),
-			ZAMO_BASE = new Tile(2373, 3131, 1);
+	public static final WorldTile LOBBY = new WorldTile(2442, 3090, 0),
+			SARA_WAITING = new WorldTile(2381, 9489, 0),
+			ZAMO_WAITING = new WorldTile(2421, 9523, 0),
+			SARA_BASE = new WorldTile(2426, 3076, 1),
+			ZAMO_BASE = new WorldTile(2373, 3131, 1);
 
 	private static PlayingGame playingGame;
 
@@ -101,7 +101,7 @@ public final class CastleWars {
 		setCape(player, new Item(team == ZAMORAK ? 4042 : 4041));
 		setHood(player, new Item(team == ZAMORAK ? 4515 : 4513));
 		player.getControlerManager().startControler("CastleWarsWaiting", team);
-		player.setNextWorldTile(new Tile(team == ZAMORAK ? ZAMO_WAITING
+		player.setNextWorldTile(new WorldTile(team == ZAMORAK ? ZAMO_WAITING
 				: SARA_WAITING, 1));
 		player.getMusicsManager().playMusic(318); // temp testing else 5
 		if (playingGame == null && waiting[team].size() >= 5) // at least
@@ -189,7 +189,7 @@ public final class CastleWars {
 		waiting[team].remove(player);
 		setCape(player, null);
 		setHood(player, null);
-		player.setNextWorldTile(new Tile(LOBBY, 2));
+		player.setNextWorldTile(new WorldTile(LOBBY, 2));
 		if (playingGame != null && waiting[team].size() == 0
 				&& playing[team].size() == 0)
 			destroyPlayingGame(); // cancels if 0 players playing/waiting on any
@@ -240,7 +240,7 @@ public final class CastleWars {
 
 		player.getHintIconsManager().removeUnsavedHintIcon();
 		player.getMusicsManager().reset();
-		player.setNextWorldTile(new Tile(LOBBY, 2));
+		player.setNextWorldTile(new WorldTile(LOBBY, 2));
 		if (playingGame != null && waiting[team].size() == 0
 				&& playing[team].size() == 0)
 			destroyPlayingGame(); // cancels if 0 players playing/waiting on any
@@ -255,7 +255,7 @@ public final class CastleWars {
 		playing[team].add(player);
 		player.setCanPvp(true);
 		player.getControlerManager().startControler("CastleWarsPlaying", team);
-		player.setNextWorldTile(new Tile(team == ZAMORAK ? ZAMO_BASE
+		player.setNextWorldTile(new WorldTile(team == ZAMORAK ? ZAMO_BASE
 				: SARA_BASE, 1));
 	}
 
@@ -301,13 +301,13 @@ public final class CastleWars {
 	}
 
 	public static void takeFlag(Player player, int team, int flagTeam,
-								GameObject object, boolean droped) {
+                                WorldObject object, boolean droped) {
 		if (playingGame == null)
 			return;
 		playingGame.takeFlag(player, team, flagTeam, object, droped);
 	}
 
-	public static void dropFlag(Tile tile, int flagTeam) {
+	public static void dropFlag(WorldTile tile, int flagTeam) {
 		if (playingGame == null)
 			return;
 		playingGame.dropFlag(tile, flagTeam);
@@ -325,7 +325,7 @@ public final class CastleWars {
 		playingGame.addBarricade(team, player);
 	}
 
-	public static boolean isBarricadeAt(Tile tile) {
+	public static boolean isBarricadeAt(WorldTile tile) {
 		if (playingGame == null)
 			return false;
 		return playingGame.isBarricadeAt(tile);
@@ -338,7 +338,7 @@ public final class CastleWars {
 		private int[] score;
 		private int[] flagStatus;
 		private int[] barricadesCount;
-		private final LinkedList<GameObject> spawnedObjects = new LinkedList<GameObject>();
+		private final LinkedList<WorldObject> spawnedObjects = new LinkedList<WorldObject>();
 		private final LinkedList<CastleWarBarricade> barricades = new LinkedList<CastleWarBarricade>();
 
 		public PlayingGame() {
@@ -350,7 +350,7 @@ public final class CastleWars {
 			score = new int[2];
 			flagStatus = new int[2];
 			barricadesCount = new int[2];
-			for (GameObject object : spawnedObjects)
+			for (WorldObject object : spawnedObjects)
 				World.destroySpawnedObject(object, object.getId() == 4377
 				|| object.getId() == 4378 ? false : true);
 			spawnedObjects.clear();
@@ -359,7 +359,7 @@ public final class CastleWars {
 			barricades.clear();
 		}
 
-		public boolean isBarricadeAt(Tile tile) {
+		public boolean isBarricadeAt(WorldTile tile) {
 			for (Iterator<CastleWarBarricade> it = barricades.iterator(); it
 					.hasNext();) {
 				CastleWarBarricade npc = it.next();
@@ -383,7 +383,7 @@ public final class CastleWars {
 			}
 			player.getInventory().deleteItem(new Item(4053, 1));
 			barricadesCount[team]++;
-			barricades.add(new CastleWarBarricade(team, new Tile(player)));
+			barricades.add(new CastleWarBarricade(team, new WorldTile(player)));
 		}
 
 		public void removeBarricade(int team, CastleWarBarricade npc) {
@@ -392,7 +392,7 @@ public final class CastleWars {
 		}
 
 		public void takeFlag(Player player, int team, int flagTeam,
-							 GameObject object, boolean droped) {
+                             WorldObject object, boolean droped) {
 			if (!droped && team == flagTeam)
 				return;
 			if (droped && flagStatus[flagTeam] != DROPPED)
@@ -410,7 +410,7 @@ public final class CastleWars {
 				return;
 			}
 			if (!droped) {
-				GameObject flagStand = new GameObject(
+				WorldObject flagStand = new WorldObject(
 						flagTeam == SARADOMIN ? 4377 : 4378, object.getType(),
 								object.getRotation(), object.getX(), object.getY(),
 								object.getPlane());
@@ -437,8 +437,8 @@ public final class CastleWars {
 		}
 
 		private void makeSafe(int flagTeam) {
-			GameObject flagStand = null;
-			for (GameObject object : spawnedObjects) {
+			WorldObject flagStand = null;
+			for (WorldObject object : spawnedObjects) {
 				if (object.getId() == (flagTeam == SARADOMIN ? 4377 : 4378)) {
 					flagStand = object;
 					break;
@@ -451,9 +451,9 @@ public final class CastleWars {
 			refreshAllPlayersPlaying();
 		}
 
-		public void dropFlag(Tile tile, int flagTeam) {
+		public void dropFlag(WorldTile tile, int flagTeam) {
 			removeHintIcon(flagTeam);
-			GameObject flagDroped = new GameObject(
+			WorldObject flagDroped = new WorldObject(
 					flagTeam == SARADOMIN ? 4900 : 4901, 10, 0, tile.getX(),
 							tile.getY(), tile.getPlane());
 			spawnedObjects.add(flagDroped);

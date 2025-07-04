@@ -1,7 +1,7 @@
 package com.feather.game.npc.godwars.zaros;
 
 import com.feather.game.Entity;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.ZarosGodwars;
 import com.feather.game.npc.NPC;
 
@@ -10,8 +10,8 @@ public class NexMinion extends NPC {
 
 	private boolean hasNoBarrier;
 
-	public NexMinion(int id, Tile tile, int mapAreaNameHash,
-					 boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public NexMinion(int id, WorldTile tile, int mapAreaNameHash,
+                     boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setCantFollowUnderCombat(true);
 		setCapDamage(0);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.feather.game.Entity;
 import com.feather.game.Graphics;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.controlers.FightKiln;
 import com.feather.utils.Utils;
@@ -27,7 +27,7 @@ public class HarAken extends NPC {
 		time = Utils.currentTimeMillis() + (underLava ? 45000 : 30000);
 	}
 	
-	public HarAken(int id, Tile tile, FightKiln controler) {
+	public HarAken(int id, WorldTile tile, FightKiln controler) {
 		super(id, tile, -1, true, true);
 		setForceMultiArea(true);
 		this.controler = controler;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.item.Item;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
@@ -365,10 +365,10 @@ public class Cooking extends Action {
 	private int amount;
 	private Cookables cook;
 	private Item item;
-	private GameObject object;
+	private WorldObject object;
 	private Animation FIRE_COOKING = new Animation(897), RANGE_COOKING= new Animation(897);
 
-	public Cooking(GameObject object, Item item, int amount) {
+	public Cooking(WorldObject object, Item item, int amount) {
 		this.amount = amount;
 		this.item = item;
 		this.object = object;

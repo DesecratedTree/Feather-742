@@ -1,8 +1,8 @@
 package com.feather.game.player.controlers;
 
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -123,28 +123,28 @@ public abstract class Controler {
 	/**
 	 * return can teleport
 	 */
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		return true;
 	}
 
 	/**
 	 * return can teleport
 	 */
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		return true;
 	}
 
 	/**
 	 * return can teleport
 	 */
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		return true;
 	}
 
 	/**
 	 * return process normaly
 	 */
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		return true;
 	}
 
@@ -178,18 +178,18 @@ public abstract class Controler {
 	/**
 	 * return process normaly
 	 */
-	public boolean processObjectClick2(GameObject object) {
+	public boolean processObjectClick2(WorldObject object) {
 		return true;
 	}
 
 	/**
 	 * return process normaly
 	 */
-	public boolean processObjectClick3(GameObject object) {
+	public boolean processObjectClick3(WorldObject object) {
 		return true;
 	}
 	
-	public boolean processObjectClick5(GameObject object) {
+	public boolean processObjectClick5(WorldObject object) {
 		return true;
 	}
 

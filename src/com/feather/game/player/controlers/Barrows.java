@@ -27,19 +27,19 @@ public final class Barrows extends Controler {
 	//TORAG
 	//VERAC
 	private static enum Hills {
-		AHRIM_HILL(new Tile(3564, 3287, 0), new Tile(3557, 9703, 3)),
-		DHAROK_HILL(new Tile(3573, 3296, 0), new Tile(3556, 9718, 3)),
-		GUTHAN_HILL(new Tile(3574, 3279, 0), new Tile(3534, 9704, 3)),
-		KARIL_HILL(new Tile(3563, 3276, 0), new Tile(3546, 9684, 3)),
-		TORAG_HILL(new Tile(3553, 3281, 0), new Tile(3568, 9683, 3)),
-		VERAC_HILL(new Tile(3556, 3296, 0), new Tile(3578, 9706, 3));
+		AHRIM_HILL(new WorldTile(3564, 3287, 0), new WorldTile(3557, 9703, 3)),
+		DHAROK_HILL(new WorldTile(3573, 3296, 0), new WorldTile(3556, 9718, 3)),
+		GUTHAN_HILL(new WorldTile(3574, 3279, 0), new WorldTile(3534, 9704, 3)),
+		KARIL_HILL(new WorldTile(3563, 3276, 0), new WorldTile(3546, 9684, 3)),
+		TORAG_HILL(new WorldTile(3553, 3281, 0), new WorldTile(3568, 9683, 3)),
+		VERAC_HILL(new WorldTile(3556, 3296, 0), new WorldTile(3578, 9706, 3));
 
-		private Tile outBound;
-		private Tile inside;
+		private WorldTile outBound;
+		private WorldTile inside;
 		
 		//out bound since it not a full circle
 		
-		private Hills(Tile outBound, Tile in) {
+		private Hills(WorldTile outBound, WorldTile in) {
 			this.outBound = outBound;
 			inside = in;
 		}
@@ -75,7 +75,7 @@ public final class Barrows extends Controler {
 		return true;
 	}
 	
-	private void exit(Tile outside) {
+	private void exit(WorldTile outside) {
 		player.setNextWorldTile(outside);
 		leave(false);
 	}
@@ -199,11 +199,11 @@ public final class Barrows extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1( GameObject object) {
+	public boolean processObjectClick1( WorldObject object) {
 		if(object.getId() >= 6702 && object.getId() <= 6707) {
-			Tile out = Hills.values()[object.getId()-6702].outBound;
+			WorldTile out = Hills.values()[object.getId()-6702].outBound;
 			 //cant make a perfect middle since 3/ 2 wont make a real integer number or wahtever u call it.. 
-			exit(new Tile(out.getX() + 1, out.getY() + 1, out.getPlane()));
+			exit(new WorldTile(out.getX() + 1, out.getY() + 1, out.getPlane()));
 			return false;
 		}else if (object.getId() == 10284) {
 			if(player.getHiddenBrother() == -1) {//reached chest
@@ -219,19 +219,19 @@ public final class Barrows extends Controler {
 			sendReward();
 			player.getPackets().sendCameraShake(3, 12, 25, 12, 25);
 			player.getPackets().closeInterface(player.getInterfaceManager().hasResizableScreen() ? 11 : 0); //removes inter
-			player.getPackets().sendSpawnedObject(new GameObject(6775, 10, 0, 3551, 9695, 0));
+			player.getPackets().sendSpawnedObject(new WorldObject(6775, 10, 0, 3551, 9695, 0));
 			player.resetBarrows();
 			return false;
 		}else if (object.getId() >= 6716 && object.getId() <= 6749) {
-			Tile walkTo;
+			WorldTile walkTo;
 			if(object.getRotation() == 0) 
-				walkTo = new Tile(object.getX() + 5, object.getY(), 0);
+				walkTo = new WorldTile(object.getX() + 5, object.getY(), 0);
 			else if(object.getRotation() == 1)
-				walkTo = new Tile(object.getX(), object.getY() - 5, 0);
+				walkTo = new WorldTile(object.getX(), object.getY() - 5, 0);
 			else if(object.getRotation() == 2) 
-				walkTo = new Tile(object.getX() - 5, object.getY(), 0);
+				walkTo = new WorldTile(object.getX() - 5, object.getY(), 0);
 			else
-				walkTo = new Tile(object.getX(), object.getY() + 5, 0);
+				walkTo = new WorldTile(object.getX(), object.getY() + 5, 0);
 			if(!World.isNotCliped(walkTo.getPlane(), walkTo.getX(), walkTo.getY(), 1))
 				return false;
 			player.addWalkSteps(walkTo.getX(), walkTo.getY(), -1, false);
@@ -286,7 +286,7 @@ public final class Barrows extends Controler {
 		sendBrotherSlain(index, true);
 	}
 	
-	public void sendTarget(int id, Tile tile) {
+	public void sendTarget(int id, WorldTile tile) {
 		if(target != null) 
 			target.disapear();
 		target = new BarrowsBrother(id, tile, this);

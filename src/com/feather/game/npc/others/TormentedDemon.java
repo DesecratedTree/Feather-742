@@ -23,8 +23,8 @@ public final class TormentedDemon extends NPC {
 	private int fixedAmount;
 	private int prayerTimer;
 
-	public TormentedDemon(int id, Tile tile, int mapAreaNameHash,
-						  boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public TormentedDemon(int id, WorldTile tile, int mapAreaNameHash,
+                          boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		demonPrayer = new boolean[3];
 		cachedDamage = new int[3];
@@ -149,7 +149,7 @@ public final class TormentedDemon extends NPC {
 	}
 
 	private void sendRandomProjectile() {
-		Tile tile = new Tile(getX() + Utils.random(7), getY()
+		WorldTile tile = new WorldTile(getX() + Utils.random(7), getY()
 				+ Utils.random(7), getPlane());
 		setNextAnimation(new Animation(10918));
 		World.sendProjectile(this, tile, 1887, 34, 16, 40, 35, 16, 0);
@@ -196,7 +196,7 @@ public final class TormentedDemon extends NPC {
 				TimeUnit.MILLISECONDS);
 	}
 
-	public static boolean atTD(Tile tile) {
+	public static boolean atTD(WorldTile tile) {
 		if ((tile.getX() >= 2560 && tile.getX() <= 2630)
 				&& (tile.getY() >= 5710 && tile.getY() <= 5753))
 			return true;

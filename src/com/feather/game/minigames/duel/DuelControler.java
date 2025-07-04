@@ -1,6 +1,6 @@
 package com.feather.game.minigames.duel;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.Controler;
 
@@ -31,12 +31,12 @@ public class DuelControler extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		return true;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		return true;
 	}
 
@@ -119,7 +119,7 @@ public class DuelControler extends Controler {
 		}
 	}
 
-	public static boolean isAtDuelArena(Tile player) {
+	public static boolean isAtDuelArena(WorldTile player) {
 		return (player.getX() >= 3355 && player.getX() <= 3360
 				&& player.getY() >= 3267 && player.getY() <= 3279)
 				|| (player.getX() >= 3355 && player.getX() <= 3379

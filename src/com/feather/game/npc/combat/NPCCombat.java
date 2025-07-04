@@ -214,14 +214,14 @@ public final class NPCCombat {
 					if (!npc.hasWalkSteps()) {
 						int[][] dirs = Utils.getCoordOffsetsNear(size);
 						for (int dir = 0; dir < dirs[0].length; dir++) {
-							final Tile tile = new Tile(new Tile(
+							final WorldTile tile = new WorldTile(new WorldTile(
 									target.getX() + dirs[0][dir], target.getY()
 											+ dirs[1][dir], target.getPlane()));
 							if (World.canMoveNPC(tile.getPlane(), tile.getX(),
 									tile.getY(), size)) { // if found done
 								nex.setFlyTime(4);
 								npc.setNextForceMovement(new ForceMovement(
-										new Tile(npc), 0, tile, 1, Utils
+										new WorldTile(npc), 0, tile, 1, Utils
 												.getMoveDirection(
 														tile.getX() - npc.getX(),
 														tile.getY() - npc.getY())));

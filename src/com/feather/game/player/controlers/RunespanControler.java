@@ -19,15 +19,15 @@ import com.feather.utils.Utils;
  * 
  */
 public class RunespanControler extends Controler {
-	public static Tile WIZARD_TOWER = new Tile(3106, 6160, 1);
-	public static Tile LOWER_LEVEL = new Tile(3994, 6105, 1);
-	public static Tile HIGHER_LEVEL = new Tile(4149, 6104, 1);
-	public static Tile VINE_LADDER = new Tile(3957, 6106, 1);
-	private static final Tile[] RANDOM_LOCATIONS = {
-			new Tile(3959, 6104, 1),
-			new Tile(3996, 6055, 1),
-			new Tile(3984, 6086, 1),
-			new Tile(4399, 6041, 1)
+	public static WorldTile WIZARD_TOWER = new WorldTile(3106, 6160, 1);
+	public static WorldTile LOWER_LEVEL = new WorldTile(3994, 6105, 1);
+	public static WorldTile HIGHER_LEVEL = new WorldTile(4149, 6104, 1);
+	public static WorldTile VINE_LADDER = new WorldTile(3957, 6106, 1);
+	private static final WorldTile[] RANDOM_LOCATIONS = {
+			new WorldTile(3959, 6104, 1),
+			new WorldTile(3996, 6055, 1),
+			new WorldTile(3984, 6086, 1),
+			new WorldTile(4399, 6041, 1)
 			
 	};
 	private long startTime;
@@ -208,14 +208,14 @@ public class RunespanControler extends Controler {
 		GREATER_MISSILE1(4371, 6032, 4376, 6037),
 		GREATER_MISSILE(4325, 6076, 4331, 6076);
 		
-		private Tile smallIsland, largeIsland;
+		private WorldTile smallIsland, largeIsland;
 		
 		private HandledPlatforms(int largeIslandX, int largeIslandY, int smallIslandX, int smallIslandY) {
-			largeIsland = new Tile(largeIslandX, largeIslandY, 1);
-			smallIsland = new Tile(smallIslandX, smallIslandY, 1);
+			largeIsland = new WorldTile(largeIslandX, largeIslandY, 1);
+			smallIsland = new WorldTile(smallIslandX, smallIslandY, 1);
 		}
 		
-		private static Object[] getToPlataform(Tile fromPlataform) {
+		private static Object[] getToPlataform(WorldTile fromPlataform) {
 			for(HandledPlatforms toPlatraform : HandledPlatforms.values()) {
 				if(toPlatraform.smallIsland.matches(fromPlataform))
 					return new Object[] {toPlatraform.largeIsland, true};
@@ -292,7 +292,7 @@ public class RunespanControler extends Controler {
 	 * @param object
 	 * @return
 	 */
-	private boolean handlePlataform(GameObject object) {
+	private boolean handlePlataform(WorldObject object) {
 		for(Platforms plataform : Platforms.values()) {
 			if(plataform.objectId == object.getId()) 
 				return handleCrossingPlataform(object, plataform);
@@ -318,7 +318,7 @@ public class RunespanControler extends Controler {
 	 * @param plataform
 	 * @return
 	 */
-	private boolean handleCrossingPlataform(final GameObject object, final Platforms plataform) {
+	private boolean handleCrossingPlataform(final WorldObject object, final Platforms plataform) {
 		Object[] toPlataform = HandledPlatforms.getToPlataform(object);
 		if(toPlataform == null)
 			return false;
@@ -356,7 +356,7 @@ public class RunespanControler extends Controler {
 			
 			
 		}
-		final Tile toTile = (Tile) toPlataform[0];
+		final WorldTile toTile = (WorldTile) toPlataform[0];
 		player.lock(7);
 		player.addWalkSteps(object.getX(), object.getY(), 1, false);
 		World.sendGraphics(player, new Graphics(getPlataformGfx(plataform.runes.length)), object);
@@ -470,7 +470,7 @@ public class RunespanControler extends Controler {
 	 */
 	public void handleWizzard(Player player) {
 		startTime = Utils.currentTimeMillis();
-		yellowWizard = new YellowWizard(new Tile(RANDOM_LOCATIONS[Utils.random(RANDOM_LOCATIONS.length)]), this);
+		yellowWizard = new YellowWizard(new WorldTile(RANDOM_LOCATIONS[Utils.random(RANDOM_LOCATIONS.length)]), this);
 		player.getPackets().sendGameMessage("<col=FF0000>You hear a wizard calling for help, find him and you may recieve a reward.</col>");
 	}
 	/**
@@ -527,7 +527,7 @@ public class RunespanControler extends Controler {
 	@Override
 	public boolean processNPCClick3(NPC npc) {
 		if(npc.getId() == 15433 && yellowWizard != null) {
-			Tile tile = yellowWizard;
+			WorldTile tile = yellowWizard;
 			player.getHintIconsManager().addHintIcon(tile.getX(), tile.getY(), tile.getPlane(), 150, 2, 0, -1, true);
 			return false;
 		}
@@ -553,18 +553,18 @@ public class RunespanControler extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final GameObject object) {
+	public boolean processObjectClick1(final WorldObject object) {
 		if(object.getId() == 70507) {
 			if(object.getX() == 4367 && object.getY() == 6062) {
 				player.addWalkSteps(object.getX(), object.getY(), 0, false);
 				player.lock(35);
-				final Tile dest = new Tile(4367, 6033, 1);
+				final WorldTile dest = new WorldTile(4367, 6033, 1);
 				WorldTasksManager.schedule(new WorldTask() {
 					private int stage;
 					@Override
 					public void run() {
 						if(stage == 0) {
-							player.setNextFaceWorldTile(new Tile(4367, 6062, 1));
+							player.setNextFaceWorldTile(new WorldTile(4367, 6062, 1));
 							player.setNextAnimation(new Animation(16662));
 							player.setNextGraphics(new Graphics(3090));
 						} else if (stage == 4) {
@@ -582,13 +582,13 @@ public class RunespanControler extends Controler {
 			} else if (object.getX() == 4367 && object.getY() == 6033) {
 				player.addWalkSteps(object.getX(), object.getY(), 0, false);
 				player.lock(35);
-				final Tile dest = new Tile(4367, 6062, 1);
+				final WorldTile dest = new WorldTile(4367, 6062, 1);
 				WorldTasksManager.schedule(new WorldTask() {
 					private int stage;
 					@Override
 					public void run() {
 						if(stage == 0) {
-							player.setNextFaceWorldTile(new Tile(4367, 6062, 1));
+							player.setNextFaceWorldTile(new WorldTile(4367, 6062, 1));
 							player.setNextAnimation(new Animation(16662));
 							player.setNextGraphics(new Graphics(3090));
 						} else if (stage == 4) {

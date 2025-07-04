@@ -16,7 +16,7 @@ public class FightKilnNPC extends NPC {
 
 	private FightKiln controler;
 
-	public FightKilnNPC(int id, Tile tile, FightKiln controler) {
+	public FightKilnNPC(int id, WorldTile tile, FightKiln controler) {
 		super(id, tile, -1, true, true);
 		setForceMultiArea(true);
 		setNoDistanceCheck(true);

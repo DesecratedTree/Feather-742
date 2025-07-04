@@ -43,10 +43,10 @@ public class Bonfire extends Action {
 	}
 	
 	private Log log;
-	private GameObject object;
+	private WorldObject object;
 	private int count;
 	
-	public Bonfire(Log log, GameObject object) {
+	public Bonfire(Log log, WorldObject object) {
 		this.log = log;
 		this.object = object;
 	}
@@ -64,7 +64,7 @@ public class Bonfire extends Action {
 		return true;
 	}
 	
-	public static boolean addLog(Player player, GameObject object, Item item) {
+	public static boolean addLog(Player player, WorldObject object, Item item) {
 		for(Log log : Log.values())
 			if(log.logId == item.getId()) {
 				player.getActionManager().setAction(new Bonfire(log, object));
@@ -73,7 +73,7 @@ public class Bonfire extends Action {
 		return false;
 	}
 	
-	public static void addLogs(Player player, GameObject object) {
+	public static void addLogs(Player player, WorldObject object) {
 		
 		ArrayList<Log> possiblities = new ArrayList<Log>();
 		for(Log log : Log.values())
@@ -102,7 +102,7 @@ public class Bonfire extends Action {
 	public boolean process(Player player) {
 		if(checkAll(player)) {
 			if(Utils.random(500) == 0) {
-				new FireSpirit(new Tile(object, 1), player);
+				new FireSpirit(new WorldTile(object, 1), player);
 				player.getPackets().sendGameMessage("<col=ff0000>A fire spirit emerges from the bonfire.");
 			}
 			return true;

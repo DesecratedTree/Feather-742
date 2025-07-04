@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
 import com.feather.utils.Utils;
@@ -18,7 +18,7 @@ public class OwnedObjectManager {
 	private static final Map<String, OwnedObjectManager> ownedObjects = new ConcurrentHashMap<String, OwnedObjectManager>();
 
 	private Player player;
-	private GameObject[] objects;
+	private WorldObject[] objects;
 	private int count;
 	private long cycleTime;
 	private long lifeTime;
@@ -29,7 +29,7 @@ public class OwnedObjectManager {
 			object.process();
 	}
 
-	public static boolean isPlayerObject(Player player, GameObject object) {
+	public static boolean isPlayerObject(Player player, WorldObject object) {
 		for (Iterator<String> it = player.getOwnedObjectManagerKeys()
 				.iterator(); it.hasNext();) {
 			OwnedObjectManager manager = ownedObjects.get(it.next());
@@ -53,8 +53,8 @@ public class OwnedObjectManager {
 
 	}
 
-	public static boolean convertIntoObject(GameObject object,
-                                            GameObject toObject, ConvertEvent event) {
+	public static boolean convertIntoObject(WorldObject object,
+                                            WorldObject toObject, ConvertEvent event) {
 		for (OwnedObjectManager manager : ownedObjects.values()) {
 			if (manager.getCurrentObject().getX() == toObject.getX()
 					&& manager.getCurrentObject().getY() == toObject.getY()
@@ -70,7 +70,7 @@ public class OwnedObjectManager {
 		return false;
 	}
 
-	public static boolean removeObject(Player player, GameObject object) {
+	public static boolean removeObject(Player player, WorldObject object) {
 		for (Iterator<String> it = player.getOwnedObjectManagerKeys().iterator(); it.hasNext();) {
 			final OwnedObjectManager manager = ownedObjects.get(it.next());
 			if (manager == null) {
@@ -107,11 +107,11 @@ public class OwnedObjectManager {
 	}
 
 	public static void addOwnedObjectManager(Player player,
-                                             GameObject[] objects, long cycleTime) {
+                                             WorldObject[] objects, long cycleTime) {
 		new OwnedObjectManager(player, objects, cycleTime);
 	}
 
-	private OwnedObjectManager(Player player, GameObject[] objects,
+	private OwnedObjectManager(Player player, WorldObject[] objects,
 			long cycleTime) {
 		managerKey = player.getUsername() + "_" + keyMaker.getAndIncrement();
 		this.cycleTime = cycleTime;
@@ -164,7 +164,7 @@ public class OwnedObjectManager {
 		resetLifeTime();
 	}
 
-	public void convertIntoObject(GameObject object) {
+	public void convertIntoObject(WorldObject object) {
 		destroyObject(objects[count]);
 		objects[count] = object;
 		spawnObject();
@@ -186,11 +186,11 @@ public class OwnedObjectManager {
 			forceMoveNextStage();
 	}
 
-	public GameObject getCurrentObject() {
+	public WorldObject getCurrentObject() {
 		return objects[count];
 	}
 
-	public void destroyObject(GameObject object) {
+	public void destroyObject(WorldObject object) {
 		World.destroySpawnedObject(object);
 	}
 

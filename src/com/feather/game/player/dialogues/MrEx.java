@@ -2,7 +2,7 @@ package com.feather.game.player.dialogues;
 
 import com.feather.Settings;
 import com.feather.cache.parser.NPCDefinitions;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.CastleWars;
 import com.feather.game.player.Skills;
 import com.feather.game.player.content.Magic;
@@ -46,7 +46,7 @@ public class MrEx extends Dialogue {
 			else if (componentId == OPTION_3)
 				teleportPlayer(2901, 5264, 0);
 			else if (componentId == OPTION_4)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2562,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2562,
 						5739, 0));
 			else if (componentId == OPTION_5) {
 				stage = 3;
@@ -56,17 +56,17 @@ public class MrEx extends Dialogue {
 			}
 		} else if (stage == 3) {
 			if (componentId == OPTION_1) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3365,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3365,
 						3275, 0));
 				player.getControlerManager().startControler("DuelControler");
 			} else if (componentId == OPTION_2)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2470,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2470,
 						3436, 0));
 			else if (componentId == OPTION_3)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3366,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3366,
 						3083, 0));
 			else if (componentId == OPTION_4)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3565,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3565,
 						3289, 0));
 			else if (componentId == OPTION_5) {
 				stage = 4;
@@ -76,17 +76,17 @@ public class MrEx extends Dialogue {
 			}
 		} else if (stage == 4) {
 			if (componentId == OPTION_1) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2538,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2538,
 						4715, 0));
 			} else if (componentId == OPTION_2) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3240,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3240,
 						3611, 0));
 				player.getControlerManager().startControler("Wilderness");
 			} else if (componentId == OPTION_3)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(4608,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(4608,
 						5061, 0));
 			else if (componentId == OPTION_4) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2984,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2984,
 						3596, 0));
 				player.getControlerManager().startControler("Wilderness");
 			} else if (componentId == OPTION_5) {
@@ -97,18 +97,18 @@ public class MrEx extends Dialogue {
 			}
 		} else if (stage == 5) {
 			if (componentId == OPTION_1) {
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3360,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3360,
 						3658, 0));
 				player.getControlerManager().startControler("Wilderness");
 			} else if (componentId == OPTION_2)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2709,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2709,
 						9464, 0));
 			else if (componentId == OPTION_3)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2966,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2966,
 						4383, 2));
 			else if (componentId == OPTION_4) {
 				player.getPackets().sendGameMessage("Disabled.");
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2570,
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2570,
 						2916, 0));
 			} else if (componentId == OPTION_5) {
 				stage = 6;
@@ -124,7 +124,7 @@ public class MrEx extends Dialogue {
 			else if (componentId == OPTION_3)
 				Magic.sendNormalTeleportSpell(player, 0, 0, CastleWars.LOBBY);
 			else if (componentId == OPTION_4)
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(2647, 9378, 0));
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2647, 9378, 0));
 			else if (componentId == OPTION_5) {
 				sendOptionsDialogue("Where would you like to go?",
 						"Kalphite Queen", "Fight Caves", "Fight Kiln", "Queen Black Dragon",
@@ -133,7 +133,7 @@ public class MrEx extends Dialogue {
 			}
 		} else if (stage == 7) {
 			if (componentId == OPTION_1) 
-				Magic.sendNormalTeleportSpell(player, 0, 0, new Tile(3226, 3108, 0));
+				Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3226, 3108, 0));
 			else if (componentId == OPTION_2)
 				Magic.sendNormalTeleportSpell(player, 0, 0, FightCaves.OUTSIDE);
 			else if (componentId == OPTION_3)
@@ -162,7 +162,7 @@ public class MrEx extends Dialogue {
 	}
 
 	private void teleportPlayer(int x, int y, int z) {
-		player.setNextWorldTile(new Tile(x, y, z));
+		player.setNextWorldTile(new WorldTile(x, y, z));
 		player.stopAll();
 		player.getControlerManager().startControler("GodWars");
 	}

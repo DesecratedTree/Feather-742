@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.player.actions.Bonfire;
 import com.feather.game.player.actions.Bonfire.Log;
 import com.feather.game.player.content.SkillsDialogue;
@@ -8,12 +8,12 @@ import com.feather.game.player.content.SkillsDialogue;
 public class BonfireD extends Dialogue {
 
 	private Log[] logs;
-	private GameObject object;
+	private WorldObject object;
 
 	@Override
 	public void start() {
 		this.logs = (Log[]) parameters[0];
-		this.object = (GameObject) parameters[1];
+		this.object = (WorldObject) parameters[1];
 		int[] ids = new int[logs.length];
 		for(int i = 0; i < ids.length; i++)
 			ids[i] = logs[i].getLogId();

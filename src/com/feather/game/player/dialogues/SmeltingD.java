@@ -1,6 +1,6 @@
 package com.feather.game.player.dialogues;
 
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.player.Skills;
 import com.feather.game.player.actions.Smelting;
 import com.feather.game.player.actions.Smelting.SmeltingBar;
@@ -9,11 +9,11 @@ import com.feather.game.player.content.SkillsDialogue.ItemNameFilter;
 
 public class SmeltingD extends Dialogue {
 
-	private GameObject object;
+	private WorldObject object;
 
 	@Override
 	public void start() {
-		object = (GameObject) parameters[0];
+		object = (WorldObject) parameters[0];
 		int[] ids = new int[SmeltingBar.values().length];
 		for (int i = 0; i < ids.length; i++)
 			ids[i] = SmeltingBar.values()[i].getProducedBar().getId();

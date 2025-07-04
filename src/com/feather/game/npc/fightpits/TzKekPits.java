@@ -10,7 +10,7 @@ import com.feather.game.tasks.WorldTasksManager;
 @SuppressWarnings("serial")
 public class TzKekPits extends FightPitsNPC {
 
-	public TzKekPits(int id, Tile tile) {
+	public TzKekPits(int id, WorldTile tile) {
 		super(id, tile);
 	}
 
@@ -20,7 +20,7 @@ public class TzKekPits extends FightPitsNPC {
 		resetWalkSteps();
 		getCombat().removeTarget();
 		setNextAnimation(null);
-		final Tile tile = this;
+		final WorldTile tile = this;
 		WorldTasksManager.schedule(new WorldTask() {
 			int loop;
 

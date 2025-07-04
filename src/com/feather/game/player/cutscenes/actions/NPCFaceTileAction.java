@@ -1,6 +1,6 @@
 package com.feather.game.player.cutscenes.actions;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.cutscenes.Cutscene;
@@ -20,7 +20,7 @@ public class NPCFaceTileAction extends CutsceneAction {
 	public void process(Player player, Object[] cache) {
 		Cutscene scene = (Cutscene) cache[0];
 		NPC npc = (NPC) cache[getCachedObjectIndex()];
-		npc.setNextFaceWorldTile(new Tile(scene.getBaseX() + x, scene
+		npc.setNextFaceWorldTile(new WorldTile(scene.getBaseX() + x, scene
 				.getBaseY() + y, npc.getPlane()));
 	}
 

@@ -1,6 +1,6 @@
 package com.feather.game.player.controlers;
 
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 
 public class GodWars extends Controler {
 
@@ -22,7 +22,7 @@ public class GodWars extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final GameObject object) {
+	public boolean processObjectClick1(final WorldObject object) {
 		if (object.getId() == 57225) {
 			player.getDialogueManager().startDialogue("NexEntrance");
 			return false;

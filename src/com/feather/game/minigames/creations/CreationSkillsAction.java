@@ -1,7 +1,7 @@
 package com.feather.game.minigames.creations;
 
 import com.feather.game.Animation;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.item.Item;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
@@ -11,7 +11,7 @@ import com.feather.utils.Utils;
 public class CreationSkillsAction extends Action {
 
 	private Animation animation;
-	private GameObject object;
+	private WorldObject object;
 	private int baseId;
 	private int objectIndex;
 
@@ -59,7 +59,7 @@ public class CreationSkillsAction extends Action {
 	
 	// 50 == class 4
 
-	public CreationSkillsAction(GameObject object, Animation animation, Item bestItem, int baseId, int objectIndex) {
+	public CreationSkillsAction(WorldObject object, Animation animation, Item bestItem, int baseId, int objectIndex) {
 		this.skillId = Skills.HUNTER;
 		this.object = object;
 		this.animation = animation;

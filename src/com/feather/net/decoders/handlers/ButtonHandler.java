@@ -8,7 +8,7 @@ import com.feather.cache.parser.ItemDefinitions;
 import com.feather.cores.CoresManager;
 import com.feather.game.ClanManager;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.minigames.Crucible;
 import com.feather.game.minigames.duel.DuelControler;
@@ -960,7 +960,7 @@ public class ButtonHandler {
 							|| amuletId >= 10354 && amuletId <= 10361) {
 						if (Magic.sendItemTeleportSpell(player, true,
 								Transportation.EMOTE, Transportation.GFX, 4,
-								new Tile(3087, 3496, 0))) {
+								new WorldTile(3087, 3496, 0))) {
 							Item amulet = player.getEquipment().getItem(
 									Equipment.SLOT_AMULET);
 							if (amulet != null) {
@@ -979,7 +979,7 @@ public class ButtonHandler {
 							|| amuletId >= 10354 && amuletId <= 10361) {
 						if (Magic.sendItemTeleportSpell(player, true,
 								Transportation.EMOTE, Transportation.GFX, 4,
-								new Tile(2918, 3176, 0))) {
+								new WorldTile(2918, 3176, 0))) {
 							Item amulet = player.getEquipment().getItem(
 									Equipment.SLOT_AMULET);
 							if (amulet != null) {
@@ -995,7 +995,7 @@ public class ButtonHandler {
 							|| amuletId >= 10354 && amuletId <= 10361) {
 						if (Magic.sendItemTeleportSpell(player, true,
 								Transportation.EMOTE, Transportation.GFX, 4,
-								new Tile(3105, 3251, 0))) {
+								new WorldTile(3105, 3251, 0))) {
 							Item amulet = player.getEquipment().getItem(
 									Equipment.SLOT_AMULET);
 							if (amulet != null) {
@@ -1011,7 +1011,7 @@ public class ButtonHandler {
 							|| amuletId >= 10354 && amuletId <= 10361) {
 						if (Magic.sendItemTeleportSpell(player, true,
 								Transportation.EMOTE, Transportation.GFX, 4,
-								new Tile(3293, 3163, 0))) {
+								new WorldTile(3293, 3163, 0))) {
 							Item amulet = player.getEquipment().getItem(
 									Equipment.SLOT_AMULET);
 							if (amulet != null) {
@@ -1215,7 +1215,7 @@ public class ButtonHandler {
 		} else if (interfaceId == 650) {
 			if (componentId == 15) {
 				player.stopAll();
-				player.setNextWorldTile(new Tile(2974, 4384, player.getPlane()));
+				player.setNextWorldTile(new WorldTile(2974, 4384, player.getPlane()));
 				player.getControlerManager().startControler(
 						"CorpBeastControler");
 			} else if (componentId == 16)
@@ -1522,7 +1522,7 @@ public class ButtonHandler {
 			player.closeInterfaces(); 
 		else if (interfaceId == 374) {
 			if(componentId >= 5 && componentId <= 9)
-				player.setNextWorldTile(new Tile(FightPitsViewingOrb.ORB_TELEPORTS[componentId-5]));
+				player.setNextWorldTile(new WorldTile(FightPitsViewingOrb.ORB_TELEPORTS[componentId-5]));
 			else if (componentId == 15)
 				player.stopAll();
 		}else if (interfaceId == 1092) {

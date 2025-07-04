@@ -1,8 +1,8 @@
 package com.feather.game.player.content;
 
 import com.feather.game.Graphics;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.HomeTeleport;
 
@@ -25,7 +25,7 @@ public class LodeStones {
 	 */
 	public static void handleButtons(final Player player, int componentId) {
 		player.stopAll();
-		Tile stoneTile = null;
+		WorldTile stoneTile = null;
 		switch (componentId) {
 		case 47: // Lumbridge is auto unlocked.
 			stoneTile = HomeTeleport.LUMBRIDGE_LODE_STONE;
@@ -59,7 +59,7 @@ public class LodeStones {
 	 * @param player
 	 * @param object
 	 */
-	public static void activateLodestone(final Player player, GameObject object) {
+	public static void activateLodestone(final Player player, WorldObject object) {
 		if (object.getId() == lodeStones[1][1]) {
 			sendReward(player);
 			player.getPackets().sendConfigByFile(lodeStones[0][0], 1);

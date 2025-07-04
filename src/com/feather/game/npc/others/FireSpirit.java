@@ -1,7 +1,7 @@
 package com.feather.game.npc.others;
 
 import com.feather.game.Animation;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -15,7 +15,7 @@ public class FireSpirit extends NPC {
 	private Player target;
 	private long createTime;
 	
-	public FireSpirit(Tile tile, Player target) {
+	public FireSpirit(WorldTile tile, Player target) {
 		super(15451, tile, -1, true, true);
 		this.target = target;
 		createTime = Utils.currentTimeMillis();

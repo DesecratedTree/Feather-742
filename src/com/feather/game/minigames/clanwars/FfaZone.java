@@ -2,8 +2,8 @@ package com.feather.game.minigames.clanwars;
 
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.Controler;
 import com.feather.game.player.controlers.Wilderness;
@@ -61,7 +61,7 @@ public final class FfaZone extends Controler {
 						player.getEquipment().init();
 						player.getInventory().init();
 					}
-					player.setNextWorldTile(new Tile(2993, 9679, 0));
+					player.setNextWorldTile(new WorldTile(2993, 9679, 0));
 					player.getControlerManager().startControler("clan_wars_request");
 					player.reset();
 					player.setNextAnimation(new Animation(-1));
@@ -81,10 +81,10 @@ public final class FfaZone extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		switch (object.getId()) {
 		case 38700:
-			player.setNextWorldTile(new Tile(2993, 9679, 0));
+			player.setNextWorldTile(new WorldTile(2993, 9679, 0));
 			player.getControlerManager().startControler("clan_wars_request");
 			return false;
 		}
@@ -135,7 +135,7 @@ public final class FfaZone extends Controler {
 	 * @param t The world tile.
 	 * @return {@code True} if so.
 	 */
-	public static boolean inPvpArea(Tile t) {
+	public static boolean inPvpArea(WorldTile t) {
 		return (t.getX() >= 2948 && t.getY() >= 5512 && t.getX() <= 3071 && t.getY() <= 5631)		//Risk area.
 				|| (t.getX() >= 2756 && t.getY() >= 5512 && t.getX() <= 2879 && t.getY() <= 5631);	//Safe area.
 	}
@@ -145,7 +145,7 @@ public final class FfaZone extends Controler {
 	 * @param t The world tile.
 	 * @return {@code True} if so.
 	 */
-	public static boolean inArea(Tile t) {
+	public static boolean inArea(WorldTile t) {
 		return (t.getX() >= 2948 && t.getY() >= 5508 && t.getX() <= 3071 && t.getY() <= 5631)		//Risk area.
 				|| (t.getX() >= 2756 && t.getY() >= 5508 && t.getX() <= 2879 && t.getY() <= 5631);	//Safe area.
 	}

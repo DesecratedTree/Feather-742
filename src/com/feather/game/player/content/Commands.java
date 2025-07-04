@@ -93,13 +93,13 @@ public final class Commands {
 				int plane = Integer.valueOf(cmd[0]);
 				int x = Integer.valueOf(cmd[1]) << 6 | Integer.valueOf(cmd[3]);
 				int y = Integer.valueOf(cmd[2]) << 6 | Integer.valueOf(cmd[4]);
-				player.setNextWorldTile(new Tile(x, y, plane));
+				player.setNextWorldTile(new WorldTile(x, y, plane));
 				return true;
 			}
 		} else {
 			String name;
 			Player target;
-			GameObject object;
+			WorldObject object;
 			switch (cmd[0]) {
 
 
@@ -217,12 +217,12 @@ public final class Commands {
 					player.getPackets().sendGameMessage("Region is null!");
 					return true;
 				}
-				List<GameObject> objects = r.getObjects();
+				List<WorldObject> objects = r.getObjects();
 				if (objects == null) {
 					player.getPackets().sendGameMessage("Objects are null!");
 					return true;
 				}
-				for (GameObject o : objects) {
+				for (WorldObject o : objects) {
 					if (o == null || !o.matches(player)) {
 						continue;
 					}
@@ -404,11 +404,11 @@ public final class Commands {
 							loaded.add(regionId);
 							r = World.getRegion(regionId, false);
 							r.loadRegionMap();
-							List<GameObject> list = r.getObjects();
+							List<WorldObject> list = r.getObjects();
 							if (list == null) {
 								continue;
 							}
-							for (GameObject o : list) {
+							for (WorldObject o : list) {
 								if (o.getDefinitions().name
 										.equalsIgnoreCase(name)
 										&& (option == null || o
@@ -748,7 +748,7 @@ public final class Commands {
 
 			case "cwbase":
 				ClanWars cw = player.getCurrentFriendChat().getClanWars();
-				Tile base = cw.getBaseLocation();
+				WorldTile base = cw.getBaseLocation();
 				player.getPackets().sendGameMessage(
 						"Base x=" + base.getX() + ", base y=" + base.getY());
 				base = cw.getBaseLocation()
@@ -772,7 +772,7 @@ public final class Commands {
 						type = 10;
 					}
 					World.spawnObject(
-							new GameObject(Integer.valueOf(cmd[1]), type, 0,
+							new WorldObject(Integer.valueOf(cmd[1]), type, 0,
 									player.getX(), player.getY(), player
 									.getPlane()), true);
 				} catch (NumberFormatException e) {
@@ -907,9 +907,9 @@ public final class Commands {
 				}
 				return true; 
 			case "forcemovement":
-				Tile toTile = player.transform(0, 5, 0);
+				WorldTile toTile = player.transform(0, 5, 0);
 				player.setNextForceMovement(new ForceMovement(
-						new Tile(player), 1, toTile, 2,  ForceMovement.NORTH));
+						new WorldTile(player), 1, toTile, 2,  ForceMovement.NORTH));
 
 				return true;
 			case "configf":
@@ -1003,7 +1003,7 @@ public final class Commands {
 			case "testo2":
 				for (int x = 0; x < 10; x++) {
 
-					object = new GameObject(62684, 0, 0,
+					object = new WorldObject(62684, 0, 0,
 							x * 2 + 1, 0, 0);
 					player.getPackets().sendSpawnedObject(object);
 
@@ -1022,10 +1022,10 @@ public final class Commands {
 			case "objectanim":
 
 				object = cmd.length == 4 ? World
-						.getObject(new Tile(Integer.parseInt(cmd[1]),
+						.getObject(new WorldTile(Integer.parseInt(cmd[1]),
 								Integer.parseInt(cmd[2]), player.getPlane()))
 								: World.getObject(
-										new Tile(Integer.parseInt(cmd[1]), Integer
+										new WorldTile(Integer.parseInt(cmd[1]), Integer
 												.parseInt(cmd[2]), player.getPlane()),
 												Integer.parseInt(cmd[3]));
 						if (object == null) {
@@ -1041,9 +1041,9 @@ public final class Commands {
 			case "loopoanim":
 				int x = Integer.parseInt(cmd[1]);
 				int y = Integer.parseInt(cmd[2]);
-				final GameObject object1 = World
+				final WorldObject object1 = World
 						.getRegion(player.getRegionId()).getSpawnedObject(
-								new Tile(x, y, player.getPlane()));
+								new WorldTile(x, y, player.getPlane()));
 				if (object1 == null) {
 					player.getPackets().sendPanelBoxMessage(
 							"Could not find object at [x=" + x + ", y=" + y
@@ -1524,7 +1524,7 @@ public final class Commands {
 				return true;
 
 			case "home":
-				player.setNextWorldTile(new Tile(3093, 3493, 0));
+				player.setNextWorldTile(new WorldTile(3093, 3493, 0));
 
 			case "reloadfiles":
 				IPBanL.init();
@@ -1539,7 +1539,7 @@ public final class Commands {
 				}
 				try {
 					player.resetWalkSteps();
-					player.setNextWorldTile(new Tile(Integer
+					player.setNextWorldTile(new WorldTile(Integer
 							.valueOf(cmd[1]), Integer.valueOf(cmd[2]),
 							cmd.length >= 4 ? Integer.valueOf(cmd[3]) : player
 									.getPlane()));
@@ -1835,7 +1835,7 @@ public final class Commands {
 				for (Player staff : World.getPlayers()) {
 					if (staff.getRights() == 0)
 						continue;
-					staff.setNextWorldTile(new Tile(2675, 10418, 0));
+					staff.setNextWorldTile(new WorldTile(2675, 10418, 0));
 					staff.getPackets().sendGameMessage("You been teleported for a staff meeting by "+player.getDisplayName());
 				}
 				return true;
@@ -1941,7 +1941,7 @@ public final class Commands {
 					player.getPackets().sendGameMessage("You cannot tele anywhere from here.");
 					return true;
 				}
-				player.setNextWorldTile(new Tile(2667, 10396, 0));
+				player.setNextWorldTile(new WorldTile(2667, 10396, 0));
 				return true;
 
 			case "unnull":

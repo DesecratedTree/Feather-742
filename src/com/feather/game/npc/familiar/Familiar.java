@@ -30,7 +30,7 @@ public abstract class Familiar extends NPC implements Serializable {
 	private BeastOfBurden bob;
 	private Pouches pouch;
 
-	public Familiar(Player owner, Pouches pouch, Tile tile,
+	public Familiar(Player owner, Pouches pouch, WorldTile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(pouch.getNpcId(), tile, mapAreaNameHash,
 				canBeAttackFromOutOfArea, false);
@@ -316,9 +316,9 @@ public abstract class Familiar extends NPC implements Serializable {
 			sendMainConfigs();
 		} else
 			removeTarget();
-		Tile teleTile = null;
+		WorldTile teleTile = null;
 		for (int dir = 0; dir < checkNearDirs[0].length; dir++) {
-			final Tile tile = new Tile(new Tile(owner.getX()
+			final WorldTile tile = new WorldTile(new WorldTile(owner.getX()
 					+ checkNearDirs[0][dir], owner.getY()
 					+ checkNearDirs[1][dir], owner.getPlane()));
 			if (World.canMoveNPC(tile.getPlane(), tile.getX(), tile.getY(),

@@ -3,7 +3,7 @@ package com.feather.game.minigames;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.Controler;
 import com.feather.game.player.controlers.CrucibleControler;
@@ -29,11 +29,11 @@ public class Crucible {
 	}
 	
 	public static void leaveArena(Player player) {
-		travel(player, new Tile(3355, 6119, 0));
+		travel(player, new WorldTile(3355, 6119, 0));
 		player.getControlerManager().forceStop();
 	}
 	
-	public static void travel(Player player, Tile tile) {
+	public static void travel(Player player, WorldTile tile) {
 		player.stopAll();
 		player.lock(2);
 		player.setNextWorldTile(tile);
@@ -122,7 +122,7 @@ public class Crucible {
 		player.getTemporaryAttributtes().remove("crucibleBounty");
 	}
 	
-	public static Tile getBankTile() {
+	public static WorldTile getBankTile() {
 		return BANK_FISSURES[Utils.random(BANK_FISSURES.length)].tile;
 	}
 	
@@ -206,11 +206,11 @@ public class Crucible {
 		FISSURE_5(3230, 6144, 14),
 		FISSURE_9(3227, 6116, 15),
 		FISSURE_8(3259, 6100, 16);
-		private Tile tile;
+		private WorldTile tile;
 		private int componentId;
 		
 		private Fissures(int x, int y, int componentId) {
-			tile = new Tile(x, y, 0);
+			tile = new WorldTile(x, y, 0);
 			this.componentId = componentId;
 		}
 		

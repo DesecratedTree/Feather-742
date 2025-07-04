@@ -1,6 +1,6 @@
 package com.feather.game.minigames.creations;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.controlers.Controler;
 
 /**
@@ -28,13 +28,13 @@ public class StealingCreationLobby extends Controler {
 	//TODO object click for exit
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "A magical force prevents you from teleporting from the arena.");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage","A magical force prevents you from teleporting from the arena.");
 		return false;
 	}

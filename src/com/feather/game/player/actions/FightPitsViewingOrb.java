@@ -1,22 +1,22 @@
 package com.feather.game.player.actions;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 
 public class FightPitsViewingOrb extends Action {
 
-	public static final Tile[] ORB_TELEPORTS = { new Tile(4571, 5092, 0),
-			new Tile(4571, 5107, 0), new Tile(4590, 5092, 0),
-			new Tile(4571, 5077, 0),
-			new Tile(4557, 5092, 0) };
+	public static final WorldTile[] ORB_TELEPORTS = { new WorldTile(4571, 5092, 0),
+			new WorldTile(4571, 5107, 0), new WorldTile(4590, 5092, 0),
+			new WorldTile(4571, 5077, 0),
+			new WorldTile(4557, 5092, 0) };
 	
-	private Tile tile;
+	private WorldTile tile;
 
 	@Override
 	public boolean start(Player player) {
 		if (!process(player))
 			return false;
-		tile = new Tile(player);
+		tile = new WorldTile(player);
 		player.getAppearence().switchHidden();
 		player.getPackets().sendBlackOut(5);
 		player.setNextWorldTile(ORB_TELEPORTS[0]);

@@ -1,6 +1,6 @@
 package com.feather.game.player.cutscenes.actions;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.cutscenes.Cutscene;
 
@@ -17,7 +17,7 @@ public class PlayerFaceTileAction extends CutsceneAction {
 	@Override
 	public void process(Player player, Object[] cache) {
 		Cutscene scene = (Cutscene) cache[0];
-		player.setNextFaceWorldTile(new Tile(scene.getBaseX() + x, scene
+		player.setNextFaceWorldTile(new WorldTile(scene.getBaseX() + x, scene
 				.getBaseY() + y, player.getPlane()));
 	}
 

@@ -3,7 +3,7 @@ package com.feather.game.npc.familiar;
 import java.io.Serializable;
 
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.item.ItemsContainer;
 import com.feather.game.player.Player;
@@ -41,7 +41,7 @@ public class BeastOfBurden implements Serializable {
 
 	public void dropBob() {
 		int size = familiar.getSize();
-		Tile Tile = new Tile(familiar.getCoordFaceX(size),
+		WorldTile Tile = new WorldTile(familiar.getCoordFaceX(size),
 				familiar.getCoordFaceY(size), familiar.getPlane());
 		for (int i = 0; i < beastItems.getSize(); i++) {
 			Item item = beastItems.get(i);

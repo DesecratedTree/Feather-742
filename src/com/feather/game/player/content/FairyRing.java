@@ -3,7 +3,7 @@ package com.feather.game.player.content;
 import javax.xml.stream.Location;
 
 import com.feather.game.Graphics;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
@@ -83,7 +83,7 @@ public final class FairyRing {
             					if (loop == 0) {
     						        p.setNextGraphics(new Graphics(569));
             					} else if (loop == 2) {
-    						        p.setNextWorldTile(new Tile(x, y, z));
+    						        p.setNextWorldTile(new WorldTile(x, y, z));
                                     p.setNextGraphics(new Graphics(569));
                                 	p.closeInterfaces();
                                     this.stop();

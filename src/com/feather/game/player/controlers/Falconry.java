@@ -2,7 +2,7 @@ package com.feather.game.player.controlers;
 
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
@@ -36,7 +36,7 @@ public class Falconry extends Controler {
 		WorldTasksManager.schedule(new WorldTask() {
 			@Override
 			public void run() {
-				player.setNextWorldTile(new Tile(2371, 3619, 0));
+				player.setNextWorldTile(new WorldTile(2371, 3619, 0));
 			}
 		});
 		player.getEquipment().getItems().set(3, new Item(10024, 1));

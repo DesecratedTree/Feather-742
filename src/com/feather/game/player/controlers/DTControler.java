@@ -1,6 +1,6 @@
 package com.feather.game.player.controlers;
 
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.DominionTower;
 import com.feather.game.player.content.Magic;
@@ -20,7 +20,7 @@ public class DTControler extends Controler {
 	private int onArena;
 
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		if (object.getId() == 62682 || object.getId() == 62683
 				|| object.getId() == 62690) {
 			player.getDominionTower().destroyArena(false, getMode());

@@ -3,7 +3,7 @@ package com.feather.game.player.actions.mining;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 import com.feather.utils.Utils;
@@ -77,10 +77,10 @@ public final class Mining extends MiningBase {
 		}
 	}
 
-	private GameObject rock;
+	private WorldObject rock;
 	private RockDefinitions definitions;
 
-	public Mining(GameObject rock, RockDefinitions definitions) {
+	public Mining(WorldObject rock, RockDefinitions definitions) {
 		this.rock = rock;
 		this.definitions = definitions;
 	}
@@ -166,7 +166,7 @@ public final class Mining extends MiningBase {
 				usedDeplateAurora = true;
 			} else if (Utils.getRandom(definitions.getRandomLifeProbability()) == 0) {
 				World.spawnTemporaryObject(
-						new GameObject(definitions.getEmptyId(), rock.getType(),
+						new WorldObject(definitions.getEmptyId(), rock.getType(),
 								rock.getRotation(), rock.getX(), rock.getY(), rock
 								.getPlane()),
 								definitions.respawnDelay * 600, false);

@@ -1,7 +1,7 @@
 package com.feather.game.player.controlers;
 
 import com.feather.game.*;
-import com.feather.game.item.GroundItem;
+import com.feather.game.item.FloorItem;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.tasks.WorldTask;
@@ -54,7 +54,7 @@ public class NewHomeControler extends Controler {
 						"SimpleMessage",
 						"You pick up the items.");
 				for (Item item : STARTER_ITEMS) {
-					final GroundItem floorItem = World
+					final FloorItem floorItem = World
 							.getRegion(player.getRegionId())
 							.getGroundItem(item.getId(), NPC1,
 									player);
@@ -94,8 +94,8 @@ public class NewHomeControler extends Controler {
 
 	private void startNPCActions() {
 		player.lock();
-		NPC1 = new NPC(1, new Tile(2966, 3386, 0), -1, true, true);
-		NPC2 = new NPC(1, new Tile(2966, 3387, 0), -1, true, true);
+		NPC1 = new NPC(1, new WorldTile(2966, 3386, 0), -1, true, true);
+		NPC2 = new NPC(1, new WorldTile(2966, 3387, 0), -1, true, true);
 		NPC1.faceEntity(NPC2);
 		NPC1.setNextAnimation(new Animation(5078));
 		NPC2.setNextGraphics(new Graphics(875));
@@ -183,7 +183,7 @@ public class NewHomeControler extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage",
 				"You cannot teleport during the tutorial.");
 		return false;
@@ -209,13 +209,13 @@ public class NewHomeControler extends Controler {
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "You cannot teleport during the tutorial.");
 		return false;
 	}
 
 	@Override
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage", "You cannot teleport during the tutorial.");
 		return false;
 	}

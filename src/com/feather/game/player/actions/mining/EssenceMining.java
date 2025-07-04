@@ -3,7 +3,7 @@ package com.feather.game.player.actions.mining;
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 import com.feather.utils.Utils;
@@ -49,10 +49,10 @@ public class EssenceMining extends MiningBase {
 
 	}
 
-	private GameObject rock;
+	private WorldObject rock;
 	private EssenceDefinitions definitions;
 
-	public EssenceMining(GameObject rock, EssenceDefinitions definitions) {
+	public EssenceMining(WorldObject rock, EssenceDefinitions definitions) {
 		this.rock = rock;
 		this.definitions = definitions;
 	}

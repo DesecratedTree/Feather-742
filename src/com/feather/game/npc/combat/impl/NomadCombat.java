@@ -21,7 +21,7 @@ public class NomadCombat extends CombatScript {
 	}
 
 	
-	private void spawnFlameVortex(Tile tile) {
+	private void spawnFlameVortex(WorldTile tile) {
 		if(!World.isNotCliped(tile.getPlane(), tile.getX(), tile.getY(), 1))
 			return;
 		new FlameVortex(tile);
@@ -78,7 +78,7 @@ public class NomadCombat extends CombatScript {
 					npc.setNextAnimation(new Animation(12701));
 					Dialogue.sendNPCDialogueNoContinue(player, nomad.getId(), 9842, "Let's make things interesting!");
 					player.getPackets().sendVoice(8039);
-					final Tile middle = new Tile(player);
+					final WorldTile middle = new WorldTile(player);
 					WorldTasksManager.schedule(new WorldTask() {
 						int count;
 						@Override
@@ -132,7 +132,7 @@ public class NomadCombat extends CombatScript {
 				break;
 				case 1:
 					nomad.setCantFollowUnderCombat(true);
-					Tile throne = nomad.getThroneTile();
+					WorldTile throne = nomad.getThroneTile();
 					if(nomad.getX() != throne.getX() || nomad.getY() != throne.getY())
 						nomad.sendTeleport(nomad.getThroneTile());
 					WorldTasksManager.schedule(new WorldTask() {
@@ -190,7 +190,7 @@ public class NomadCombat extends CombatScript {
 								player.addFreezeDelay(17000);
 								Dialogue.sendNPCDialogueNoContinue(player, nomad.getId(), 9790, "Let's see how much punishment you can take!");
 								player.getPackets().sendVoice(8001);
-								player.setNextFaceWorldTile(new Tile(player.getX(), player.getY()+1, 0));
+								player.setNextFaceWorldTile(new WorldTile(player.getX(), player.getY()+1, 0));
 								player.setNextGraphics(new Graphics(369));
 								player.unlock();
 								secondLoop = true;

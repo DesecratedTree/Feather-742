@@ -1,6 +1,6 @@
 package com.feather.game.route.strategy;
 
-import com.feather.game.item.GroundItem;
+import com.feather.game.item.FloorItem;
 import com.feather.game.route.RouteStrategy;
 
 public class FloorItemStrategy extends RouteStrategy {
@@ -14,7 +14,7 @@ public class FloorItemStrategy extends RouteStrategy {
 	 */
 	private int y;
 
-	public FloorItemStrategy(GroundItem entity) {
+	public FloorItemStrategy(FloorItem entity) {
 		this.x = entity.getTile().getX();
 		this.y = entity.getTile().getY();
 	}

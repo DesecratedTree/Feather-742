@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import com.feather.game.ForceTalk;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 
 public class TicketSystem {
@@ -88,7 +88,7 @@ public class TicketSystem {
 	
 	public static class TicketEntry {
 		private Player player;
-		private Tile tile;
+		private WorldTile tile;
 		
 		public TicketEntry(Player player) {
 			this.player = player;
@@ -99,7 +99,7 @@ public class TicketSystem {
 			return player;
 		}
 
-		public Tile getTile() {
+		public WorldTile getTile() {
 			return tile;
 		}
 	}

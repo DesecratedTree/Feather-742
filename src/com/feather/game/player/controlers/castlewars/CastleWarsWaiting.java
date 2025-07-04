@@ -1,7 +1,7 @@
 package com.feather.game.player.controlers.castlewars;
 
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.CastleWars;
 import com.feather.game.player.Equipment;
 import com.feather.game.player.controlers.Controler;
@@ -62,33 +62,33 @@ public class CastleWarsWaiting extends Controler {
 
 	@Override
 	public boolean logout() {
-		player.setLocation(new Tile(CastleWars.LOBBY, 2));
+		player.setLocation(new WorldTile(CastleWars.LOBBY, 2));
 		return true;
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage",
 				"You can't leave just like that!");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage",
 				"You can't leave just like that!");
 		return false;
 	}
 
 	@Override
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		player.getDialogueManager().startDialogue("SimpleMessage",
 				"You can't leave just like that!");
 		return false;
 	}
 
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		int id = object.getId();
 		if (id == 4389 || id == 4390) {
 			removeControler();

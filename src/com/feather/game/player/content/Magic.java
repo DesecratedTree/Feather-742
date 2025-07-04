@@ -4,7 +4,7 @@ import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.clanwars.FfaZone;
 import com.feather.game.minigames.clanwars.RequestController;
 import com.feather.game.player.Player;
@@ -432,36 +432,36 @@ public class Magic {
 			setCombatSpell(player, spellId);
 			break;
 		case 40:
-			sendAncientTeleportSpell(player, 54, 64, new Tile(3099, 9882,
+			sendAncientTeleportSpell(player, 54, 64, new WorldTile(3099, 9882,
 					0), LAW_RUNE, 2, FIRE_RUNE, 1, AIR_RUNE, 1);
 			break;
 		case 41:
-			sendAncientTeleportSpell(player, 60, 70, new Tile(3222, 3336,
+			sendAncientTeleportSpell(player, 60, 70, new WorldTile(3222, 3336,
 					0), LAW_RUNE, 2, SOUL_RUNE, 1);
 			break;
 		case 42:
-			sendAncientTeleportSpell(player, 66, 76, new Tile(3492, 3471,
+			sendAncientTeleportSpell(player, 66, 76, new WorldTile(3492, 3471,
 					0), LAW_RUNE, 2, BLOOD_RUNE, 1);
 
 			break;
 		case 43:
-			sendAncientTeleportSpell(player, 72, 82, new Tile(3006, 3471,
+			sendAncientTeleportSpell(player, 72, 82, new WorldTile(3006, 3471,
 					0), LAW_RUNE, 2, WATER_RUNE, 4);
 			break;
 		case 44:
-			sendAncientTeleportSpell(player, 78, 88, new Tile(2990, 3696,
+			sendAncientTeleportSpell(player, 78, 88, new WorldTile(2990, 3696,
 					0), LAW_RUNE, 2, FIRE_RUNE, 3, AIR_RUNE, 2);
 			break;
 		case 45:
-			sendAncientTeleportSpell(player, 84, 94, new Tile(3217, 3677,
+			sendAncientTeleportSpell(player, 84, 94, new WorldTile(3217, 3677,
 					0), LAW_RUNE, 2, SOUL_RUNE, 2);
 			break;
 		case 46:
-			sendAncientTeleportSpell(player, 90, 100, new Tile(3288, 3886,
+			sendAncientTeleportSpell(player, 90, 100, new WorldTile(3288, 3886,
 					0), LAW_RUNE, 2, BLOOD_RUNE, 2);
 			break;
 		case 47:
-			sendAncientTeleportSpell(player, 96, 106, new Tile(2977, 3873,
+			sendAncientTeleportSpell(player, 96, 106, new WorldTile(2977, 3873,
 					0), LAW_RUNE, 2, WATER_RUNE, 8);
 			break;
 		case 48:
@@ -517,43 +517,43 @@ public class Magic {
 			break;
 		case 37: // mobi
 			sendNormalTeleportSpell(player, 10, 19,
-					new Tile(2413, 2848, 0), LAW_RUNE, 1, WATER_RUNE, 1,
+					new WorldTile(2413, 2848, 0), LAW_RUNE, 1, WATER_RUNE, 1,
 					AIR_RUNE, 1);
 			break;
 		case 40: // varrock
 			sendNormalTeleportSpell(player, 25, 19,
-					new Tile(3212, 3424, 0), FIRE_RUNE, 1, AIR_RUNE, 3,
+					new WorldTile(3212, 3424, 0), FIRE_RUNE, 1, AIR_RUNE, 3,
 					LAW_RUNE, 1);
 			break;
 		case 43: // lumby
 			sendNormalTeleportSpell(player, 31, 41,
-					new Tile(3222, 3218, 0), EARTH_RUNE, 1, AIR_RUNE, 3,
+					new WorldTile(3222, 3218, 0), EARTH_RUNE, 1, AIR_RUNE, 3,
 					LAW_RUNE, 1);
 			break;
 		case 46: // fally
 			sendNormalTeleportSpell(player, 37, 48,
-					new Tile(2964, 3379, 0), WATER_RUNE, 1, AIR_RUNE, 3,
+					new WorldTile(2964, 3379, 0), WATER_RUNE, 1, AIR_RUNE, 3,
 					LAW_RUNE, 1);
 			break;
 		case 51: // camelot
-			sendNormalTeleportSpell(player, 45, 55.5, new Tile(2757, 3478,
+			sendNormalTeleportSpell(player, 45, 55.5, new WorldTile(2757, 3478,
 					0), AIR_RUNE, 5, LAW_RUNE, 1);
 			break;
 		case 57: // ardy
 			sendNormalTeleportSpell(player, 51, 61,
-					new Tile(2664, 3305, 0), WATER_RUNE, 2, LAW_RUNE, 2);
+					new WorldTile(2664, 3305, 0), WATER_RUNE, 2, LAW_RUNE, 2);
 			break;
 		case 62: // watch
 			sendNormalTeleportSpell(player, 58, 68,
-					new Tile(2547, 3113, 2), EARTH_RUNE, 2, LAW_RUNE, 2);
+					new WorldTile(2547, 3113, 2), EARTH_RUNE, 2, LAW_RUNE, 2);
 			break;
 		case 69: // troll
 			sendNormalTeleportSpell(player, 61, 68,
-					new Tile(2888, 3674, 0), FIRE_RUNE, 2, LAW_RUNE, 2);
+					new WorldTile(2888, 3674, 0), FIRE_RUNE, 2, LAW_RUNE, 2);
 			break;
 		case 72: // ape
 			sendNormalTeleportSpell(player, 64, 76,
-					new Tile(2776, 9103, 0), FIRE_RUNE, 2, WATER_RUNE, 2,
+					new WorldTile(2776, 9103, 0), FIRE_RUNE, 2, WATER_RUNE, 2,
 					LAW_RUNE, 2, 1963, 1);
 			break;
 		}
@@ -628,7 +628,7 @@ public class Magic {
 					player.setNextAnimation(new Animation(13288));
 					player.setNextGraphics(new Graphics(2516));
 				} else if (loop == 1) {
-					player.setNextWorldTile(new Tile(x, y, h));
+					player.setNextWorldTile(new WorldTile(x, y, h));
 					player.setNextAnimation(new Animation(13285));
 					player.setNextGraphics(new Graphics(2517));
 					player.unlock();
@@ -640,26 +640,26 @@ public class Magic {
 
 
 	public static final void sendAncientTeleportSpell(Player player, int level,
-													  double xp, Tile tile, int... runes) {
+													  double xp, WorldTile tile, int... runes) {
 		sendTeleportSpell(player, 1979, -1, 1681, -1, level, xp, tile, 5, true,
 				MAGIC_TELEPORT, runes);
 	}
 
 	public static final void sendNormalTeleportSpell(Player player, int level,
-													 double xp, Tile tile, int... runes) {
+													 double xp, WorldTile tile, int... runes) {
 		sendTeleportSpell(player, 8939, 8941, 1576, 1577, level, xp, tile, 3,
 				true, MAGIC_TELEPORT, runes);
 	}
 
 	public static final boolean sendItemTeleportSpell(Player player,
 			boolean randomize, int upEmoteId, int upGraphicId, int delay,
-			Tile tile) {
+			WorldTile tile) {
 		return sendTeleportSpell(player, upEmoteId, -2, upGraphicId, -1, 0, 0,
 				tile, delay, randomize, ITEM_TELEPORT);
 	}
 
 	public static void pushLeverTeleport(final Player player,
-			final Tile tile) {
+			final WorldTile tile) {
 		if (!player.getControlerManager().processObjectTeleport(tile))
 			return;
 		player.setNextAnimation(new Animation(2140));
@@ -674,13 +674,13 @@ public class Magic {
 	}
 
 	public static final void sendObjectTeleportSpell(Player player,
-			boolean randomize, Tile tile) {
+			boolean randomize, WorldTile tile) {
 		sendTeleportSpell(player, 8939, 8941, 1576, 1577, 0, 0, tile, 3,
 				randomize, OBJECT_TELEPORT);
 	}
 
 	public static final void sendDelayedObjectTeleportSpell(Player player,
-			int delay, boolean randomize, Tile tile) {
+			int delay, boolean randomize, WorldTile tile) {
 		sendTeleportSpell(player, 8939, 8941, 1576, 1577, 0, 0, tile, delay,
 				randomize, OBJECT_TELEPORT);
 	}
@@ -688,7 +688,7 @@ public class Magic {
 	public static final boolean sendTeleportSpell(final Player player,
 												  int upEmoteId, final int downEmoteId, int upGraphicId,
 												  final int downGraphicId, int level, final double xp,
-												  final Tile tile, int delay, final boolean randomize,
+												  final WorldTile tile, int delay, final boolean randomize,
 												  final int teleType, int... runes) {
 		long currentTime = Utils.currentTimeMillis();
 		if (player.getLockDelay() > currentTime)
@@ -726,11 +726,11 @@ public class Magic {
 			@Override
 			public void run() {
 				if(!removeDamage) {
-					Tile teleTile = tile;
+					WorldTile teleTile = tile;
 					if (randomize) {
 						// attemps to randomize tile by 4x4 area
 						for (int trycount = 0; trycount < 10; trycount++) {
-							teleTile = new Tile(tile, 2);
+							teleTile = new WorldTile(tile, 2);
 							if (World.canMoveNPC(tile.getPlane(), teleTile.getX(),
 									teleTile.getY(), player.getSize()))
 								break;
@@ -750,7 +750,7 @@ public class Magic {
 						player.setNextGraphics(new Graphics(downGraphicId));
 					if (teleType == MAGIC_TELEPORT) {
 						player.getPackets().sendSound(5524, 0, 2);
-						player.setNextFaceWorldTile(new Tile(teleTile.getX(),
+						player.setNextFaceWorldTile(new WorldTile(teleTile.getX(),
 								teleTile.getY() - 1, teleTile.getPlane()));
 						player.setDirection(6);
 					}
@@ -764,9 +764,9 @@ public class Magic {
 		return true;
 	}
 
-	private final static Tile[] TABS = { new Tile(3217, 3426, 0),
-			new Tile(3222, 3218, 0), new Tile(2965, 3379, 0),
-			new Tile(2758, 3478, 0), new Tile(2660, 3306, 0) };
+	private final static WorldTile[] TABS = { new WorldTile(3217, 3426, 0),
+			new WorldTile(3222, 3218, 0), new WorldTile(2965, 3379, 0),
+			new WorldTile(2758, 3478, 0), new WorldTile(2660, 3306, 0) };
 
 	public static boolean useTabTeleport(final Player player, final int itemId) {
 		if (itemId < 8007 || itemId > 8007 + TABS.length - 1)
@@ -776,7 +776,7 @@ public class Magic {
 		return true;
 	}
 
-	public static boolean useTeleTab(final Player player, final Tile tile) {
+	public static boolean useTeleTab(final Player player, final WorldTile tile) {
 		if (!player.getControlerManager().processItemTeleport(tile))
 			return false;
 		player.lock();
@@ -791,10 +791,10 @@ public class Magic {
 					player.setNextAnimation(new Animation(4731));
 					stage = 1;
 				} else if(stage == 1){
-					Tile teleTile = tile;
+					WorldTile teleTile = tile;
 					// attemps to randomize tile by 4x4 area
 					for (int trycount = 0; trycount < 10; trycount++) {
-						teleTile = new Tile(tile, 2);
+						teleTile = new WorldTile(tile, 2);
 						if (World.canMoveNPC(tile.getPlane(), teleTile.getX(),
 								teleTile.getY(), player.getSize()))
 							break;
@@ -804,7 +804,7 @@ public class Magic {
 					player.getControlerManager().magicTeleported(ITEM_TELEPORT);
 					if (player.getControlerManager().getControler() == null)
 						teleControlersCheck(player, teleTile);
-					player.setNextFaceWorldTile(new Tile(teleTile.getX(),
+					player.setNextFaceWorldTile(new WorldTile(teleTile.getX(),
 							teleTile.getY() - 1, teleTile.getPlane()));
 					player.setDirection(6);
 					player.setNextAnimation(new Animation(-1));
@@ -820,7 +820,7 @@ public class Magic {
 		return true;
 	}
 
-	public static void teleControlersCheck(Player player, Tile teleTile) {
+	public static void teleControlersCheck(Player player, WorldTile teleTile) {
 		if (Kalaboss.isAtKalaboss(teleTile))
 			player.getControlerManager().startControler("Kalaboss");
 		else if (Wilderness.isAtWild(teleTile))

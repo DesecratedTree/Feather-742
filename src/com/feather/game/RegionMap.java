@@ -442,7 +442,7 @@ public class RegionMap {
 
 	public void setMask(int plane, int x, int y, int mask) {
 		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
-			Tile tile = new Tile(regionX + x, regionY + y, plane);
+			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
 			int regionId = tile.getRegionId();
 			int newRegionX = (regionId >> 8) * 64;
 			int newRegionY = (regionId & 0xff) * 64;
@@ -463,7 +463,7 @@ public class RegionMap {
 
 	public void removeMask(int plane, int x, int y, int mask) {
 		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
-			Tile tile = new Tile(regionX + x, regionY + y, plane);
+			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
 			int regionId = tile.getRegionId();
 			int newRegionX = (regionId >> 8) * 64;
 			int newRegionY = (regionId & 0xff) * 64;
@@ -484,7 +484,7 @@ public class RegionMap {
 
 	public void addMask(int plane, int x, int y, int mask) {
 		if (x >= 64 || y >= 64 || x < 0 || y < 0) {
-			Tile tile = new Tile(regionX + x, regionY + y, plane);
+			WorldTile tile = new WorldTile(regionX + x, regionY + y, plane);
 			int regionId = tile.getRegionId();
 			int newRegionX = (regionId >> 8) * 64;
 			int newRegionY = (regionId & 0xff) * 64;

@@ -1,8 +1,8 @@
 package com.feather.game.player.controlers;
 
 import com.feather.game.Animation;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
@@ -22,7 +22,7 @@ public class JailControler extends Controler {
 			player.getControlerManager().getControler().removeControler();
 			player.getPackets().sendGameMessage(
 					"Your account has been unjailed.", true);
-			player.setNextWorldTile(new Tile(2677, 10379, 0));
+			player.setNextWorldTile(new WorldTile(2677, 10379, 0));
 		}
 	}
 
@@ -69,21 +69,21 @@ public class JailControler extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage(
 				"You are currently jailed for your delinquent acts.");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage(
 				"You are currently jailed for your delinquent acts.");
 		return false;
 	}
 
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		player.getPackets().sendGameMessage(
 				"You cannot do any activities while being jailed.");
 		return false;

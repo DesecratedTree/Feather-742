@@ -2,7 +2,7 @@ package com.feather.game.player.content;
 
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
 import com.feather.game.tasks.WorldTasksManager;
@@ -15,12 +15,12 @@ import com.feather.game.tasks.WorldTasksManager;
 public class SpiritTree {
 
 	// Variables of the set locations.
-	public static final Tile TREE_GNOME_VILLAGE = new Tile(2542,
-			3168, 0), TREE_GNOME_STRONGHOLD = new Tile(2460, 3446, 0),
-			BATTLEFIELD_OF_KHAZARD = new Tile(2553, 3256, 0),
-			GRAND_EXCHANGE = new Tile(3186, 3508, 0),
-			MOBILISING_ARMIES = new Tile(2416, 2848, 0),
-			MAIN_SPIRIT_TREE = new Tile(2542, 3168, 0);
+	public static final WorldTile TREE_GNOME_VILLAGE = new WorldTile(2542,
+			3168, 0), TREE_GNOME_STRONGHOLD = new WorldTile(2460, 3446, 0),
+			BATTLEFIELD_OF_KHAZARD = new WorldTile(2553, 3256, 0),
+			GRAND_EXCHANGE = new WorldTile(3186, 3508, 0),
+			MOBILISING_ARMIES = new WorldTile(2416, 2848, 0),
+			MAIN_SPIRIT_TREE = new WorldTile(2542, 3168, 0);
 
 	/**
 	 * Handles the buttons of the spirit tree interface.
@@ -51,7 +51,7 @@ public class SpiritTree {
 	 * @param tile
 	 */
 	public static void sendSpiritTreeTeleport(final Player player,
-			final Tile tile) {
+			final WorldTile tile) {
 		if (!player.getControlerManager().processObjectTeleport(tile))
 			return;
 		player.closeInterfaces();

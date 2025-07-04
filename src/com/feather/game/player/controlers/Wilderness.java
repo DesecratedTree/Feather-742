@@ -71,7 +71,7 @@ public class Wilderness extends Controler {
 		if (target.getAttackedBy() != player
 				&& player.getAttackedBy() != target)
 			player.setWildernessSkull();
-		if (player.getCombatDefinitions().getSpellId() <= 0 && Utils.inCircle(new Tile(3105, 3933, 0), target, 24)) {
+		if (player.getCombatDefinitions().getSpellId() <= 0 && Utils.inCircle(new WorldTile(3105, 3933, 0), target, 24)) {
 			player.getPackets().sendGameMessage("You can only use magic in the arena.");
 			return false;
 		}
@@ -106,7 +106,7 @@ public class Wilderness extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		if (getWildLevel() > 20) {
 			player.getPackets().sendGameMessage(
 					"A mysterious force prevents you from teleporting.");
@@ -122,7 +122,7 @@ public class Wilderness extends Controler {
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		if (getWildLevel() > 20) {
 			player.getPackets().sendGameMessage(
 					"A mysterious force prevents you from teleporting.");
@@ -137,7 +137,7 @@ public class Wilderness extends Controler {
 	}
 
 	@Override
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		if (player.getTeleBlockDelay() > Utils.currentTimeMillis()) {
 			player.getPackets().sendGameMessage(
 					"A mysterious force prevents you from teleporting.");
@@ -155,15 +155,15 @@ public class Wilderness extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(final GameObject object) {
+	public boolean processObjectClick1(final WorldObject object) {
 		if (isDitch(object.getId())) {
 			player.lock();
 			player.setNextAnimation(new Animation(6132));
-			final Tile toTile = new Tile(object.getRotation() == 1 || object.getRotation() == 3 ? object.getX() + 2 : player.getX(),
+			final WorldTile toTile = new WorldTile(object.getRotation() == 1 || object.getRotation() == 3 ? object.getX() + 2 : player.getX(),
 					object.getRotation() == 0 || object.getRotation() == 2 ? object.getY() - 1 : player.getY(), object.getPlane());
 			
 			player.setNextForceMovement(new ForceMovement(
-					new Tile(player), 1, toTile, 2, object.getRotation() == 0 || object.getRotation() == 2 ? ForceMovement.SOUTH : ForceMovement.EAST));
+					new WorldTile(player), 1, toTile, 2, object.getRotation() == 0 || object.getRotation() == 2 ? ForceMovement.SOUTH : ForceMovement.EAST));
 			WorldTasksManager.schedule(new WorldTask() {
 				@Override
 				public void run() {
@@ -184,7 +184,7 @@ public class Wilderness extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick2(final GameObject object) {
+	public boolean processObjectClick2(final WorldObject object) {
 		if (object.getId() == 2557 || object.getId() == 65717) {
 			Thieving.pickDoor(player, object);
 			return false;
@@ -220,7 +220,7 @@ public class Wilderness extends Controler {
 					player.getEquipment().init();
 					player.getInventory().init();
 					player.reset();
-					player.setNextWorldTile(new Tile(Settings.RESPAWN_PLAYER_LOCATION));
+					player.setNextWorldTile(new WorldTile(Settings.RESPAWN_PLAYER_LOCATION));
 					player.setNextAnimation(new Animation(-1));
 				} else if (loop == 4) {
 					removeIcon();
@@ -280,7 +280,7 @@ public class Wilderness extends Controler {
 		removeIcon();
 	}
 
-	public static final boolean isAtWild(Tile tile) {//TODO fix this
+	public static final boolean isAtWild(WorldTile tile) {//TODO fix this
 		return (tile.getX() >= 3011 && tile.getX() <= 3132
 				&& tile.getY() >= 10052 && tile.getY() <= 10175) //fortihrny dungeon
 				|| 	(tile.getX() >= 2940 && tile.getX() <= 3395

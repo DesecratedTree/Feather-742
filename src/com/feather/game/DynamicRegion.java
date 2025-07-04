@@ -23,7 +23,7 @@ public class DynamicRegion extends Region {
 	}
 
 	@Override
-	public void removeMapObject(GameObject object, int x, int y) {
+	public void removeMapObject(WorldObject object, int x, int y) {
 		if (removedMap == null)
 			removedMap = new RegionMap(getRegionId(), false);
 		int plane = object.getPlane();
@@ -95,7 +95,7 @@ public class DynamicRegion extends Region {
 	 * gets the real tile objects from real region
 	 */
 	@Override
-	public GameObject[] getObjects(int plane, int localX, int localY) {
+	public WorldObject[] getObjects(int plane, int localX, int localY) {
 		int currentChunkX = localX / 8;
 		int currentChunkY = localY / 8;
 		int rotation = regionCoords[plane][currentChunkX][currentChunkY][3];

@@ -69,7 +69,7 @@ public class StrykewyrmCombat extends CombatScript {
 				}, 1);
 			}
 		} else if (attackStyle == 10) { // bury
-			final Tile tile = new Tile(target);
+			final WorldTile tile = new WorldTile(target);
 			tile.moveLocation(-1, -1, 0);
 			npc.setNextAnimation(new Animation(12796));
 			npc.setCantInteract(true);

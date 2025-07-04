@@ -40,7 +40,7 @@ public class KalphiteQueenCombat extends CombatScript {
 	}
 
 	
-	private Player getTarget(List<Player> list, final Entity fromEntity, Tile startTile) {
+	private Player getTarget(List<Player> list, final Entity fromEntity, WorldTile startTile) {
 		if (fromEntity == null) {
 			return null;
 		}

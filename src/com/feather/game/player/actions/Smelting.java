@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.feather.game.Animation;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.item.Item;
 import com.feather.game.player.Equipment;
 import com.feather.game.player.Player;
@@ -97,10 +97,10 @@ public class Smelting extends Action {
 	}
 
 	public SmeltingBar bar;
-	public GameObject object;
+	public WorldObject object;
 	public int ticks;
 
-	public Smelting(int slotId, GameObject object, int ticks) {
+	public Smelting(int slotId, WorldObject object, int ticks) {
 		this.object = object;
 		this.bar = SmeltingBar.forId(slotId);
 		this.ticks = ticks;

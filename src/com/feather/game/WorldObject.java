@@ -3,14 +3,14 @@ package com.feather.game;
 import com.feather.cache.parser.ObjectDefinitions;
 
 @SuppressWarnings("serial")
-public class GameObject extends Tile {
+public class WorldObject extends WorldTile {
 
 	private int id;
 	private int type;
 	private int rotation;
 	private int life;
 
-	public GameObject(int id, int type, int rotation, Tile tile) {
+	public WorldObject(int id, int type, int rotation, WorldTile tile) {
 		super(tile.getX(), tile.getY(), tile.getPlane());
 		this.id = id;
 		this.type = type;
@@ -18,7 +18,7 @@ public class GameObject extends Tile {
 		this.life = 1;
 	}
 	
-	public GameObject(int id, int type, int rotation, int x, int y, int plane) {
+	public WorldObject(int id, int type, int rotation, int x, int y, int plane) {
 		super(x, y, plane);
 		this.id = id;
 		this.type = type;
@@ -26,7 +26,7 @@ public class GameObject extends Tile {
 		this.life = 1;
 	}
 	
-	public GameObject(int id, int type, int rotation, int x, int y, int plane, int life) {
+	public WorldObject(int id, int type, int rotation, int x, int y, int plane, int life) {
 		super(x, y, plane);
 		this.id = id;
 		this.type = type;
@@ -35,7 +35,7 @@ public class GameObject extends Tile {
 	}
 	
 
-	public GameObject(GameObject object) {
+	public WorldObject(WorldObject object) {
 		super(object.getX(), object.getY(), object.getPlane());
 		this.id = object.id;
 		this.type = object.type;

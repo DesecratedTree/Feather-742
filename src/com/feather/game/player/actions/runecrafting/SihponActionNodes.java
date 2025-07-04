@@ -3,7 +3,7 @@ package com.feather.game.player.actions.runecrafting;
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
 import com.feather.game.player.actions.Action;
@@ -18,7 +18,7 @@ import com.feather.utils.Utils;
  */
 public class SihponActionNodes extends Action {
 	Nodes nodes;
-	GameObject node;
+	WorldObject node;
 	private boolean started;
 
 	/**
@@ -26,7 +26,7 @@ public class SihponActionNodes extends Action {
 	 * @param nodes
 	 * @param node
 	 */
-	public SihponActionNodes(Nodes nodes, GameObject node) {
+	public SihponActionNodes(Nodes nodes, WorldObject node) {
 		this.nodes = nodes;
 		this.node = node;
 	}
@@ -148,7 +148,7 @@ public class SihponActionNodes extends Action {
 		}
 	}
 
-	public static boolean siphon(Player player, GameObject object) {
+	public static boolean siphon(Player player, WorldObject object) {
 		Nodes node = getNode(object.getId());
 		if (node == null)
 			return false;

@@ -2,8 +2,8 @@ package com.feather.game.minigames.clanwars;
 
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.clanwars.ClanWars.Rules;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.PlayerCombat;
@@ -74,7 +74,7 @@ public final class WarControler extends Controler {
 						int secondKills = (clanWars.getKills() >> 24 & 0xFFFF) + 1;
 						clanWars.setKills(firstKills | (secondKills << 24));
 					} else {
-						Tile northEast = clanWars.getBaseLocation().transform(clanWars.getAreaType().getNorthEastTile().getX() - clanWars.getAreaType().getSouthWestTile().getX(),
+						WorldTile northEast = clanWars.getBaseLocation().transform(clanWars.getAreaType().getNorthEastTile().getX() - clanWars.getAreaType().getSouthWestTile().getX(),
 								clanWars.getAreaType().getNorthEastTile().getY() - clanWars.getAreaType().getSouthWestTile().getY(), 0);
 						player.setNextWorldTile(northEast.transform(clanWars.getAreaType().getSecondDeathOffsetX(), clanWars.getAreaType().getSecondDeathOffsetY(), 0));
 						clanWars.getSecondPlayers().remove(player);
@@ -114,19 +114,19 @@ public final class WarControler extends Controler {
 	}
 	
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage("You can't teleport out of a clan war!");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage("You can't teleport out of a clan war!");
 		return false;
 	}
 	
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		switch (object.getId()) {
 		case 38697:
 		case 28140:
@@ -212,10 +212,10 @@ public final class WarControler extends Controler {
 			player.setForceMultiArea(true);
 			break;
 		case FORSAKEN_QUARRY:
-			Tile northEast = clanWars.getBaseLocation().transform(clanWars.getAreaType().getNorthEastTile().getX() - clanWars.getAreaType().getSouthWestTile().getX(),
+			WorldTile northEast = clanWars.getBaseLocation().transform(clanWars.getAreaType().getNorthEastTile().getX() - clanWars.getAreaType().getSouthWestTile().getX(),
 				clanWars.getAreaType().getNorthEastTile().getY() - clanWars.getAreaType().getSouthWestTile().getY(), 0)
 				.transform(-16, -16, 0);
-			Tile southWest = clanWars.getBaseLocation().transform(16, 16, 0);
+			WorldTile southWest = clanWars.getBaseLocation().transform(16, 16, 0);
 			player.setForceMultiArea(player.getX() >= southWest.getX() && player.getY() >= southWest.getY() && player.getX() <= northEast.getX() && player.getY() <= northEast.getY());
 			break;
 		}
@@ -229,7 +229,7 @@ public final class WarControler extends Controler {
 	
 	@Override
 	public boolean logout() {
-		player.setLocation(new Tile(2992, 9676, 0));
+		player.setLocation(new WorldTile(2992, 9676, 0));
 		return true;
 	}
 

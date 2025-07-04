@@ -1,7 +1,7 @@
 package com.feather.game.npc.familiar;
 
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.Woodcutting;
 import com.feather.game.player.actions.Summoning.Pouches;
@@ -14,7 +14,7 @@ public class Beaver extends Familiar {
 	 */
 	private static final long serialVersionUID = -9181393770444014076L;
 
-	public Beaver(Player owner, Pouches pouch, Tile tile,
+	public Beaver(Player owner, Pouches pouch, WorldTile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(owner, pouch, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 	}
@@ -46,7 +46,7 @@ public class Beaver extends Familiar {
 
 	@Override
 	public boolean submitSpecial(Object context) {
-		GameObject object = (GameObject) context;
+		WorldObject object = (WorldObject) context;
 		getOwner().getActionManager().setAction(
 				new Woodcutting(object, TreeDefinitions.NORMAL));
 		return true;

@@ -2,8 +2,8 @@ package com.feather.game;
 
 public final class NewForceMovement extends ForceMovement {
 
-	public NewForceMovement(Tile toFirstTile, int firstTileTicketDelay,
-                            Tile toSecondTile, int secondTileTicketDelay, int direction) {
+	public NewForceMovement(WorldTile toFirstTile, int firstTileTicketDelay,
+                            WorldTile toSecondTile, int secondTileTicketDelay, int direction) {
 		super(toFirstTile, firstTileTicketDelay, toSecondTile, secondTileTicketDelay,
 				direction);
 	}

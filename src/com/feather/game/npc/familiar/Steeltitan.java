@@ -1,7 +1,7 @@
 package com.feather.game.npc.familiar;
 
 import com.feather.game.Animation;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.Summoning.Pouches;
 
@@ -12,7 +12,7 @@ public class Steeltitan extends Familiar {
 	 */
 	private static final long serialVersionUID = -6377458256826528627L;
 
-	public Steeltitan(Player owner, Pouches pouch, Tile tile,
+	public Steeltitan(Player owner, Pouches pouch, WorldTile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(owner, pouch, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 		setNextAnimation(new Animation(8188));

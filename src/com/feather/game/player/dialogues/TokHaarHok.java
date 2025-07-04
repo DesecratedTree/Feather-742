@@ -3,7 +3,7 @@ package com.feather.game.player.dialogues;
 import java.util.TimerTask;
 
 import com.feather.cores.CoresManager;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.controlers.FightKiln;
 import com.feather.game.player.cutscenes.Cutscene;
 import com.feather.utils.Logger;
@@ -95,10 +95,10 @@ public class TokHaarHok extends Dialogue {
 			case -1:
 				stage = 0;
 				player.getInterfaceManager().closeChatBoxInterface();
-				Tile lookTo = fightKiln.getWorldTile(37, 50);
+				WorldTile lookTo = fightKiln.getWorldTile(37, 50);
 				player.getPackets().sendCameraLook(Cutscene.getX(player, lookTo.getX()),
 						Cutscene.getY(player, lookTo.getY()), 1000);
-				Tile posTile = fightKiln.getWorldTile(37, 45);
+				WorldTile posTile = fightKiln.getWorldTile(37, 45);
 				player.getPackets().sendCameraPos(Cutscene.getX(player, posTile.getX()),
 						Cutscene.getY(player, posTile.getY()), 3000);
 				CoresManager.fastExecutor.schedule(new TimerTask() {

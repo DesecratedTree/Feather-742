@@ -2,8 +2,8 @@ package com.feather.game.player.controlers.fightpits;
 
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.FightPits;
 import com.feather.game.player.Player;
 import com.feather.game.player.controlers.Controler;
@@ -18,7 +18,7 @@ public class FightPitsArena extends Controler {
 	}
 
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		if (object.getId() == 68222) {
 			FightPits.leaveArena(player, 1);
 			return false;
@@ -35,19 +35,19 @@ public class FightPitsArena extends Controler {
 	}
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage("You can't teleport out of the arena!");
 		return false;
 	}
 
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage("You can't teleport out of the arena!");
 		return false;
 	}
 
 	@Override
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage("You can't teleport out of the arena!");
 		return false;
 	}

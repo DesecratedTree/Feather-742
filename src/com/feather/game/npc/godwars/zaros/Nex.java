@@ -26,8 +26,8 @@ public final class Nex extends NPC {
 	private NPC[] bloodReavers;
 	private int switchPrayersDelay;
 
-	public Nex(int id, Tile tile, int mapAreaNameHash,
-			   boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public Nex(int id, WorldTile tile, int mapAreaNameHash,
+               boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		setCantInteract(true);
 		setCapDamage(500);
@@ -118,26 +118,26 @@ public final class Nex extends NPC {
 								|| entity.hasFinished()
 								|| !entity.withinDistance(target, 10))
 							continue;
-						World.sendProjectile(target, new Tile(getX() + 2,
+						World.sendProjectile(target, new WorldTile(getX() + 2,
 								getY() + 2, getPlane()), 2260, 24, 0, 41, 35,
 								30, 0);
-						World.sendProjectile(target, new Tile(getX() + 2,
+						World.sendProjectile(target, new WorldTile(getX() + 2,
 								getY(), getPlane()), 2260, 41, 0, 41, 35, 30, 0);
-						World.sendProjectile(target, new Tile(getX() + 2,
+						World.sendProjectile(target, new WorldTile(getX() + 2,
 								getY() - 2, getPlane()), 2260, 41, 0, 41, 35,
 								30, 0);
-						World.sendProjectile(target, new Tile(getX() - 2,
+						World.sendProjectile(target, new WorldTile(getX() - 2,
 								getY() + 2, getPlane()), 2260, 41, 0, 41, 35,
 								30, 0);
-						World.sendProjectile(target, new Tile(getX() - 2,
+						World.sendProjectile(target, new WorldTile(getX() - 2,
 								getY(), getPlane()), 2260, 41, 0, 41, 35, 30, 0);
-						World.sendProjectile(target, new Tile(getX() - 2,
+						World.sendProjectile(target, new WorldTile(getX() - 2,
 								getY() - 2, getPlane()), 2260, 41, 0, 41, 35,
 								30, 0);
-						World.sendProjectile(target, new Tile(getX(),
+						World.sendProjectile(target, new WorldTile(getX(),
 								getY() + 2, getPlane()), 2260, 41, 0, 41, 35,
 								30, 0);
-						World.sendProjectile(target, new Tile(getX(),
+						World.sendProjectile(target, new WorldTile(getX(),
 								getY() - 2, getPlane()), 2260, 41, 0, 41, 35,
 								30, 0);
 						entity.applyHit(new Hit(target, Utils.getRandom(600),
@@ -148,8 +148,8 @@ public final class Nex extends NPC {
 		});
 	}
 
-	public ArrayList<Entity> calculatePossibleTargets(Tile current,
-													  Tile position, boolean northSouth) {
+	public ArrayList<Entity> calculatePossibleTargets(WorldTile current,
+                                                      WorldTile position, boolean northSouth) {
 		ArrayList<Entity> list = new ArrayList<Entity>();
 		for (Entity e : getPossibleTargets()) {
 			if (e.inArea(current.getX(), current.getY(), position.getX()

@@ -8,7 +8,7 @@ import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.GodWarsBosses;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -19,8 +19,8 @@ import com.feather.game.tasks.WorldTasksManager;
 @SuppressWarnings("serial")
 public class KreeArra extends NPC {
 
-	public KreeArra(int id, Tile tile, int mapAreaNameHash,
-					boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public KreeArra(int id, WorldTile tile, int mapAreaNameHash,
+                    boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
 

@@ -2,8 +2,8 @@ package com.feather.game.player.controlers;
 
 import com.feather.game.Animation;
 import com.feather.game.Entity;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.minigames.Crucible;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
@@ -82,21 +82,21 @@ public class CrucibleControler extends Controler {
 	
 
 	@Override
-	public boolean processMagicTeleport(Tile toTile) {
+	public boolean processMagicTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage(
 				"You cannot teleport from an instance shard world.");
 		return false;
 	}
 	
 	@Override
-	public boolean processItemTeleport(Tile toTile) {
+	public boolean processItemTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage(
 				"You cannot teleport from an instance shard world.");
 		return false;
 	}
 	
 	@Override
-	public boolean processObjectTeleport(Tile toTile) {
+	public boolean processObjectTeleport(WorldTile toTile) {
 		player.getPackets().sendGameMessage(
 				"You cannot teleport from an instance shard world.");
 		return false;
@@ -168,7 +168,7 @@ public class CrucibleControler extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		if(object.getId() == 72921 || object.getId() == 72922) {
 			Crucible.leaveArena(player);
 			return false;
@@ -180,7 +180,7 @@ public class CrucibleControler extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick2(GameObject object) {
+	public boolean processObjectClick2(WorldObject object) {
 		if (object.getId() >= 72923 && object.getId() <= 72935) {
 			Crucible.openFissureTravel(player);
 			return false;
@@ -189,7 +189,7 @@ public class CrucibleControler extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick3(GameObject object) {
+	public boolean processObjectClick3(WorldObject object) {
 		if (object.getId() >= 72923 && object.getId() <= 72935) {
 			Crucible.goBank(player, this);
 			return false;

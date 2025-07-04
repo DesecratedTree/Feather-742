@@ -5,7 +5,7 @@ import java.util.List;
 import com.feather.game.Animation;
 import com.feather.game.ForceTalk;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Equipment;
 import com.feather.game.player.Player;
@@ -100,7 +100,7 @@ public class Thieving {
 	}
 
 	public static void handleStalls(final Player player,
-			final GameObject object) {
+			final WorldObject object) {
 		if (player.getAttackedBy() != null
 				&& player.getAttackedByDelay() > Utils.currentTimeMillis()) {
 			player.getPackets().sendGameMessage(
@@ -109,7 +109,7 @@ public class Thieving {
 		}
 		for (final Stalls stall : Stalls.values()) {
 			if (stall.getObjectId() == object.getId()) {
-				final GameObject emptyStall = new GameObject(
+				final WorldObject emptyStall = new WorldObject(
 						stall.getReplaceObject(), 10, object.getRotation(),
 						object.getX(), object.getY(), object.getPlane());
 				if (player.getSkills().getLevel(Skills.THIEVING) < stall
@@ -190,7 +190,7 @@ public class Thieving {
 		}
 	}
 
-	public static boolean pickDoor(Player player, GameObject object) {
+	public static boolean pickDoor(Player player, WorldObject object) {
 		if (player.getTemporaryAttributtes().get("numbFingers") == null)
 			player.getTemporaryAttributtes().put("numbFingers", 0);
 		int thievingLevel = player.getSkills().getLevel(Skills.THIEVING);

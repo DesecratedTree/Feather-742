@@ -2,7 +2,7 @@ package com.feather.game.npc.familiar;
 
 import com.feather.game.Animation;
 import com.feather.game.Graphics;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.actions.Summoning.Pouches;
 
@@ -13,7 +13,7 @@ public class Unicornstallion extends Familiar {
 	 */
 	private static final long serialVersionUID = -1291968400159646829L;
 
-	public Unicornstallion(Player owner, Pouches pouch, Tile tile,
+	public Unicornstallion(Player owner, Pouches pouch, WorldTile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(owner, pouch, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 	}

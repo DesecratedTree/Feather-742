@@ -9,7 +9,7 @@ import com.feather.cache.Cache;
 import com.feather.cache.parser.ClientScriptMap;
 import com.feather.cache.parser.ObjectDefinitions;
 import com.feather.cores.CoresManager;
-import com.feather.game.item.GroundItem;
+import com.feather.game.item.FloorItem;
 import com.feather.game.player.Player;
 import com.feather.io.InputStream;
 import com.feather.utils.Logger;
@@ -25,10 +25,10 @@ public class Region {
 
 	private List<Integer> playersIndexes;
 	private List<Integer> npcsIndexes;
-	private List<GameObject> spawnedObjects;
-	private List<GameObject> removedObjects;
-	private List<GroundItem> floorItems;
-	private GameObject[][][][] objects;
+	private List<WorldObject> spawnedObjects;
+	private List<WorldObject> removedObjects;
+	private List<FloorItem> floorItems;
+	private WorldObject[][][][] objects;
 	private int loadMapStage;
 	private boolean loadedNPCSpawns;
 	private boolean loadedObjectSpawns;
@@ -493,7 +493,7 @@ public class Region {
 		return map;
 	}
 
-	public void addMapObject(GameObject object, int x, int y) {
+	public void addMapObject(WorldObject object, int x, int y) {
 		if (map == null)
 			map = new RegionMap(regionId, false);
 		if (clipedOnlyMap == null)
@@ -536,7 +536,7 @@ public class Region {
 		}
 	}
 
-	public void removeMapObject(GameObject object, int x, int y) {
+	public void removeMapObject(WorldObject object, int x, int y) {
 		if (map == null)
 			map = new RegionMap(regionId, false);
 		if (clipedOnlyMap == null)
@@ -693,7 +693,7 @@ public class Region {
 					if (objectPlane < 0 || objectPlane >= 4 || plane < 0
 							|| plane >= 4)
 						continue;
-					addObject(new GameObject(objectId, type, rotation, localX + regionX, localY + regionY, objectPlane),
+					addObject(new WorldObject(objectId, type, rotation, localX + regionX, localY + regionY, objectPlane),
 							objectPlane, localX, localY);
 				}
 			}
@@ -703,15 +703,15 @@ public class Region {
 			Logger.log(this, "Missing xteas for region " + regionId + ".");
 	}
 
-	public void addObject(GameObject object, int plane, int localX, int localY) {
+	public void addObject(WorldObject object, int plane, int localX, int localY) {
 		addMapObject(object, localX, localY);
 		if (objects == null)
-			objects = new GameObject[4][64][64][];
-		GameObject[] tileObjects = objects[plane][localX][localY];
+			objects = new WorldObject[4][64][64][];
+		WorldObject[] tileObjects = objects[plane][localX][localY];
 		if (tileObjects == null)
-			objects[plane][localX][localY] = new GameObject[] { object };
+			objects[plane][localX][localY] = new WorldObject[] { object };
 		else {
-			GameObject[] newTileObjects = new GameObject[tileObjects.length + 1];
+			WorldObject[] newTileObjects = new WorldObject[tileObjects.length + 1];
 			newTileObjects[tileObjects.length] = object;
 			System.arraycopy(tileObjects, 0, newTileObjects, 0,
 					tileObjects.length);
@@ -719,17 +719,17 @@ public class Region {
 		}
 	}
 
-	public void removeObject(GameObject object, int plane, int localX,
+	public void removeObject(WorldObject object, int plane, int localX,
 							 int localY) {
 		if (objects == null)
 			return;
-		GameObject[] tileObjects = objects[plane][localX][localY];
+		WorldObject[] tileObjects = objects[plane][localX][localY];
 		if (tileObjects == null)
 			return;
-		GameObject[] newTileObjects = new GameObject[objects[plane][localX][localY].length - 1];
+		WorldObject[] newTileObjects = new WorldObject[objects[plane][localX][localY].length - 1];
 		int count = 0;
 		boolean found = false;
-		for (GameObject oldObjects : tileObjects) {
+		for (WorldObject oldObjects : tileObjects) {
 			if (count >= newTileObjects.length)
 				break;
 			if (oldObjects.getId() == object.getId()) {
@@ -777,25 +777,25 @@ public class Region {
 		return npcsIndexes.remove(index);
 	}
 
-	public GameObject getObject(int plane, int x, int y) {
-		GameObject[] objects = getObjects(plane, x, y);
+	public WorldObject getObject(int plane, int x, int y) {
+		WorldObject[] objects = getObjects(plane, x, y);
 		if (objects == null)
 			return null;
 		return objects[0];
 	}
 
-	public GameObject getObject(int plane, int x, int y, int type) {
-		GameObject[] objects = getObjects(plane, x, y);
+	public WorldObject getObject(int plane, int x, int y, int type) {
+		WorldObject[] objects = getObjects(plane, x, y);
 		if (objects == null)
 			return null;
-		for (GameObject object : objects)
+		for (WorldObject object : objects)
 			if (object.getType() == type)
 				return object;
 		return null;
 	}
 
 	// override by static region to get objects from needed
-	public GameObject[] getObjects(int plane, int x, int y) {
+	public WorldObject[] getObjects(int plane, int x, int y) {
 		checkLoadMap();
 		// if objects just loaded now will return null, anyway after they load
 		// will return correct so np
@@ -808,11 +808,11 @@ public class Region {
 	 * Gets the list of world objects in this region.
 	 * @return The list of world objects.
 	 */
-	public List<GameObject> getObjects() {
+	public List<WorldObject> getObjects() {
 		if (objects == null) {
 			return null;
 		}
-		List<GameObject> list = new ArrayList<GameObject>();
+		List<WorldObject> list = new ArrayList<WorldObject>();
 		for (int z = 0; z < objects.length; z++) {
 			if (objects[z] == null) {
 				continue;
@@ -825,7 +825,7 @@ public class Region {
 					if (objects[z][x][y] == null) {
 						continue;
 					}
-					for (GameObject o : objects[z][x][y]) {
+					for (WorldObject o : objects[z][x][y]) {
 						if (o != null) {
 							list.add(o);
 						}
@@ -836,112 +836,112 @@ public class Region {
 		return list;
 	}
 
-	public GameObject getObject(int id, Tile tile) {
+	public WorldObject getObject(int id, WorldTile tile) {
 		int absX = (regionId >> 8) * 64;
 		int absY = (regionId & 0xff) * 64;
 		int localX = tile.getX() - absX;
 		int localY = tile.getY() - absY;
 		if (localX < 0 || localY < 0 || localX >= 64 || localY >= 64)
 			return null;
-		GameObject spawnedObject = getSpawnedObject(tile);
+		WorldObject spawnedObject = getSpawnedObject(tile);
 		if (spawnedObject != null)
 			return spawnedObject;
-		GameObject removedObject = getRemovedObject(tile);
+		WorldObject removedObject = getRemovedObject(tile);
 		if (removedObject != null && removedObject.getId() == id)
 			return null;
-		GameObject[] mapObjects = getObjects(tile.getPlane(), localX, localY);
+		WorldObject[] mapObjects = getObjects(tile.getPlane(), localX, localY);
 		if (mapObjects == null)
 			return null;
-		for (GameObject object : mapObjects)
+		for (WorldObject object : mapObjects)
 			if (object.getId() == id)
 				return object;
 		return null;
 	}
 
-	public GameObject getSpawnedObject(Tile tile) {
+	public WorldObject getSpawnedObject(WorldTile tile) {
 		if (spawnedObjects == null)
 			return null;
-		for (GameObject object : spawnedObjects)
+		for (WorldObject object : spawnedObjects)
 			if (object.getX() == tile.getX() && object.getY() == tile.getY()
 					&& object.getPlane() == tile.getPlane())
 				return object;
 		return null;
 	}
 
-	public GameObject getRemovedObject(Tile tile) {
+	public WorldObject getRemovedObject(WorldTile tile) {
 		if (removedObjects == null)
 			return null;
-		for (GameObject object : removedObjects)
+		for (WorldObject object : removedObjects)
 			if (object.getX() == tile.getX() && object.getY() == tile.getY()
 					&& object.getPlane() == tile.getPlane())
 				return object;
 		return null;
 	}
 
-	public void addObject(GameObject object) {
+	public void addObject(WorldObject object) {
 		if (spawnedObjects == null)
-			spawnedObjects = new CopyOnWriteArrayList<GameObject>();
+			spawnedObjects = new CopyOnWriteArrayList<WorldObject>();
 		spawnedObjects.add(object);
 	}
 
-	public void removeObject(GameObject object) {
+	public void removeObject(WorldObject object) {
 		if (spawnedObjects == null)
 			return;
 		spawnedObjects.remove(object);
 	}
 
-	public void addRemovedObject(GameObject object) {
+	public void addRemovedObject(WorldObject object) {
 		if (removedObjects == null)
-			removedObjects = new CopyOnWriteArrayList<GameObject>();
+			removedObjects = new CopyOnWriteArrayList<WorldObject>();
 		removedObjects.add(object);
 	}
 
-	public void removeRemovedObject(GameObject object) {
+	public void removeRemovedObject(WorldObject object) {
 		if (removedObjects == null)
 			return;
 		removedObjects.remove(object);
 	}
 
-	public List<GameObject> getSpawnedObjects() {
+	public List<WorldObject> getSpawnedObjects() {
 		return spawnedObjects;
 	}
 
-	public List<GameObject> getRemovedObjects() {
+	public List<WorldObject> getRemovedObjects() {
 		return removedObjects;
 	}
 
-	public GameObject getRealObject(GameObject spawnObject) {
+	public WorldObject getRealObject(WorldObject spawnObject) {
 		int absX = (regionId >> 8) * 64;
 		int absY = (regionId & 0xff) * 64;
 		int localX = spawnObject.getX() - absX;
 		int localY = spawnObject.getY() - absY;
-		GameObject[] mapObjects = getObjects(spawnObject.getPlane(), localX,
+		WorldObject[] mapObjects = getObjects(spawnObject.getPlane(), localX,
 				localY);
 		if (mapObjects == null)
 			return null;
-		for (GameObject object : mapObjects)
+		for (WorldObject object : mapObjects)
 			if (object.getType() == spawnObject.getType())
 				return object;
 		return null;
 	}
 
-	public boolean containsObject(int id, Tile tile) {
+	public boolean containsObject(int id, WorldTile tile) {
 		int absX = (regionId >> 8) * 64;
 		int absY = (regionId & 0xff) * 64;
 		int localX = tile.getX() - absX;
 		int localY = tile.getY() - absY;
 		if (localX < 0 || localY < 0 || localX >= 64 || localY >= 64)
 			return false;
-		GameObject spawnedObject = getSpawnedObject(tile);
+		WorldObject spawnedObject = getSpawnedObject(tile);
 		if (spawnedObject != null)
 			return spawnedObject.getId() == id;
-		GameObject removedObject = getRemovedObject(tile);
+		WorldObject removedObject = getRemovedObject(tile);
 		if (removedObject != null && removedObject.getId() == id)
 			return false;
-		GameObject[] mapObjects = getObjects(tile.getPlane(), localX, localY);
+		WorldObject[] mapObjects = getObjects(tile.getPlane(), localX, localY);
 		if (mapObjects == null)
 			return false;
-		for (GameObject object : mapObjects)
+		for (WorldObject object : mapObjects)
 			if (object.getId() == id)
 				return true;
 		return false;
@@ -953,7 +953,7 @@ public class Region {
 			return -1; // cliped tile
 
 		if (localX >= 64 || localY >= 64 || localX < 0 || localY < 0) {
-			Tile tile = new Tile(map.getRegionX() + localX,
+			WorldTile tile = new WorldTile(map.getRegionX() + localX,
 					map.getRegionY() + localY, plane);
 			int regionId = tile.getRegionId();
 			int newRegionX = (regionId >> 8) * 64;
@@ -970,7 +970,7 @@ public class Region {
 			return; // cliped tile
 
 		if (localX >= 64 || localY >= 64 || localX < 0 || localY < 0) {
-			Tile tile = new Tile(map.getRegionX() + localX,
+			WorldTile tile = new WorldTile(map.getRegionX() + localX,
 					map.getRegionY() + localY, plane);
 			int regionId = tile.getRegionId();
 			int newRegionX = (regionId >> 8) * 64;
@@ -996,20 +996,20 @@ public class Region {
 		return clipedOnlyMap.getMasks()[plane][localX][localY];
 	}
 
-	public List<GroundItem> forceGetFloorItems() {
+	public List<FloorItem> forceGetFloorItems() {
 		if (floorItems == null)
-			floorItems = new CopyOnWriteArrayList<GroundItem>();
+			floorItems = new CopyOnWriteArrayList<FloorItem>();
 		return floorItems;
 	}
 
-	public List<GroundItem> getFloorItems() {
+	public List<FloorItem> getFloorItems() {
 		return floorItems;
 	}
 
-	public GroundItem getGroundItem(int id, Tile tile, Player player) {
+	public FloorItem getGroundItem(int id, WorldTile tile, Player player) {
 		if (floorItems == null)
 			return null;
-		for (GroundItem item : floorItems) {
+		for (FloorItem item : floorItems) {
 			if ((item.isInvisible() || item.isGrave())
 					&& player != item.getOwner())
 				continue;

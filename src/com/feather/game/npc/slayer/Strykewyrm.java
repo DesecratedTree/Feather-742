@@ -1,7 +1,7 @@
 package com.feather.game.npc.slayer;
 
 import com.feather.game.Animation;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.tasks.WorldTask;
@@ -13,8 +13,8 @@ public class Strykewyrm extends NPC {
 
 	private int stompId;
 
-	public Strykewyrm(int id, Tile tile, int mapAreaNameHash,
-					  boolean canBeAttackFromOutOfArea) {
+	public Strykewyrm(int id, WorldTile tile, int mapAreaNameHash,
+                      boolean canBeAttackFromOutOfArea) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, true);
 		stompId = id;
 	}

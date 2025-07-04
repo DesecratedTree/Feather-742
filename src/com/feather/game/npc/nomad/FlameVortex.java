@@ -15,12 +15,12 @@ public class FlameVortex extends NPC {
 
 	private long explodeTime;
 	
-	public FlameVortex(Tile tile) {
+	public FlameVortex(WorldTile tile) {
 		this(9441, tile, -1, true, true);
 	}
 	
-	public FlameVortex(int id, Tile tile, int mapAreaNameHash,
-					   boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public FlameVortex(int id, WorldTile tile, int mapAreaNameHash,
+                       boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 		explodeTime = Utils.currentTimeMillis() + 60000;
 		setNextAnimation(new Animation(12720));

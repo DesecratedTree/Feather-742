@@ -6,7 +6,7 @@ import java.util.List;
 import com.feather.game.Entity;
 import com.feather.game.Graphics;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 
@@ -14,7 +14,7 @@ import com.feather.game.player.Player;
 public class FightCavesNPC extends NPC {
 
 
-	public FightCavesNPC(int id, Tile tile) {
+	public FightCavesNPC(int id, WorldTile tile) {
 		super(id, tile, -1, true, true);
 		setForceMultiArea(true);
 		setNoDistanceCheck(true);

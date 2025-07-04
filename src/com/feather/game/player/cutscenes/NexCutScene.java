@@ -2,7 +2,7 @@ package com.feather.game.player.cutscenes;
 
 import java.util.ArrayList;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 import com.feather.game.player.cutscenes.actions.CutsceneAction;
 import com.feather.game.player.cutscenes.actions.LookCameraAction;
@@ -10,10 +10,10 @@ import com.feather.game.player.cutscenes.actions.PosCameraAction;
 
 public class NexCutScene extends Cutscene {
 
-	private Tile dir;
+	private WorldTile dir;
 	private int selected;
 
-	public NexCutScene(Tile dir, int selected) {
+	public NexCutScene(WorldTile dir, int selected) {
 		this.dir = dir;
 		this.selected = selected;
 	}

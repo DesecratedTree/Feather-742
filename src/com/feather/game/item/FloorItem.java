@@ -1,17 +1,17 @@
 package com.feather.game.item;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.player.Player;
 
 @SuppressWarnings("serial")
-public class GroundItem extends Item {
+public class FloorItem extends Item {
 
-	private Tile tile;
+	private WorldTile tile;
 	private Player owner;
 	private boolean invisible;
 	private boolean grave;
 
-	public GroundItem(int id) {
+	public FloorItem(int id) {
 		super(id);
 	}
 
@@ -20,8 +20,8 @@ public class GroundItem extends Item {
 		this.amount = amount;
 	}
 
-	public GroundItem(Item item, Tile tile, Player owner,
-					  boolean underGrave, boolean invisible) {
+	public FloorItem(Item item, WorldTile tile, Player owner,
+					 boolean underGrave, boolean invisible) {
 		super(item.getId(), item.getAmount());
 		this.tile = tile;
 		this.owner = owner;
@@ -29,7 +29,7 @@ public class GroundItem extends Item {
 		this.invisible = invisible;
 	}
 
-	public Tile getTile() {
+	public WorldTile getTile() {
 		return tile;
 	}
 

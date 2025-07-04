@@ -13,7 +13,7 @@ public class Spiritspider extends Familiar {
 	 */
 	private static final long serialVersionUID = 5995661005749498978L;
 
-	public Spiritspider(Player owner, Pouches pouch, Tile tile,
+	public Spiritspider(Player owner, Pouches pouch, WorldTile tile,
 			int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
 		super(owner, pouch, tile, mapAreaNameHash, canBeAttackFromOutOfArea);
 	}
@@ -49,10 +49,10 @@ public class Spiritspider extends Familiar {
 		setNextAnimation(new Animation(8267));
 		player.setNextAnimation(new Animation(7660));
 		player.setNextGraphics(new Graphics(1316));
-		Tile tile = this;
+		WorldTile tile = this;
 		// attemps to randomize tile by 4x4 area
 		for (int trycount = 0; trycount < Utils.getRandom(10); trycount++) {
-			tile = new Tile(this, 2);
+			tile = new WorldTile(this, 2);
 			if (World.canMoveNPC(this.getPlane(), tile.getX(), tile.getY(),
 					player.getSize()))
 				return true;

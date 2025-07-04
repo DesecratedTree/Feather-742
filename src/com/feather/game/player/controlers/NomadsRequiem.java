@@ -20,7 +20,7 @@ import com.feather.utils.Utils;
 
 public class NomadsRequiem extends Controler {
 
-	public static final Tile OUTSIDE = new Tile(1895, 3177, 0);
+	public static final WorldTile OUTSIDE = new WorldTile(1895, 3177, 0);
 	
 	private DungeonPart currentPart;
 	private int[] mapBaseChunks;
@@ -45,7 +45,7 @@ public class NomadsRequiem extends Controler {
 	}
 	
 	@Override
-	public boolean processObjectClick1(GameObject object) {
+	public boolean processObjectClick1(WorldObject object) {
 		switch(object.getId()) {
 		case 47981:
 			enter(DungeonPart.HALL, 0);
@@ -103,7 +103,7 @@ public class NomadsRequiem extends Controler {
 	}*/
 	
 	public void enterDoor(int doorIndex) {
-		player.setNextWorldTile(new Tile(getBaseX() + currentPart.doorPositions[doorIndex*2]
+		player.setNextWorldTile(new WorldTile(getBaseX() + currentPart.doorPositions[doorIndex*2]
 				, getBaseY() + + currentPart.doorPositions[doorIndex*2+1], 0));
 		player.getMusicsManager().playMusic(currentPart == DungeonPart.THRONE ? 727 : 728);
 		if(currentPart == DungeonPart.THRONE) 
@@ -163,7 +163,7 @@ public class NomadsRequiem extends Controler {
 	
 	public void sendFirstScene() {
 		player.getQuestManager().setQuestStage(Quests.NOMADS_REQUIEM, 1);
-		final NPC nomad = World.spawnNPC(8531, new Tile(getBaseX() + 41, getBaseY() + 11, 0), -1, true, true);
+		final NPC nomad = World.spawnNPC(8531, new WorldTile(getBaseX() + 41, getBaseY() + 11, 0), -1, true, true);
 		nomad.setRun(true);
 		nomad.setDirection(Utils.getFaceDirection(1, 0));
 		WorldTasksManager.schedule(new WorldTask() {
@@ -181,7 +181,7 @@ public class NomadsRequiem extends Controler {
 				}else if (stage == 12) {
 					/*nomad.setNextAnimation(new Animation(12729));
 					nomad.setNextGraphics(new Graphics(1576));*/
-					Tile walk = new Tile(getBaseX() + 35, getBaseY() + 11, 0);
+					WorldTile walk = new WorldTile(getBaseX() + 35, getBaseY() + 11, 0);
 					nomad.addWalkSteps(walk.getX(), walk.getY(), -1, false);
 					nomad.setNextForceTalk(new ForceTalk("You'll find out... soon."));
 					Dialogue.sendNPCDialogueNoContinue(player, nomad.getId(), 9827, "You'll find out... soon.");
@@ -198,7 +198,7 @@ public class NomadsRequiem extends Controler {
 	}
 	
 	public void startThroneScene() {
-		final GameObject object = new GameObject(48072, 10, 0, getBaseX() + 14, getBaseY() + 20, 0);
+		final WorldObject object = new WorldObject(48072, 10, 0, getBaseX() + 14, getBaseY() + 20, 0);
 		World.spawnObject(object, false);
 		final NomadsRequiem requiem = this;
 		WorldTasksManager.schedule(new WorldTask() {
@@ -282,7 +282,7 @@ public class NomadsRequiem extends Controler {
 	}
 	
 	public void continueThroneScene() {
-		final GameObject object = new GameObject(48072, 10, 0, getBaseX() + 14, getBaseY() + 20, 0);
+		final WorldObject object = new WorldObject(48072, 10, 0, getBaseX() + 14, getBaseY() + 20, 0);
 		WorldTasksManager.schedule(new WorldTask() {
 
 			private int stage;
@@ -294,13 +294,13 @@ public class NomadsRequiem extends Controler {
 				}else if (stage == 4) {
 					player.setNextAnimation(new Animation(7272));
 				}else if (stage == 8) {
-					Tile throne = new Tile(getBaseX() + 16, getBaseY() + 20, 0);
+					WorldTile throne = new WorldTile(getBaseX() + 16, getBaseY() + 20, 0);
 					Nomad nomad =(Nomad) World.spawnNPC(8528, throne, -1, true, true);
 					nomad.setDirection(Utils.getFaceDirection(0, -1));
 					nomad.setThroneTile(throne);
 					nomad.setTarget(player);
 					World.destroySpawnedObject(object, false);
-					player.getPackets().sendSpawnedObject(new GameObject(48073, 10, 0, getBaseX() + 14, getBaseY() + 22, 0));
+					player.getPackets().sendSpawnedObject(new WorldObject(48073, 10, 0, getBaseX() + 14, getBaseY() + 22, 0));
 					player.unlock();
 					player.setRun(true);
 					stop();

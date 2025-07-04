@@ -6,7 +6,7 @@ import java.util.List;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
 import com.feather.game.player.Player;
@@ -17,8 +17,8 @@ import com.feather.utils.Utils;
 @SuppressWarnings("serial")
 public class GodWarMinion extends NPC {
 
-	public GodWarMinion(int id, Tile tile, int mapAreaNameHash,
-						boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public GodWarMinion(int id, WorldTile tile, int mapAreaNameHash,
+                        boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
 

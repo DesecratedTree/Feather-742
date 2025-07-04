@@ -1,6 +1,6 @@
 package com.feather.game.route.strategy;
 
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.route.RouteStrategy;
 
 public class ObjectStrategy extends RouteStrategy {
@@ -38,7 +38,7 @@ public class ObjectStrategy extends RouteStrategy {
 	 */
 	private int accessBlockFlag;
 
-	public ObjectStrategy(GameObject object) {
+	public ObjectStrategy(WorldObject object) {
 		this.x = object.getX();
 		this.y = object.getY();
 		this.routeType = getType(object);
@@ -96,7 +96,7 @@ public class ObjectStrategy extends RouteStrategy {
 		return sizeY;
 	}
 
-	private int getType(GameObject object) {
+	private int getType(WorldObject object) {
 		int type = object.getType();
 		if ((type >= 0 && type <= 3) || type == 9)
 			return 0; // wall

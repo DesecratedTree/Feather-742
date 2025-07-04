@@ -6,7 +6,7 @@ import java.util.List;
 import com.feather.game.Animation;
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 
@@ -15,7 +15,7 @@ public class HarAkenTentacle extends NPC {
 
 	private HarAken aken;
 	
-	public HarAkenTentacle(int id, Tile tile, HarAken aken) {
+	public HarAkenTentacle(int id, WorldTile tile, HarAken aken) {
 		super(id, tile, -1, true, true);
 		setForceMultiArea(true);
 		setCantFollowUnderCombat(true);

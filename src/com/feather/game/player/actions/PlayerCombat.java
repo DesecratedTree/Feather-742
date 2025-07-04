@@ -1788,7 +1788,7 @@ public class PlayerCombat extends Action {
 				player.getEquipment().removeAmmo(weaponId, quantity);
 				World.updateGroundItem(
 						new Item(weaponId, quantity),
-						new Tile(target.getCoordFaceX(target.getSize()),
+						new WorldTile(target.getCoordFaceX(target.getSize()),
 								target.getCoordFaceY(target.getSize()), target
 								.getPlane()), player);
 			}
@@ -1808,7 +1808,7 @@ public class PlayerCombat extends Action {
 				player.getEquipment().removeAmmo(ammoId, quantity);
 				World.updateGroundItem(
 						new Item(ammoId, quantity),
-						new Tile(target.getCoordFaceX(target.getSize()),
+						new WorldTile(target.getCoordFaceX(target.getSize()),
 								target.getCoordFaceY(target.getSize()), target
 								.getPlane()), player);
 			}

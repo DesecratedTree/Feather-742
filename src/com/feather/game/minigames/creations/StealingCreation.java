@@ -6,8 +6,8 @@ import java.util.TimerTask;
 
 import com.feather.cores.CoresManager;
 import com.feather.game.Animation;
-import com.feather.game.GameObject;
-import com.feather.game.Tile;
+import com.feather.game.WorldObject;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.player.Player;
 import com.feather.game.player.Skills;
@@ -33,7 +33,7 @@ public class StealingCreation {
 	public static final int[] CLASS_ITEMS_BASE = {14132, 14122, 14142, 14152, 14172, 14162, 14367, 
 		14357, 14347, 14411, 14391, 14401, 14337, 14317, 14327, 14297, 14287, 14307, 14192,
 		14202, 12850, 12851, 14422, 14377, 14421, -1, -1, 14215, 14225, 14235, 14245, 14255, 14265, 14275, 14285};
-	public static final Tile LOBBY_WORLDTILE = new Tile(2968, 9701, 0);
+	public static final WorldTile LOBBY_WORLDTILE = new WorldTile(2968, 9701, 0);
 
 	private static class LobbyTimer extends TimerTask {
 
@@ -99,7 +99,7 @@ public class StealingCreation {
 		return true;
 	}
 
-	public static void startDynamicSkill(Player player, GameObject object, Animation animation, int baseId, int objectIndex) {
+	public static void startDynamicSkill(Player player, WorldObject object, Animation animation, int baseId, int objectIndex) {
 		if(!checkSkillRequriments(player, getRequestedObjectSkill(), objectIndex))
 			return;
 		Item item = getBestItem(player, baseId);

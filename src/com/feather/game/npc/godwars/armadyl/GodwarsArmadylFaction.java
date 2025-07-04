@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.feather.game.Entity;
 import com.feather.game.World;
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.item.Item;
 import com.feather.game.npc.NPC;
 import com.feather.game.npc.combat.NPCCombatDefinitions;
@@ -16,8 +16,8 @@ import com.feather.utils.Utils;
 @SuppressWarnings("serial")
 public class GodwarsArmadylFaction extends NPC {
 
-	public GodwarsArmadylFaction(int id, Tile tile, int mapAreaNameHash,
-								 boolean canBeAttackFromOutOfArea, boolean spawned) {
+	public GodwarsArmadylFaction(int id, WorldTile tile, int mapAreaNameHash,
+                                 boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);
 	}
 

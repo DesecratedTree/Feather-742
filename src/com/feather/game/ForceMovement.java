@@ -6,8 +6,8 @@ public class ForceMovement {
 
 	public static final int NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3;
 	
-	private Tile toFirstTile;
-	private Tile toSecondTile;
+	private WorldTile toFirstTile;
+	private WorldTile toSecondTile;
 	private int firstTileTicketDelay;
 	private int secondTileTicketDelay;
 	protected int direction;
@@ -16,7 +16,7 @@ public class ForceMovement {
 	 * USE: moves to firsttile firstTileTicketDelay: the delay in game tickets
 	 * between your tile and first tile the direction
 	 */
-	public ForceMovement(Tile toFirstTile, int firstTileTicketDelay,
+	public ForceMovement(WorldTile toFirstTile, int firstTileTicketDelay,
                          int direction) {
 		this(toFirstTile, firstTileTicketDelay, null, 0, direction);
 	}
@@ -26,8 +26,8 @@ public class ForceMovement {
 	 * first tile secondTileTicketDelay: the delay in game tickets between first
 	 * tile and second tile the direction
 	 */
-	public ForceMovement(Tile toFirstTile, int firstTileTicketDelay,
-                         Tile toSecondTile, int secondTileTicketDelay, int direction) {
+	public ForceMovement(WorldTile toFirstTile, int firstTileTicketDelay,
+                         WorldTile toSecondTile, int secondTileTicketDelay, int direction) {
 		this.toFirstTile = toFirstTile;
 		this.firstTileTicketDelay = firstTileTicketDelay;
 		this.toSecondTile = toSecondTile;
@@ -49,11 +49,11 @@ public class ForceMovement {
 		}
 	}
 
-	public Tile getToFirstTile() {
+	public WorldTile getToFirstTile() {
 		return toFirstTile;
 	}
 
-	public Tile getToSecondTile() {
+	public WorldTile getToSecondTile() {
 		return toSecondTile;
 	}
 

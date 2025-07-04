@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.feather.game.Animation;
 import com.feather.game.World;
-import com.feather.game.GameObject;
+import com.feather.game.WorldObject;
 import com.feather.game.item.Item;
 import com.feather.game.player.OwnedObjectManager;
 import com.feather.game.player.Player;
@@ -189,7 +189,7 @@ public class BoxAction extends Action {
 				if (!player.addWalkSteps(player.getX(), player.getY() + 1, 1))
 					player.addWalkSteps(player.getX(), player.getY() - 1, 1);
 		player.getInventory().deleteItem(hunt.getId(), 1);
-		OwnedObjectManager.addOwnedObjectManager(player, new GameObject[] { new GameObject(hunt.getObjectId(), 10, 0, player.getX(), player.getY(), player.getPlane()) }, 600000);
+		OwnedObjectManager.addOwnedObjectManager(player, new WorldObject[] { new WorldObject(hunt.getObjectId(), 10, 0, player.getX(), player.getY(), player.getPlane()) }, 600000);
 		return -1;
 	}
 
@@ -212,9 +212,9 @@ public class BoxAction extends Action {
 			player.getPackets().sendGameMessage("You can't setup your trap here.");
 			return false;
 		}
-		List<GameObject> objects = World.getRegion(player.getRegionId()).getSpawnedObjects();
+		List<WorldObject> objects = World.getRegion(player.getRegionId()).getSpawnedObjects();
 		if (objects != null) {
-			for (GameObject object : objects) {
+			for (WorldObject object : objects) {
 				if (object.getX() == player.getX() && object.getY() == player.getY() && object.getPlane() == player.getPlane()) {
 					player.getPackets().sendGameMessage("You can't setup your trap here.");
 					return false;

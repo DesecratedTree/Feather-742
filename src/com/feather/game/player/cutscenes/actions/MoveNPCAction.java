@@ -1,6 +1,6 @@
 package com.feather.game.player.cutscenes.actions;
 
-import com.feather.game.Tile;
+import com.feather.game.WorldTile;
 import com.feather.game.npc.NPC;
 import com.feather.game.player.Player;
 import com.feather.game.player.cutscenes.Cutscene;
@@ -29,7 +29,7 @@ public class MoveNPCAction extends CutsceneAction {
 		NPC npc = (NPC) cache[getCachedObjectIndex()];
 		Cutscene scene = (Cutscene) cache[0];
 		if (movementType == Player.TELE_MOVE_TYPE) {
-			npc.setNextWorldTile(new Tile(scene.getBaseX() + x, scene
+			npc.setNextWorldTile(new WorldTile(scene.getBaseX() + x, scene
 					.getBaseY() + y, plane));
 			return;
 		}

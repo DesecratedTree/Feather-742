@@ -205,9 +205,9 @@ public class Hunter {
 						WorldTasksManager.schedule(new WorldTask() {
 							@Override
 							public void run() {
-								Tile teleTile = npc;
+								WorldTile teleTile = npc;
 								for (int trycount = 0; trycount < 10; trycount++) {
-									teleTile = new Tile(npc, 10);
+									teleTile = new WorldTile(npc, 10);
 									if (World.canMoveNPC(npc.getPlane(), teleTile.getX(),
 											teleTile.getY(), player.getSize()))
 										break;
@@ -248,7 +248,7 @@ public class Hunter {
 
 	static int[] requiredLogs = new int[] {1151, 1153, 1155, 1157, 1519, 1521, 13567, 1521, 2862, 10810, 6332, 12581};
 
-	public static void createLoggedObject(Player player, GameObject object, boolean kebbits) {
+	public static void createLoggedObject(Player player, WorldObject object, boolean kebbits) {
 		if (!player.getInventory().containsOneItem(requiredLogs)) {
 			player.getPackets().sendGameMessage("You need to have logs to create this trap.");
 			return;
@@ -257,7 +257,7 @@ public class Hunter {
 		player.getActionManager().setActionDelay(3);
 		player.setNextAnimation(new Animation(5208));//all animation for everything :L
 		if (World.removeTemporaryObject(object, 300000, false)) {//five minute delay
-			World.spawnTemporaryObject(new GameObject(kebbits ? 19206 : -1, object.getType(), object.getRotation(), object), 300000, false);//TODO
+			World.spawnTemporaryObject(new WorldObject(kebbits ? 19206 : -1, object.getType(), object.getRotation(), object), 300000, false);//TODO
 			Item item = null;
 			for (int requiredLog : requiredLogs) {
 				if ((item = player.getInventory().getItems().lookup(requiredLog)) != null) {
