@@ -400,10 +400,10 @@ public class RunespanControler extends Controler {
 					}else if(plataform.middleGraphic != -1)
 						player.setNextGraphics(new Graphics(plataform.middleGraphic));
 					if(plataform.invisible)
-						player.getAppearence().asNPC(1957);
+						player.getAppearance().asNPC(1957);
 				}else if (stage == 5) {
 					if(plataform.invisible)
-						player.getAppearence().asNPC(-1);
+						player.getAppearance().asNPC(-1);
 					if(plataform.endEmote != -1)
 						player.setNextAnimation(new Animation(plataform.endEmote));
 					if(plataform.endGraphic != -1)

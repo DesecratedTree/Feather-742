@@ -164,12 +164,12 @@ public final class BrimhavenAgility extends Controler {
 			}, 1, 1);
 			return false;
 		} else if (object.getId() == 3553) {
-			player.getAppearence().setRenderEmote(155);
+			player.getAppearance().setRenderEmote(155);
 			final WorldTile tile = new WorldTile(player.getX(), player.getY() - object.getRotation(), player.getPlane());
 			player.setNextForceMovement(new ForceMovement(tile, 1, 1));
 			return false;
 		} else if (object.getId() == 3551) {
-			player.getAppearence().setRenderEmote(155);
+			player.getAppearance().setRenderEmote(155);
 			WorldTasksManager.schedule(new WorldTask() {
 				int index = 0;
 				@Override
@@ -177,7 +177,7 @@ public final class BrimhavenAgility extends Controler {
 					if (index++ >= 7) {
 						player.unlock();
 						player.getSkills().addXp(Skills.AGILITY, 5);
-						player.getAppearence().setRenderEmote(-1);
+						player.getAppearance().setRenderEmote(-1);
 						this.stop();
 						return;
 					}

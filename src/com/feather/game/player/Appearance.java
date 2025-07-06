@@ -12,7 +12,7 @@ import com.feather.game.item.Item;
 import com.feather.io.OutputStream;
 import com.feather.utils.Utils;
 
-public class Appearence implements Serializable {
+public class Appearance implements Serializable {
 
 	/**
 	 * The serial UID
@@ -75,7 +75,7 @@ public class Appearence implements Serializable {
 	/**
 	 * Constructs a new {@code PlayerAppearance} object
 	 */
-	public Appearence() {
+	public Appearance() {
 		male = true;
 		renderEmote = -1;
 		title = -1;

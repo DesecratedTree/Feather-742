@@ -497,7 +497,7 @@ public class Foods {
 				player.getPackets()
 				.sendGameMessage(
 						"It hurts to see a grown "
-								+ player.getAppearence().isMale() != null ? "male"
+								+ player.getAppearance().isMale() != null ? "male"
 										: "female" + "cry.");
 			}
 		},

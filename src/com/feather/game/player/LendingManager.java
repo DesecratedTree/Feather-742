@@ -151,7 +151,7 @@ public class LendingManager implements Serializable {
 			lendee.getEquipment().getItemsContainer().remove(new Item(lend.getItem().getDefinitions().getLendId()));
 			if (lendeeLog) {
 				lendee.getEquipment().init();
-				lendee.getAppearence().loadAppearanceBlock();
+				lendee.getAppearance().loadAppearanceBlock();
 			}
 		}
 		if (lendee.getBank().containsItem(lend.getItem().getDefinitions().getLendId(), 1)) {
@@ -206,7 +206,7 @@ public class LendingManager implements Serializable {
 					lendee.getEquipment().getItemsContainer().remove(new Item(lend.getItem().getDefinitions().getLendId()));
 					if (lendeeLog) {
 						lendee.getEquipment().init();
-						lendee.getAppearence().loadAppearanceBlock();
+						lendee.getAppearance().loadAppearanceBlock();
 					}
 				}
 				if (lendee.getBank().containsItem(lend.getItem().getDefinitions().getLendId(), 1)) {

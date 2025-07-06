@@ -185,7 +185,7 @@ public class Player extends Entity {
 	@SuppressWarnings("unused")
 	private long creationDate;
 	private long moneyPouch = 0;
-	private Appearence appearence;
+	private Appearance appearance;
 	private Inventory inventory;
 	private Equipment equipment;
 	private Skills skills;
@@ -304,7 +304,7 @@ public class Player extends Entity {
 		super(/*Settings.HOSTED ? */Settings.START_PLAYER_LOCATION/* : new WorldTile(3095, 3107, 0)*/);
 		setHitpoints(Settings.START_PLAYER_HITPOINTS);
 		this.password = password;
-		appearence = new Appearence();
+		appearance = new Appearance();
 		inventory = new Inventory();
 		equipment = new Equipment();
 		skills = new Skills();
@@ -369,7 +369,7 @@ public class Player extends Entity {
 		trade = new Trade(this);
 		// loads player on saved instances
 		pouch.setPlayer(this);
-		appearence.setPlayer(this);
+		appearance.setPlayer(this);
 		inventory.setPlayer(this);
 		equipment.setPlayer(this);
 		skills.setPlayer(this);
@@ -438,24 +438,24 @@ public class Player extends Entity {
 	public void setWildernessSkull() {
 		skullDelay = 3000; // 30minutes
 		skullId = 0;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 	}
 
 	public void setFightPitsSkull() {
 		skullDelay = Integer.MAX_VALUE; //infinite
 		skullId = 1;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 	}
 	
 	public void setSkullInfiniteDelay(int skullId) {
 		skullDelay = Integer.MAX_VALUE; //infinite
 		this.skullId = skullId;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 	}
 
 	public void removeSkull() {
 		skullDelay = -1;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 	}
 
 	public boolean hasSkull() {
@@ -567,7 +567,7 @@ public class Player extends Entity {
 		fireImmune = 0;
 		castedVeng = false;
 		setRunEnergy(100);
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 	}
 
 	@Override
@@ -628,7 +628,7 @@ public class Player extends Entity {
 		if (hasSkull()) {
 			skullDelay--;
 			if (!hasSkull())
-				appearence.loadAppearanceBlock();
+				appearance.loadAppearanceBlock();
 		}
 		if (polDelay != 0 && polDelay <= Utils.currentTimeMillis()) {
 			getPackets().sendGameMessage("The power of the light fades. Your resistance to melee attacks return to normal.");
@@ -827,7 +827,7 @@ public class Player extends Entity {
 		}
 		running = true;
 		updateMovementType = true;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 		controlerManager.login(); // checks what to do on login after welcome
 		OwnedObjectManager.linkKeys(this);
 		// screen
@@ -1134,8 +1134,8 @@ public class Player extends Entity {
 		return displayName != null;
 	}
 
-	public Appearence getAppearence() {
-		return appearence;
+	public Appearance getAppearance() {
+		return appearance;
 	}
 
 	public Equipment getEquipment() {
@@ -2105,7 +2105,7 @@ public class Player extends Entity {
 
 	@Override
 	public int getSize() {
-		return appearence.getSize();
+		return appearance.getSize();
 	}
 
 	public boolean isCanPvp() {
@@ -2114,7 +2114,7 @@ public class Player extends Entity {
 
 	public void setCanPvp(boolean canPvp) {
 		this.canPvp = canPvp;
-		appearence.loadAppearanceBlock();
+		appearance.loadAppearanceBlock();
 		getPackets().sendPlayerOption(canPvp ? "Attack" : "null", 1, true);
 		getPackets().sendPlayerUnderNPCPriority(canPvp);
 	}

@@ -36,7 +36,7 @@ public class ChargesManager implements Serializable {
 				if (newId != -1) {
 					item.setId(newId);
 					player.getEquipment().refresh(slot);
-					player.getAppearence().loadAppearanceBlock();
+					player.getAppearance().loadAppearanceBlock();
 					player.getPackets().sendGameMessage(
 							"Your " + item.getDefinitions().getName()
 									+ " degraded.");
@@ -103,7 +103,7 @@ public class ChargesManager implements Serializable {
 			return;
 		player.getEquipment().getItems().set(slot, new Item(newId, 1));
 		player.getEquipment().refresh(slot);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		player.getPackets().sendGameMessage(
 				"Your " + item.getDefinitions().getName() + " degraded.");
 	}
@@ -131,7 +131,7 @@ public class ChargesManager implements Serializable {
 											.getItemDefinitions(itemId)
 											.getName() + " degraded.");
 				player.getEquipment().refresh(slot);
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().loadAppearanceBlock();
 				return;
 			}
 		}

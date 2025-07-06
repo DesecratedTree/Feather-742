@@ -30,10 +30,10 @@ public final class ItemDefinitions {
 
 	// model size information
 	public int modelZoom;
-	public int modelRotation1;
-	public int modelRotation2;
-	public int modelOffset1;
-	public int modelOffset2;
+	public int modelRotationX;
+	public int modelRotationY;
+	public int modelOffsetX;
+	public int modelOffsetY;
 
 	// extra information
 	public int stackable;
@@ -451,12 +451,12 @@ public final class ItemDefinitions {
 		return modelZoom;
 	}
 
-	public int getModelOffset1() {
-		return modelOffset1;
+	public int getModelOffsetX() {
+		return modelOffsetX;
 	}
 
-	public int getModelOffset2() {
-		return modelOffset2;
+	public int getModelOffsetY() {
+		return modelOffsetY;
 	}
 
 	public int getQuestId() {
@@ -566,20 +566,18 @@ public final class ItemDefinitions {
 		else if (opcode == 4)
 			modelZoom = stream.readUnsignedShort();
 		else if (opcode == 5)
-			modelRotation1 = stream.readUnsignedShort();
+			modelRotationX = stream.readUnsignedShort();
 		else if (opcode == 6)
-			modelRotation2 = stream.readUnsignedShort();
+			modelRotationY = stream.readUnsignedShort();
 		else if (opcode == 7) {
-			modelOffset1 = stream.readUnsignedShort();
-			if (modelOffset1 > 32767)
-				modelOffset1 -= 65536;
-			modelOffset1 <<= 0;
-		} else if (opcode == 8) {
-			modelOffset2 = stream.readUnsignedShort();
-			if (modelOffset2 > 32767)
-				modelOffset2 -= 65536;
-			modelOffset2 <<= 0;
-		} else if (opcode == 11)
+			modelOffsetX = stream.readUnsignedShort();
+			if (modelOffsetX > 32767)
+				modelOffsetX -= 65536;
+        } else if (opcode == 8) {
+			modelOffsetY = stream.readUnsignedShort();
+			if (modelOffsetY > 32767)
+				modelOffsetY -= 65536;
+        } else if (opcode == 11)
 			stackable = 1;
 		else if (opcode == 12)
 			value = stream.readInt();
@@ -590,7 +588,7 @@ public final class ItemDefinitions {
 		} else if (opcode == 16)
 			membersOnly = true;
 		else if (opcode == 18) { // added
-			stream.readUnsignedShort();
+			int multiStackSize = stream.readUnsignedShort();
 		} else if (opcode == 23)
 			maleEquip1 = stream.readBigSmart();
 		else if (opcode == 24)
@@ -846,7 +844,7 @@ public final class ItemDefinitions {
 	public int getEquipType() {
 		return equipType;
 	}
-	
+
 //	public void getShopStats(Player player, Item item) {
 //		if (item.getDefinitions().name.contains("sword")
 //				|| item.getDefinitions().name.contains("dagger")

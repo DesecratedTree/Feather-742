@@ -1397,7 +1397,7 @@ public final class WorldPacketsDecoder extends Decoder {
 					value = 99;
 				player.getSkills().set(skillId, value);
 				player.getSkills().setXp(skillId, Skills.getXPForLevel(value));
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().loadAppearanceBlock();
 				player.getDialogueManager().finishDialogue();
 			} else if (player.getTemporaryAttributtes().get("kilnX") != null) {
 				int index = (Integer) player.getTemporaryAttributtes().get("scIndex");

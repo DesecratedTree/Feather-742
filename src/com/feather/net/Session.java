@@ -20,7 +20,7 @@ import com.feather.utils.IPBanL;
 
 public class Session {
 
-	private Channel channel;
+	private final Channel channel;
 	private Decoder decoder;
 	private Encoder encoder;
 

@@ -1614,7 +1614,7 @@ public class PlayerCombat extends Action {
 						player.setNextGraphics(new Graphics(2140));
 						player.getEquipment().getItems().set(3, null);
 						player.getEquipment().refresh(3);
-						player.getAppearence().loadAppearanceBlock();
+						player.getAppearance().loadAppearanceBlock();
 						player.applyHit(new Hit(player,
 								Utils.getRandom(150) + 10,
 								HitLook.REGULAR_DAMAGE));

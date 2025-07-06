@@ -46,22 +46,22 @@ public final class PlayerLook {
 			player.closeInterfaces();
 			if (male == null || skin == null)
 				return;
-			if (male == player.getAppearence().isMale() && skin == player.getAppearence().getSkinColor())
+			if (male == player.getAppearance().isMale() && skin == player.getAppearance().getSkinColor())
 				player.getDialogueManager().startDialogue("MakeOverMage", 2676,1);
 			else {
 				player.getDialogueManager().startDialogue("MakeOverMage", 2676, 2);
-				if (player.getAppearence().isMale() != male) {
+				if (player.getAppearance().isMale() != male) {
 					if (player.getEquipment().wearingArmour()) {
 						player.getDialogueManager().startDialogue("SimpleMessage", "You cannot have armor on while changing your gender.");
 						return;
 					}
 					if (male)
-						player.getAppearence().resetAppearance();
+						player.getAppearance().resetAppearance();
 					else
-						player.getAppearence().female();
+						player.getAppearance().female();
 				}
-				player.getAppearence().setSkinColor(skin);
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().setSkinColor(skin);
+				player.getAppearance().loadAppearanceBlock();
 			}
 		}
 	}
@@ -78,24 +78,24 @@ public final class PlayerLook {
 		} else if (buttonId == 10) {
 			Boolean hairSalon =  (Boolean) player.getTemporaryAttributtes().get("hairSaloon");
 			if(hairSalon != null && hairSalon) 
-				player.getAppearence().setHairStyle((int) ClientScriptMap.getMap(player.getAppearence().isMale() ? 2339 : 2342).getKeyForValue(slotId/2));
-			else if (player.getAppearence().isMale())
-				player.getAppearence().setBeardStyle(ClientScriptMap.getMap(703).getIntValue(slotId/2));
+				player.getAppearance().setHairStyle((int) ClientScriptMap.getMap(player.getAppearance().isMale() ? 2339 : 2342).getKeyForValue(slotId/2));
+			else if (player.getAppearance().isMale())
+				player.getAppearance().setBeardStyle(ClientScriptMap.getMap(703).getIntValue(slotId/2));
 		} else if (buttonId == 16) 
-			player.getAppearence().setHairColor(ClientScriptMap.getMap(2345).getIntValue(slotId/2));
+			player.getAppearance().setHairColor(ClientScriptMap.getMap(2345).getIntValue(slotId/2));
 	}
 	
 	public static void openMageMakeOver(Player player) {
 		player.getInterfaceManager().sendInterface(900);
 		player.getPackets().sendIComponentText(900, 33, "Confirm");
 		player.getPackets().sendConfigByFile(6098,
-				player.getAppearence().isMale() ? 0 : 1);
+				player.getAppearance().isMale() ? 0 : 1);
 		player.getPackets().sendConfigByFile(6099,
-				player.getAppearence().getSkinColor());
+				player.getAppearance().getSkinColor());
 		player.getTemporaryAttributtes().put("MageMakeOverGender",
-				player.getAppearence().isMale());
+				player.getAppearance().isMale());
 		player.getTemporaryAttributtes().put("MageMakeOverSkin",
-				player.getAppearence().getSkinColor());
+				player.getAppearance().getSkinColor());
 	}
 
 	
@@ -103,12 +103,12 @@ public final class PlayerLook {
 		if (buttonId == 6)
 			player.getTemporaryAttributtes().put("ThessaliasMakeOver", 0);
 		else if (buttonId == 7) {
-			if(ClientScriptMap.getMap(player.getAppearence().isMale() ? 690 : 1591).getKeyForValue(player.getAppearence().getTopStyle()) >= 32) {
+			if(ClientScriptMap.getMap(player.getAppearance().isMale() ? 690 : 1591).getKeyForValue(player.getAppearance().getTopStyle()) >= 32) {
 				player.getTemporaryAttributtes().put("ThessaliasMakeOver", 1);
 			}else
 				player.getPackets().sendGameMessage("You can't select different arms to go with that top.");
 		}else if (buttonId == 8) {
-			if(ClientScriptMap.getMap(player.getAppearence().isMale() ? 690 : 1591).getKeyForValue(player.getAppearence().getTopStyle()) >= 32) {
+			if(ClientScriptMap.getMap(player.getAppearance().isMale() ? 690 : 1591).getKeyForValue(player.getAppearance().getTopStyle()) >= 32) {
 				player.getTemporaryAttributtes().put("ThessaliasMakeOver", 2);
 			}else
 				player.getPackets().sendGameMessage("You can't select different wrists to go with that top.");
@@ -119,24 +119,24 @@ public final class PlayerLook {
 		} else if (buttonId == 12) { //set part
 			Integer stage = (Integer) player.getTemporaryAttributtes().get("ThessaliasMakeOver");
 			if(stage == null || stage == 0) {
-				player.getAppearence().setTopStyle((int) ClientScriptMap.getMap(player.getAppearence().isMale() ? 690 : 1591).getIntValue(slotId/2));
-				if(!player.getAppearence().isMale())
-					player.getAppearence().setBeardStyle(player.getAppearence().getTopStyle());
-				player.getAppearence().setArmsStyle(player.getAppearence().isMale() ? 26 : 65); //default
-				player.getAppearence().setWristsStyle(player.getAppearence().isMale() ? 34 : 68); //default
+				player.getAppearance().setTopStyle((int) ClientScriptMap.getMap(player.getAppearance().isMale() ? 690 : 1591).getIntValue(slotId/2));
+				if(!player.getAppearance().isMale())
+					player.getAppearance().setBeardStyle(player.getAppearance().getTopStyle());
+				player.getAppearance().setArmsStyle(player.getAppearance().isMale() ? 26 : 65); //default
+				player.getAppearance().setWristsStyle(player.getAppearance().isMale() ? 34 : 68); //default
 			}else if (stage == 1) //arms
-				player.getAppearence().setArmsStyle((int) ClientScriptMap.getMap(player.getAppearence().isMale() ? 711 : 693).getIntValue(slotId/2));
+				player.getAppearance().setArmsStyle((int) ClientScriptMap.getMap(player.getAppearance().isMale() ? 711 : 693).getIntValue(slotId/2));
 			else if (stage == 2) //wrists
-				player.getAppearence().setWristsStyle((int) ClientScriptMap.getMap(751).getIntValue(slotId/2));
+				player.getAppearance().setWristsStyle((int) ClientScriptMap.getMap(751).getIntValue(slotId/2));
 			else
-				player.getAppearence().setLegsStyle((int) ClientScriptMap.getMap(player.getAppearence().isMale() ? 1586 : 1607).getIntValue(slotId/2));
+				player.getAppearance().setLegsStyle((int) ClientScriptMap.getMap(player.getAppearance().isMale() ? 1586 : 1607).getIntValue(slotId/2));
 			
 		} else if (buttonId == 17) {//color
 			Integer stage = (Integer) player.getTemporaryAttributtes().get("ThessaliasMakeOver");
 			if(stage == null || stage == 0 || stage == 1) 
-				player.getAppearence().setTopColor(ClientScriptMap.getMap(3282).getIntValue(slotId/2));
+				player.getAppearance().setTopColor(ClientScriptMap.getMap(3282).getIntValue(slotId/2));
 			else if (stage == 3)
-				player.getAppearence().setLegsColor(ClientScriptMap.getMap(3284).getIntValue(slotId/2));
+				player.getAppearance().setLegsColor(ClientScriptMap.getMap(3284).getIntValue(slotId/2));
 		}
 	}
 	
@@ -158,7 +158,7 @@ public final class PlayerLook {
 			public void run() {
 				player.getDialogueManager().startDialogue("SimpleNPCMessage", 548, "A marvellous choise. You look splendid!");
 				player.setNextAnimation(new Animation(-1));
-				player.getAppearence().getAppearanceBlock();
+				player.getAppearance().getAppearanceBlock();
 				player.getTemporaryAttributtes().remove("ThessaliasMakeOver");
 			}
 			
@@ -177,7 +177,7 @@ public final class PlayerLook {
 		}
 		player.setNextAnimation(new Animation(11623));
 		player.getInterfaceManager().sendInterface(309);
-		player.getPackets().sendUnlockIComponentOptionSlots(309, 10, 0, ClientScriptMap.getMap(player.getAppearence().isMale() ? 2339 : 2342).getSize()*2, 0);
+		player.getPackets().sendUnlockIComponentOptionSlots(309, 10, 0, ClientScriptMap.getMap(player.getAppearance().isMale() ? 2339 : 2342).getSize()*2, 0);
 		player.getPackets().sendUnlockIComponentOptionSlots(309, 16, 0, ClientScriptMap.getMap(2345).getSize()*2, 0); 
 		player.getPackets().sendIComponentText(309, 20, "Free!");
 		player.getTemporaryAttributtes().put("hairSaloon", true);
@@ -185,9 +185,9 @@ public final class PlayerLook {
 
 			@Override
 			public void run() {
-				player.getDialogueManager().startDialogue("SimpleNPCMessage", 598, "An excellent choice, "+(player.getAppearence().isMale() ? "sir" : "lady")+".");
+				player.getDialogueManager().startDialogue("SimpleNPCMessage", 598, "An excellent choice, "+(player.getAppearance().isMale() ? "sir" : "lady")+".");
 				player.setNextAnimation(new Animation(-1));
-				player.getAppearence().getAppearanceBlock();
+				player.getAppearance().getAppearanceBlock();
 				player.getTemporaryAttributtes().remove("hairSaloon");
 			}
 			

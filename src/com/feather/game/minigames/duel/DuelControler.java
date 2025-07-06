@@ -9,7 +9,7 @@ public class DuelControler extends Controler {
 	@Override
 	public void start() {
 		sendInterfaces();
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		//player.getPackets().sendPlayerOption("Challenge", 1, false);
 		moved();
 	}
@@ -106,7 +106,7 @@ public class DuelControler extends Controler {
 	public void remove() {
 		player.getPackets().closeInterface(
 				player.getInterfaceManager().hasResizableScreen() ? 11 : 27);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		player.getPackets().sendPlayerOption("null", 1, false);
 	}
 

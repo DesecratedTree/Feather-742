@@ -1554,7 +1554,7 @@ public class ButtonHandler {
 			return;
 		player.getEquipment().getItems().set(slotId, null);
 		player.getEquipment().refresh(slotId);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		if (Runecrafting.isTiara(item.getId()))
 			player.getPackets().sendConfig(491, 0);
 		if (slotId == 3)
@@ -1571,7 +1571,7 @@ public class ButtonHandler {
 		if (item == null || item.getId() != itemId)
 			return false;
 		if (item.getDefinitions().isNoted()
-				|| !item.getDefinitions().isWearItem(player.getAppearence().isMale())) {
+				|| !item.getDefinitions().isWearItem(player.getAppearance().isMale())) {
 			player.getPackets().sendGameMessage("You can't wear that.");
 			return true;
 		}
@@ -1698,7 +1698,7 @@ public class ButtonHandler {
 		player.getEquipment().getItems().set(targetSlot, item2);
 		player.getEquipment().refresh(targetSlot,
 				targetSlot == 3 ? 5 : targetSlot == 3 ? 0 : 3);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		player.getPackets().sendSound(2240, 0, 1);
 		if (targetSlot == 3)
 			player.getCombatDefinitions().desecreaseSpecialAttack(0);
@@ -1718,7 +1718,7 @@ public class ButtonHandler {
 			return true;
 		}
 		if (item.getDefinitions().isNoted()
-				|| !item.getDefinitions().isWearItem(player.getAppearence().isMale()) && itemId != 4084) {
+				|| !item.getDefinitions().isWearItem(player.getAppearance().isMale()) && itemId != 4084) {
 			player.getPackets().sendGameMessage("You can't wear that.");
 			return false;
 		}
@@ -1881,7 +1881,7 @@ public class ButtonHandler {
 		}
 		player.getInventory().refreshItems(copy);
 		if (worn) {
-			player.getAppearence().loadAppearanceBlock();
+			player.getAppearance().loadAppearanceBlock();
 			player.getPackets().sendSound(2240, 0, 1);
 		}
 	}
@@ -1902,13 +1902,7 @@ public class ButtonHandler {
 		refreshEquipBonuses(player);
 		if(banking) {
 			player.getTemporaryAttributtes().put("Banking", Boolean.TRUE);
-			player.setCloseInterfacesEvent(new Runnable() {
-				@Override
-				public void run() {
-					player.getTemporaryAttributtes().remove("Banking");
-				}
-
-			});
+			player.setCloseInterfacesEvent(() -> player.getTemporaryAttributtes().remove("Banking"));
 		}
 	}
 

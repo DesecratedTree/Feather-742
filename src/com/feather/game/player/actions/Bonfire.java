@@ -91,7 +91,7 @@ public class Bonfire extends Action {
 	@Override
 	public boolean start(Player player) {
 		if(checkAll(player)) {
-			player.getAppearence().setRenderEmote(2498);
+			player.getAppearance().setRenderEmote(2498);
 			return true;
 		}
 		return false;
@@ -158,7 +158,7 @@ public class Bonfire extends Action {
 			@Override
 			public void run() {
 				player.setNextAnimation(new Animation(16702));
-				player.getAppearence().setRenderEmote(-1);
+				player.getAppearance().setRenderEmote(-1);
 				
 			}
 			

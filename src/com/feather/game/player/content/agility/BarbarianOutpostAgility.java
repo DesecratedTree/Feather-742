@@ -105,7 +105,7 @@ public class BarbarianOutpostAgility {
 		final WorldTile toTile = new WorldTile(2536, 3553, 3);
 		player.setNextForceMovement(new ForceMovement(player, 1, toTile, 3, ForceMovement.EAST));
 		player.setNextAnimation(new Animation(16079));
-		player.getAppearence().setRenderEmote(330);
+		player.getAppearance().setRenderEmote(330);
 		 WorldTasksManager.schedule(new WorldTask() {
 			@Override
 			public void run() {
@@ -124,7 +124,7 @@ public class BarbarianOutpostAgility {
 			return;
 		player.lock(1);
 		player.setNextAnimation(new Animation(2586));
-		player.getAppearence().setRenderEmote(-1);
+		player.getAppearance().setRenderEmote(-1);
 		 WorldTasksManager.schedule(new WorldTask() {
 			@Override
 			public void run() {
@@ -241,7 +241,7 @@ public class BarbarianOutpostAgility {
 		 player.getPackets().sendGameMessage("You put your food on the ledge and try to edge across...", true);
 		 player.lock(5);
 		 player.setNextAnimation(new Animation(753));
-		 player.getAppearence().setRenderEmote(157);
+		 player.getAppearance().setRenderEmote(157);
 		 final WorldTile toTile = new WorldTile(2532, object.getY(), object.getPlane());
 		 player.setRun(true);
 		 player.addWalkSteps(toTile.getX(), toTile.getY(), -1, false);
@@ -249,7 +249,7 @@ public class BarbarianOutpostAgility {
 			@Override
 			public void run() {
 				 player.setNextAnimation(new Animation(759));
-				 player.getAppearence().setRenderEmote(-1);
+				 player.getAppearance().setRenderEmote(-1);
 				player.getSkills().addXp(Skills.AGILITY, 22);
 				player.getPackets().sendGameMessage("You skilfully edge across the gap.", true);
 				if (getStage(player) == 2)

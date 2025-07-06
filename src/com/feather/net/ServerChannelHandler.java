@@ -24,7 +24,7 @@ public final class ServerChannelHandler extends SimpleChannelHandler {
 	private static ChannelGroup channels;
 	private static ServerBootstrap bootstrap;
 
-	public static final void init() {
+	public static void init() {
 		new ServerChannelHandler();
 	}
 
@@ -68,7 +68,7 @@ public final class ServerChannelHandler extends SimpleChannelHandler {
 	public void channelDisconnected(ChannelHandlerContext ctx,
 			ChannelStateEvent e) {
 		Object sessionObject = ctx.getAttachment();
-		if (sessionObject != null && sessionObject instanceof Session) {
+		if (sessionObject instanceof Session) {
 			Session session = (Session) sessionObject;
 			if (session.getDecoder() == null)
 				return;
@@ -82,7 +82,7 @@ public final class ServerChannelHandler extends SimpleChannelHandler {
 		if (!(e.getMessage() instanceof ChannelBuffer))
 			return;
 		Object sessionObject = ctx.getAttachment();
-		if (sessionObject != null && sessionObject instanceof Session) {
+		if (sessionObject instanceof Session) {
 			Session session = (Session) sessionObject;
 			if (session.getDecoder() == null)
 				return;
@@ -103,8 +103,7 @@ public final class ServerChannelHandler extends SimpleChannelHandler {
 	}
 
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ee)
-			throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent ee) {
 
 	}
 

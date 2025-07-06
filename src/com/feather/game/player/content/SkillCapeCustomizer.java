@@ -30,7 +30,7 @@ public final class SkillCapeCustomizer {
 		player.getPackets().sendIComponentModel(
 				20,
 				55,
-				player.getAppearence().isMale() ? ItemDefinitions
+				player.getAppearance().isMale() ? ItemDefinitions
 						.getItemDefinitions(itemId).getMaleWornModelId1()
 						: ItemDefinitions.getItemDefinitions(itemId)
 								.getFemaleWornModelId1());
@@ -93,7 +93,7 @@ public final class SkillCapeCustomizer {
 			player.getInterfaceManager().sendInterface(19);
 			player.getPackets().sendConfig(2174, skillCape[3]);
 		} else if (buttonId == 114 || buttonId == 142) { // done / close
-			player.getAppearence().loadAppearanceBlock();
+			player.getAppearance().loadAppearanceBlock();
 			player.closeInterfaces();
 		}
 	}

@@ -26,7 +26,7 @@ import com.feather.utils.huffman.Huffman;
 
 public class WorldPacketsEncoder extends Encoder {
 
-	private Player player;
+	private final Player player;
 
 	public WorldPacketsEncoder(Session session, Player player) {
 		super(session);
@@ -245,8 +245,7 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.writeByte(endHeight);
 		stream.writeShort(delay);
 		int duration = (Utils.getDistance(startTile.getX(), startTile.getY(),
-				endTile.getX(), endTile.getY()) * 30 / ((speed / 10) < 1 ? 1
-				: (speed / 10)))
+				endTile.getX(), endTile.getY()) * 30 / (Math.max((speed / 10), 1)))
 				+ delay;
 		stream.writeShort(duration);
 		stream.writeByte(curve);
@@ -895,7 +894,7 @@ public class WorldPacketsEncoder extends Encoder {
 			// xteas
 			for (int i = 0; i < 4; i++)
 				stream.writeInt(0);
-		byte[] appearence = player.getAppearence().getAppearanceBlock();
+		byte[] appearence = player.getAppearance().getAppearanceBlock();
 		stream.writeByte(appearence.length);
 		stream.writeBytes(appearence);
 		stream.endPacketVarShort();

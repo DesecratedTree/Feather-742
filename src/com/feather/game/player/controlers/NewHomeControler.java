@@ -21,7 +21,7 @@ public class NewHomeControler extends Controler {
 	public void update() {
 		int stage = getStage();
 		if (stage == 0) {
-			player.getAppearence().switchHidden(); // hides player
+			player.getAppearance().switchHidden(); // hides player
 		} else if (stage == 1)
 			player.getCutscenesManager().play("HomeCutScene");
 		else if (stage == 2) {
@@ -148,7 +148,7 @@ public class NewHomeControler extends Controler {
 	public void nextStage() {
 		int stage = increaseStage();
 		if (stage == 1)
-			player.getAppearence().switchHidden(); // unhides player
+			player.getAppearance().switchHidden(); // unhides player
 		update();
 		sendInterfaces();
 	}

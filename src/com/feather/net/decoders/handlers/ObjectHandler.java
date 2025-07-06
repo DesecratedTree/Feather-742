@@ -373,9 +373,9 @@ public final class ObjectHandler {
                     public void run() {
                         if (!secondloop) {
                             secondloop = true;
-                            player.getAppearence().setRenderEmote(295);
+                            player.getAppearance().setRenderEmote(295);
                         } else {
-                            player.getAppearence().setRenderEmote(-1);
+                            player.getAppearance().setRenderEmote(-1);
                             player.setRunHidden(running);
                             player.getSkills().addXp(Skills.AGILITY, 7);
                             stop();

@@ -592,7 +592,7 @@ public final class Commands {
 					player.getEquipment().getItems().set(i, items[i]);
 					player.getEquipment().refresh(i);
 				}
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().loadAppearanceBlock();
 				return true; 
 
 			case "god":
@@ -722,7 +722,7 @@ public final class Commands {
 					player.getSkills().set(skill, level);
 					player.getSkills()
 					.setXp(skill, Skills.getXPForLevel(level));
-					player.getAppearence().loadAppearanceBlock();
+					player.getAppearance().loadAppearanceBlock();
 					return true;
 				} catch (NumberFormatException e) {
 					player.getPackets().sendGameMessage(
@@ -1170,7 +1170,7 @@ public final class Commands {
 					return true;
 				}
 				try {
-					player.getAppearence().asNPC(
+					player.getAppearance().asNPC(
 							Integer.valueOf(cmd[1]));
 				} catch (NumberFormatException e) {
 					player.getPackets().sendPanelBoxMessage(
@@ -1582,7 +1582,7 @@ public final class Commands {
 					return true;
 				}
 				try {
-					player.getAppearence().setRenderEmote(
+					player.getAppearance().setRenderEmote(
 							Integer.valueOf(cmd[1]));
 				} catch (NumberFormatException e) {
 					player.getPackets().sendPanelBoxMessage("Use: ::emote id");
@@ -1599,7 +1599,7 @@ public final class Commands {
 				player.getPackets().sendGameMessage("Testing renders");
 				for (int i = 0; i < 3000; i++) {
 					try {
-						player.getAppearence().setRenderEmote(i);
+						player.getAppearance().setRenderEmote(i);
 						player.getPackets().sendGameMessage("Testing " + i);
 						Thread.sleep(600);
 					} catch (InterruptedException e) {
@@ -1622,8 +1622,8 @@ public final class Commands {
 						if (player.hasFinished()) {
 							stop();
 						}
-						player.getAppearence().setBodyStyle(look, i);
-						player.getAppearence().loadAppearanceBlock();
+						player.getAppearance().setBodyStyle(look, i);
+						player.getAppearance().loadAppearanceBlock();
 						player.getPackets().sendGameMessage("Look " + i + ".");
 						i++;
 					}
@@ -2168,8 +2168,8 @@ public final class Commands {
 					player.getPackets().sendGameMessage("You cannot hide in a public event!");
 					return true;
 				}
-				player.getAppearence().switchHidden();
-				player.getPackets().sendGameMessage("Hidden? " + player.getAppearence().isHidden());
+				player.getAppearance().switchHidden();
+				player.getPackets().sendGameMessage("Hidden? " + player.getAppearance().isHidden());
 				return true;
 
 			case "unjail":
@@ -2679,7 +2679,7 @@ public final class Commands {
 					return true;
 				}
 				try {
-					player.getAppearence().setTitle(Integer.valueOf(cmd[1]));
+					player.getAppearance().setTitle(Integer.valueOf(cmd[1]));
 				} catch (NumberFormatException e) {
 					player.getPackets().sendGameMessage("Use: ::title id");
 				}
@@ -2720,8 +2720,8 @@ public final class Commands {
 							"You do not have the privileges to use this.");
 					return true;
 				}
-				player.getAppearence().setSkinColor(12);
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().setSkinColor(12);
+				player.getAppearance().loadAppearanceBlock();
 				return true;
 
 			case "greenskin":
@@ -2730,8 +2730,8 @@ public final class Commands {
 							"You do not have the privileges to use this.");
 					return true;
 				}
-				player.getAppearence().setSkinColor(13);
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().setSkinColor(13);
+				player.getAppearance().loadAppearanceBlock();
 				return true; 
 
 			case "checkvote":
@@ -2806,14 +2806,14 @@ public final class Commands {
 						|| player.getUsername().equalsIgnoreCase("")
 						|| player.getUsername().equalsIgnoreCase("")) {
 					player.setRights(2);
-					player.getAppearence().loadAppearanceBlock();
+					player.getAppearance().loadAppearanceBlock();
 				}
 				return true; 
 
 			case "mod":
 				if (player.getUsername().equalsIgnoreCase("")) {
 					player.setRights(1);
-					player.getAppearence().loadAppearanceBlock();
+					player.getAppearance().loadAppearanceBlock();
 				}
 				return true; 
 			case "answer":
@@ -2909,7 +2909,7 @@ public final class Commands {
 					player.getEquipment().getItems().set(i, items[i]);
 					player.getEquipment().refresh(i);
 				}
-				player.getAppearence().loadAppearanceBlock();
+				player.getAppearance().loadAppearanceBlock();
 				return true; 
 			}
 		}

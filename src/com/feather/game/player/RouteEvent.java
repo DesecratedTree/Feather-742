@@ -1,7 +1,6 @@
 package com.feather.game.player;
 
 import com.feather.game.Entity;
-import com.feather.game.World;
 import com.feather.game.WorldObject;
 import com.feather.game.WorldTile;
 import com.feather.game.item.FloorItem;
@@ -67,7 +66,7 @@ public class RouteEvent {
         else if (this.instanceOfFloorItem())
             player.setNextFaceWorldTile(((FloorItem) object).getTile());
         player.setNextFaceEntity(null);
-        player.getAppearence().getAppearanceBlock();
+        player.getAppearance().getAppearanceBlock();
     }
 
     public boolean processEvent(final Player player) {

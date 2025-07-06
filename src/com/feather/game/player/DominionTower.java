@@ -359,7 +359,7 @@ public final class DominionTower implements Serializable {
 			player.getEquipment().deleteItem(
 					BOSSES[nextBossIndex].item.getId(),
 					BOSSES[nextBossIndex].item.getAmount());
-			player.getAppearence().loadAppearanceBlock();
+			player.getAppearance().loadAppearanceBlock();
 		}
 	}
 

@@ -368,7 +368,7 @@ public final class EmotesManager implements Serializable {
 						@Override
 						public void run() {
 							if (step == 1) {
-								player.getAppearence().asNPC(
+								player.getAppearance().asNPC(
 										(rand == 0 ? 11227 : (rand == 1 ? 11228
 												: 11229)));
 								player.setNextAnimation(new Animation(
@@ -376,7 +376,7 @@ public final class EmotesManager implements Serializable {
 												: 13194)))));
 							}
 							if (step == 3) {
-								player.getAppearence().asNPC(-1);
+								player.getAppearance().asNPC(-1);
 								stop();
 							}
 							step++;
@@ -539,7 +539,7 @@ public final class EmotesManager implements Serializable {
 								player.setNextAnimation(new Animation(356));
 								player.setNextGraphics(new Graphics(307));
 							} else if (step == 2) {
-								player.getAppearence().asNPC(
+								player.getAppearance().asNPC(
 										capeId == 20769 ? 1830 : 3372);
 								player.setNextAnimation(new Animation(1174));
 								player.setNextGraphics(new Graphics(1443));
@@ -549,7 +549,7 @@ public final class EmotesManager implements Serializable {
 							} else if (step == 5) {
 								player.getPackets().sendStopCameraShake();
 							} else if (step == 8) {
-								player.getAppearence().asNPC(-1);
+								player.getAppearance().asNPC(-1);
 								player.setNextAnimation(new Animation(1175));
 								stop();
 							}
@@ -594,11 +594,11 @@ public final class EmotesManager implements Serializable {
 							player.setNextGraphics(new Graphics(86));
 						} else if (step == 1) {
 							player.setNextAnimation(new Animation(10996));
-							player.getAppearence().asNPC(8499);
+							player.getAppearance().asNPC(8499);
 						} else if (step == 6) {
 							player.setNextAnimation(new Animation(10995));
 							player.setNextGraphics(new Graphics(86));
-							player.getAppearence().asNPC(-1);
+							player.getAppearance().asNPC(-1);
 							stop();
 						}
 						step++;
@@ -620,7 +620,7 @@ public final class EmotesManager implements Serializable {
 							player.setNextGraphics(new Graphics(1287));
 						} else if (step == 1) {
 							player.setNextAnimation(new Animation(15106));
-							player.getAppearence().asNPC(
+							player.getAppearance().asNPC(
 									random == 0 ? 13255 : (random == 1 ? 13256
 											: 13257));
 						} else if (step == 2) {
@@ -628,7 +628,7 @@ public final class EmotesManager implements Serializable {
 						} else if (step == 3) {
 							player.setNextAnimation(new Animation(15105));
 							player.setNextGraphics(new Graphics(1287));
-							player.getAppearence().asNPC(-1);
+							player.getAppearance().asNPC(-1);
 							stop();
 						}
 						step++;

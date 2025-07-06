@@ -30,7 +30,7 @@ public class Schism extends Dialogue {
 			stage = 1;
 			sendNPCDialogue(npcId, 9827,
 					"I don't believe that's any of your business, "
-							+ (player.getAppearence().isMale() ? "sir"
+							+ (player.getAppearance().isMale() ? "sir"
 									: "ma'am") + "!");
 			break;
 		case 1:

@@ -27,7 +27,7 @@ public class LumbridgeCook extends Dialogue {
 		} else if (player.startedCooksAssistant == true) {
 			sendNPCDialogue(npcId, 9827,
 					"Hi there, "
-							+ (player.getAppearence().isMale() ? "sir"
+							+ (player.getAppearance().isMale() ? "sir"
 									: "ma'am") + "!",
 					"What can I help you with today?");
 		}

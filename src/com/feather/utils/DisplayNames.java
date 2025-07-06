@@ -54,7 +54,7 @@ public final class DisplayNames {
 		player.setDisplayName(displayName);
 		FriendChatsManager.refreshChat(player);
 		Highscores.highscores(player, displayname);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		return true;
 	}
 	
@@ -65,7 +65,7 @@ public final class DisplayNames {
 			cachedNames.remove(player.getDisplayName());
 		}
 		player.setDisplayName(null);
-		player.getAppearence().loadAppearanceBlock();
+		player.getAppearance().loadAppearanceBlock();
 		return true;
 	}
 }

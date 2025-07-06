@@ -155,7 +155,7 @@ public final class LocalPlayerUpdate {
 				stream.writeBits(6, p.getXInRegion());
 				stream.writeBits(6, p.getYInRegion());
 				boolean needAppearenceUpdate = needAppearenceUpdate(
-						p.getIndex(), p.getAppearence()
+						p.getIndex(), p.getAppearance()
 						.getEncryptedAppearanceBlock());
 				appendUpdateBlock(p, updateBlockData, needAppearenceUpdate,
 						true);
@@ -222,7 +222,7 @@ public final class LocalPlayerUpdate {
 				localPlayers[playerIndex] = null;
 			} else {
 				boolean needAppearenceUpdate = needAppearenceUpdate(
-						p.getIndex(), p.getAppearence()
+						p.getIndex(), p.getAppearance()
 								.getEncryptedAppearanceBlock());
 				boolean needUpdate = p.needMasksUpdate() || needAppearenceUpdate;
 				if (needUpdate)
@@ -296,7 +296,7 @@ public final class LocalPlayerUpdate {
 								|| p2.hasTeleported()
 								|| p2.getNextWalkDirection() != -1
 								|| (p2.needMasksUpdate() || needAppearenceUpdate(
-										p2.getIndex(), p2.getAppearence()
+										p2.getIndex(), p2.getAppearance()
 										.getEncryptedAppearanceBlock())))
 							break;
 						skip++;
@@ -476,9 +476,9 @@ public final class LocalPlayerUpdate {
 	}
 
 	private void applyAppearanceMask(Player p, OutputStream data) {
-		byte[] renderData = p.getAppearence().getAppearanceBlock();
+		byte[] renderData = p.getAppearance().getAppearanceBlock();
 		totalRenderDataSentLength += renderData.length;
-		cachedAppearencesHashes[p.getIndex()] = p.getAppearence()
+		cachedAppearencesHashes[p.getIndex()] = p.getAppearance()
 				.getEncryptedAppearanceBlock();
 		data.writeByte128(renderData.length);
 		data.writeBytes(renderData);
