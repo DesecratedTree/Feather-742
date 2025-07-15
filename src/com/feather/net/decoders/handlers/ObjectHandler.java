@@ -25,7 +25,7 @@ import com.feather.game.player.actions.mining.Mining;
 import com.feather.game.player.actions.mining.MiningBase;
 import com.feather.game.player.actions.mining.EssenceMining.EssenceDefinitions;
 import com.feather.game.player.actions.mining.Mining.RockDefinitions;
-import com.feather.game.player.actions.runecrafting.SihponActionNodes;
+import com.feather.game.player.actions.runecrafting.SiphonActionNodes;
 import com.feather.game.player.actions.thieving.Thieving;
 import com.feather.game.player.content.FairyRing;
 import com.feather.game.player.content.Hunter;
@@ -141,7 +141,7 @@ public final class ObjectHandler {
 		final int id = object.getId();
 		final int x = object.getX();
 		final int y = object.getY();
-		if(SihponActionNodes.siphon(player, object)) 
+		if(SiphonActionNodes.siphon(player, object))
 			return;
 		player.setRouteEvent(new RouteEvent(object, () -> {
             player.stopAll();
@@ -1513,9 +1513,9 @@ public final class ObjectHandler {
 		return false;
 	}
 
-	public static boolean handleDoor(Player player, WorldObject object, long timer) {
+	public static void handleDoor(Player player, WorldObject object, long timer) {
 		if (World.isSpawnedObject(object))
-			return false;
+			return;
 		WorldObject openedDoor = new WorldObject(object.getId(),
 				object.getType(), object.getRotation() + 1, object.getX(),
 				object.getY(), object.getPlane());
@@ -1530,31 +1530,29 @@ public final class ObjectHandler {
 		if (World.removeTemporaryObject(object, timer, true)) {
 			player.faceObject(openedDoor);
 			World.spawnTemporaryObject(openedDoor, timer, true);
-			return true;
-		}
-		return false;
-	}
+        }
+    }
 
-	private static boolean handleDoor(Player player, WorldObject object) {
-		return handleDoor(player, object, 60000);
-	}
+	private static void handleDoor(Player player, WorldObject object) {
+        handleDoor(player, object, 60000);
+    }
 
-	private static boolean handleStaircases(Player player, WorldObject object,
-			int optionId) {
+	private static void handleStaircases(Player player, WorldObject object,
+                                         int optionId) {
 		String option = object.getDefinitions().getOption(optionId);
 		if (option.equalsIgnoreCase("Climb-up")) {
 			if (player.getPlane() == 3)
-				return false;
+				return;
 			player.useStairs(-1, new WorldTile(player.getX(), player.getY(),
 					player.getPlane() + 1), 0, 1);
 		} else if (option.equalsIgnoreCase("Climb-down")) {
 			if (player.getPlane() == 0)
-				return false;
+				return;
 			player.useStairs(-1, new WorldTile(player.getX(), player.getY(),
 					player.getPlane() - 1), 0, 1);
 		} else if (option.equalsIgnoreCase("Climb")) {
 			if (player.getPlane() == 3 || player.getPlane() == 0)
-				return false;
+				return;
 			player.getDialogueManager().startDialogue(
 					"ClimbNoEmoteStairs",
 					new WorldTile(player.getX(), player.getY(), player
@@ -1562,27 +1560,25 @@ public final class ObjectHandler {
 							new WorldTile(player.getX(), player.getY(), player
 									.getPlane() - 1), "Go up the stairs.",
 					"Go down the stairs.");
-		} else
-			return false;
-		return false;
-	}
+		}
+    }
 
-	private static boolean handleLadder(Player player, WorldObject object,
-			int optionId) {
+	private static void handleLadder(Player player, WorldObject object,
+                                     int optionId) {
 		String option = object.getDefinitions().getOption(optionId);
 		if (option.equalsIgnoreCase("Climb-up")) {
 			if (player.getPlane() == 3)
-				return false;
+				return;
 			player.useStairs(828, new WorldTile(player.getX(), player.getY(),
 					player.getPlane() + 1), 1, 2);
 		} else if (option.equalsIgnoreCase("Climb-down")) {
 			if (player.getPlane() == 0)
-				return false;
+				return;
 			player.useStairs(828, new WorldTile(player.getX(), player.getY(),
 					player.getPlane() - 1), 1, 2);
 		} else if (option.equalsIgnoreCase("Climb")) {
 			if (player.getPlane() == 3 || player.getPlane() == 0)
-				return false;
+				return;
 			player.getDialogueManager().startDialogue(
 					"ClimbEmoteStairs",
 					new WorldTile(player.getX(), player.getY(), player
@@ -1590,10 +1586,8 @@ public final class ObjectHandler {
 							new WorldTile(player.getX(), player.getY(), player
 									.getPlane() - 1), "Climb up the ladder.",
 									"Climb down the ladder.", 828);
-		} else
-			return false;
-		return true;
-	}
+		}
+    }
 
 	public static void handleItemOnObject(final Player player, final WorldObject object, final int interfaceId, final Item item) {
 		final int itemId = item.getId();

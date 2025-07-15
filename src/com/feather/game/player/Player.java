@@ -966,6 +966,8 @@ public class Player extends Entity {
 		}
 		getPackets().sendLogout(lobby && Settings.MANAGMENT_SERVER_ENABLED);
 		running = false;
+
+		WorldTasksManager.cleanupEntityTasks(this);
 	}
 
 	public void forceLogout() {
@@ -1053,6 +1055,7 @@ public class Player extends Entity {
 		if (Settings.DEBUG) {
 			Logger.log(this, "Finished Player: " + username + ", pass: " + password);
 		}
+		WorldTasksManager.cleanupEntityTasks(this);
 	}
 
 	@Override

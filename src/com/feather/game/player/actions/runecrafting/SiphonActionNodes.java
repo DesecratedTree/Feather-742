@@ -16,7 +16,7 @@ import com.feather.utils.Utils;
  * @author Tyler
  *
  */
-public class SihponActionNodes extends Action {
+public class SiphonActionNodes extends Action {
 	Nodes nodes;
 	WorldObject node;
 	private boolean started;
@@ -26,7 +26,7 @@ public class SihponActionNodes extends Action {
 	 * @param nodes
 	 * @param node
 	 */
-	public SihponActionNodes(Nodes nodes, WorldObject node) {
+	public SiphonActionNodes(Nodes nodes, WorldObject node) {
 		this.nodes = nodes;
 		this.node = node;
 	}
@@ -153,7 +153,7 @@ public class SihponActionNodes extends Action {
 		if (node == null)
 			return false;
 		player.getActionManager()
-				.setAction(new SihponActionNodes(node, object));
+				.setAction(new SiphonActionNodes(node, object));
 		return true;
 	}
 	/**

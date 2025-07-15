@@ -1,10 +1,25 @@
 package com.feather.game.tasks;
 
-public abstract class WorldTask implements Runnable {
+public abstract class WorldTask {
+	public volatile boolean needRemove = false;
 
-	protected boolean needRemove;
+	/**
+	 * Execute the task
+	 */
+	public abstract void run();
 
-	public final void stop() {
-		needRemove = true;
+	/**
+	 * Called when the task is being cleaned up or cancelled
+	 * Override this to release resources, clear references, etc.
+	 */
+	public void stop() {
+		// Default implementation - override if needed
+	}
+
+	/**
+	 * Mark this task for removal after the next execution
+	 */
+	public final void cancel() {
+		this.needRemove = true;
 	}
 }

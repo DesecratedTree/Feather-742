@@ -204,8 +204,8 @@ public final class NPCSpawns {
 				loadedCount++; // Increment the counter for each NPC spawned
 			}
 
-			// Log the count of NPCs that were spawned
-			Logger.log("NPCSpawns", "Spawned " + loadedCount + " NPCs from the list.");
+			/*// Log the count of NPCs that were spawned
+			Logger.log("NPCSpawns", "Spawned " + loadedCount + " NPCs.");*/
 		}
 	}
 

@@ -46,7 +46,7 @@ public class NPCExamines {
                 loadedCount++;
             }
 
-            Logger.log("NPCExamines", "Loaded " + loadedCount + " NPC examines from YAML.");
+//            Logger.log("NPCExamines", "Loaded " + loadedCount + " NPC examines");
         } catch (IOException e) {
             e.printStackTrace();
         }
