@@ -482,7 +482,7 @@ public class InventoryOptionsHandler {
 			return;
 		}
 		player.getInventory().deleteItem(slotId, item);
-		if (player.getCharges().degradeCompletly(item))
+		if (player.getCharges().degradeCompletely(item))
 			return;
 		World.addGroundItem(item, new WorldTile(player), player, false, 180,
 				true);

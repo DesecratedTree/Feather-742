@@ -20,7 +20,7 @@ public class DestroyItemOption extends Dialogue {
 	public void run(int interfaceId, int componentId) {
 		if (interfaceId == 1183 && componentId == 9) {
 			player.getInventory().deleteItem(slotId, item);
-			player.getCharges().degradeCompletly(item);
+			player.getCharges().degradeCompletely(item);
 			player.getPackets().sendSound(4500, 0, 1);
 		}
 		end();
