@@ -7,3 +7,8 @@
 *.p
 /data/cache - Copy
 data/cache.zip
+/build
+/.gradle
+/gradle
+gradlew
+gradlew.bat

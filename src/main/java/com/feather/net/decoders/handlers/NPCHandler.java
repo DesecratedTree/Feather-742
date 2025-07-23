@@ -10,7 +10,6 @@ import com.feather.game.npc.others.FireSpirit;
 import com.feather.game.npc.others.LivingRock;
 import com.feather.game.npc.pet.Pet;
 import com.feather.game.npc.slayer.Strykewyrm;
-import com.feather.game.player.CoordsEvent;
 import com.feather.game.player.Player;
 import com.feather.game.player.RouteEvent;
 import com.feather.game.player.actions.Fishing;
