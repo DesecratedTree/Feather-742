@@ -1531,4 +1531,12 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.writeInt((tile.getPlane() << 28) | (tile.getX() << 14) | tile.getY());
 		session.write(stream);
 	}
+
+    public void sendMinimapFlag(int localX, int localY) {
+		OutputStream stream = new OutputStream(3);
+		stream.writePacket(player, 13);
+		stream.writeByte128(localY);
+		stream.writeByte128(localX);
+		session.write(stream);
+    }
 }

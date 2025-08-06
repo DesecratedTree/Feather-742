@@ -543,7 +543,7 @@ public class Player extends Entity {
 			coordsEvent = null;
 			routeEvent = null;
 			resetWalkSteps();
-			getPackets().sendResetMinimapFlag();
+			//getPackets().sendResetMinimapFlag();
 		}
 		if (stopActions)
 			actionManager.forceStop();

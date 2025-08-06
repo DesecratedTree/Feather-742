@@ -16,6 +16,7 @@ import com.feather.utils.Utils;
 @SuppressWarnings("serial")
 public class GodwarsArmadylFaction extends NPC {
 
+
 	public GodwarsArmadylFaction(int id, WorldTile tile, int mapAreaNameHash,
                                  boolean canBeAttackFromOutOfArea, boolean spawned) {
 		super(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, spawned);

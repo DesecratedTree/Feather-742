@@ -79,28 +79,6 @@ public class RouteEvent {
             completePath(player);
             return true;
         }
-        // else if (EffectsManager.isBound(player)){
-        // if ((instanceOfEntity() || instanceOfRSObject()) && Utils.getDistance(player, instanceOfEntity() ? (Entity) object : (RSObject) object) >= 2){
-        // player.getPackets().sendGameMessage("You can't reach that.");
-        // player.getPackets().sendResetMinimapFlag();
-        // completePath(player);
-        // return true;
-        // }
-        // else if (instanceOfFloorItem()){
-        // if (Utils.getDistance(player, ((FloorItem) object).getTile()) == 1){
-        // player.setNextAnimation(new Animation(832));
-        // completePath(player);
-        // event.run();
-        // return true;
-        // }
-        // else if (Utils.getDistance(player, ((FloorItem) object).getTile()) >= 2){
-        // player.getPackets().sendGameMessage("You can't reach that.");
-        // player.getPackets().sendResetMinimapFlag();
-        // completePath(player);
-        // return true;
-        // }
-        // }
-        // }
         RouteStrategy[] strategies = generateStrategies();
         if (strategies == null)
             return false;
@@ -157,7 +135,7 @@ public class RouteEvent {
 
                 WorldTile last = new WorldTile(bufferX[0], bufferY[0], player.getPlane());
                 player.resetWalkSteps();
-                //player.getPackets().sendMinimapFlag(last.getLocalX(player.getLastLoadedMapRegionTile(), player.getMapSize()), last.getLocalY(player.getLastLoadedMapRegionTile(), player.getMapSize()));
+                player.getPackets().sendMinimapFlag(last.getLocalX(player.getLastLoadedMapRegionTile(), player.getMapSize()), last.getLocalY(player.getLastLoadedMapRegionTile(), player.getMapSize()));
                 if (player.getFreezeDelay() > Utils.currentTimeMillis())
                     return false;
                 for (int step = steps - 1; step >= 0; step--) {

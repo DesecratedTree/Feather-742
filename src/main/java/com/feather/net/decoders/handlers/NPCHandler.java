@@ -42,6 +42,7 @@ public class NPCHandler {
 			player.getPackets().sendGameMessage(
 					"FeatherNPC - ID is " + npc.getId() + ", location is " + npc.getX() + " - " + npc.getY() + " - " + npc.getPlane() + ".");}
         player.getPackets().sendGameMessage(NPCExamines.getExamine(npc));
+        player.getPackets().sendGameMessage("NPC HP: " + npc.getCombatDefinitions().getHitpoints());
 		if(player.isSpawnsMode()) {
 			try {
 				if(NPCSpawns.removeSpawn(npc)) {
