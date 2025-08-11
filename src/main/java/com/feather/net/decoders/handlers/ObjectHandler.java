@@ -1304,6 +1304,7 @@ public final class ObjectHandler {
 			System.out.println("Offsets"+offsetX+ " , "+offsetY);
 		}
 		player.getPackets().sendGameMessage("It's a " + object.getDefinitions().name + ".");
+        player.getPackets().sendObjectMessage(object, "Object ID: " + object.getId());
 		if (Settings.DEBUG) Logger.log(
 				"ObjectHandler",
 				"examined object id : " + object.getId() + ", "

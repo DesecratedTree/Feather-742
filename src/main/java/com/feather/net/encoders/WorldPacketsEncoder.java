@@ -1159,7 +1159,11 @@ public class WorldPacketsEncoder extends Encoder {
 	}
 	
 	public void sendNPCMessage(NPC npc, String message) {
-		sendGameMessage(message);
+		sendNPCMessage(0, npc, message);
+	}
+
+	public void sendObjectMessage(WorldObject object, String message) {
+		sendObjectMessage(0, object, message);
 	}
 	
 	public void sendGameMessage(String text) {
@@ -1423,16 +1427,8 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(packet);
 	}
 
-	public void sendResetMinimapFlag() {
-		OutputStream stream = new OutputStream(3);
-		stream.writePacket(player, 13);
-		stream.writeByte128(255);
-		stream.writeByte128(255);
-		session.write(stream);
-	}
-
 	public void sendPlayerMessage(int border, Player player, String message) {
-		sendGameMessage(message);
+		//sendGameMessage(message);
 		sendGlobalString(306, message);
 		sendGlobalConfig(1699, 15263739);
 		sendGlobalConfig(1700, border);
@@ -1441,7 +1437,7 @@ public class WorldPacketsEncoder extends Encoder {
 	}
 
 	public void sendNPCMessage(int border, NPC npc, String message) {
-		sendGameMessage(message);
+		//sendGameMessage(message);
 		sendGlobalString(306, message);
 		sendGlobalConfig(1699, 15263739);
 		sendGlobalConfig(1700, border);
@@ -1450,7 +1446,7 @@ public class WorldPacketsEncoder extends Encoder {
 	}
 
 	public void sendObjectMessage(int border, WorldObject object, String message) {
-		sendGameMessage(message);
+		//sendGameMessage(message);
 		sendGlobalString(306, message);
 		sendGlobalConfig(1699, 15263739);
 		sendGlobalConfig(1700, border);
@@ -1539,4 +1535,12 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.writeByte128(localX);
 		session.write(stream);
     }
+
+	public void sendResetMinimapFlag() {
+		OutputStream stream = new OutputStream(3);
+		stream.writePacket(player, 13);
+		stream.writeByte128(255);
+		stream.writeByte128(255);
+		session.write(stream);
+	}
 }
