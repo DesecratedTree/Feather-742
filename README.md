@@ -29,3 +29,4 @@ Requires JDK 8.
 - [Gircat on Rune-Server](https://rune-server.org/members/gircat.247379/) for providing the original release.
 - [One Time on Rune-Server](https://rune-server.org/members/one-time.325253/) for providing a mirrored copy.
 - Rune-Server
+- The original Matrix team.
