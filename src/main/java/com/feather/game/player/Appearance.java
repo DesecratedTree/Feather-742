@@ -399,7 +399,7 @@ public class Appearance implements Serializable {
 				item = cosmeticItems[male ? Equipment.SLOT_HAT
 						: Equipment.SLOT_CHEST];
 		}
-		if (item == null || (male && Equipment.showBear(item)))
+		if (item == null || (male && Equipment.showBeard(item)))
 			stream.writeShort(0x100 + bodyStyle[1]);
 		else
 			stream.writeByte(0);

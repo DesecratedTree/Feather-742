@@ -1657,11 +1657,11 @@ public final class WorldPacketsDecoder extends Decoder {
 			@SuppressWarnings("unused")
 			String unknown2 = stream.readString();
 		} else if (packetId == ITEM_ON_FLOOR_EXAMINE) {
-			int y = stream.readUnsignedShort(); //CLIENT SENDS THEM BACKWARDS ON PURPOSE
-			int x = stream.readUnsignedShortLE();
-			int id = stream.readUnsignedShort();
+			int itemy = stream.readUnsignedShort(); //CLIENT SENDS THEM BACKWARDS ON PURPOSE
+			int itemx = stream.readUnsignedShortLE();
+			int itemid = stream.readUnsignedShort();
 			boolean forceRun = stream.readUnsigned128Byte() == 1;
-			player.getPackets().sendItemMessage(0, 15263739, id, x, y, ItemExamines.getExamine(new Item(id))); // ChatboxMessage
+			player.getPackets().sendItemMessage(0, 15263739, World.getRegion(new WorldTile(itemx, itemy, 0).getRegionId()).getGroundItem(itemid, new WorldTile(itemx, itemy, player.getPlane()), player), ItemExamines.getExamine(new Item(itemid)));
 		}
 	}
 }

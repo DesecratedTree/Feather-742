@@ -52,10 +52,10 @@ public class InventoryOptionsHandler {
 			return;
 
 		if (itemId == 5733) {
-			player.getDialogueManager().startDialogue("RottenPotato"); 
+			player.getDialogueManager().startDialogue("RottenPotato");
 			return;
 		}
-		
+
 		if (itemId >= 5509 && itemId <= 5514) {
 			int pouch = -1;
 			if (itemId == 5509)
@@ -69,15 +69,13 @@ public class InventoryOptionsHandler {
 			Runecrafting.emptyPouch(player, pouch);
 			player.stopAll(false);
 		} else if (itemId >= 15086 && itemId <= 15100) {
-			Dicing.handleRoll(player, itemId, true); 
+			Dicing.handleRoll(player, itemId, true);
 			return;
 		} else {
 			if (player.isEquipDisabled())
 				return;
-			long passedTime = Utils.currentTimeMillis()
-					- WorldThread.LAST_CYCLE_CTM;
+			long passedTime = Utils.currentTimeMillis() - WorldThread.LAST_CYCLE_CTM;
 			WorldTasksManager.schedule(new WorldTask() {
-
 				@Override
 				public void run() {
 					List<Integer> slots = player.getSwitchItemCache();
@@ -88,7 +86,7 @@ public class InventoryOptionsHandler {
 					ButtonHandler.sendWear(player, slot);
 					player.stopAll(false, true, false);
 				}
-			}, passedTime >= 600 ? 0 : passedTime > 330 ? 1 : 0);
+			}, 0);
 			if (player.getSwitchItemCache().contains(slotId))
 				return;
 			player.getSwitchItemCache().add(slotId);

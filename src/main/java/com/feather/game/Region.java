@@ -607,7 +607,7 @@ public class Region {
 	}
 
 	void loadNPCSpawns() {
-		NPCSpawns.loadNPCSpawns();
+		NPCSpawns.loadNPCSpawns(regionId);
 	}
 
 	void loadObjectSpawns() {

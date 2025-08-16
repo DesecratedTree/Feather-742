@@ -1,13 +1,11 @@
 package com.feather.game.player;
 
 import java.io.Serializable;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.feather.cache.parser.ItemDefinitions;
 import com.feather.game.item.Item;
 import com.feather.game.item.ItemsContainer;
 import com.feather.game.player.actions.Bonfire;
-import com.feather.game.player.content.Lend;
 import com.feather.utils.ItemExamines;
 
 public final class Equipment implements Serializable {
@@ -136,7 +134,7 @@ public final class Equipment implements Serializable {
 		return item.getDefinitions().getEquipType() == 8;
 	}
 	
-	public static boolean showBear(Item item) { 
+	public static boolean showBeard(Item item) {
 		String name = item.getName().toLowerCase();
 		return !hideHair(item)
 				|| name.contains("horns")

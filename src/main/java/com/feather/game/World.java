@@ -433,14 +433,13 @@ public final class World {
 		return n;
 	}
 
-	public static void spawnNPC(int id, WorldTile tile,
-								int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
-		spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+	public static void spawnNPC(int id, WorldTile tile, int mapAreaNameHash, boolean canBeAttackFromOutOfArea) {
+		spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, true);
 	}
 
 	public static void spawnNPC(int id, WorldTile tile,
 								int mapAreaNameHash, boolean canBeAttackFromOutOfArea, EntityDirection faceDirection) {
-		NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+		NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, true);
 		if (returnValue != null) {
 			returnValue.setDirection(faceDirection.getValue());
 		}

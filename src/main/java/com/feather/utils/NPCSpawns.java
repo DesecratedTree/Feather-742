@@ -1,216 +1,111 @@
-package com.feather.utils;
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//  Copyright (C) 2021 Trenton Kress
+//  This file is part of project: Darkan
+//
+package com.rs.utils.spawns;
 
-import com.feather.cache.parser.NPCDefinitions;
-import com.feather.game.World;
-import com.feather.game.WorldTile;
-import com.feather.game.npc.EntityDirection;
-import com.feather.game.npc.NPC;
-import org.yaml.snakeyaml.Yaml;
+import com.google.gson.JsonIOException;
+import com.rs.cache.loaders.NPCDefinitions;
+import com.rs.game.World;
+import com.rs.lib.file.JsonFileManager;
+import com.rs.lib.game.Tile;
+import com.rs.lib.util.Logger;
+import com.rs.plugin.annotations.PluginEventHandler;
+import com.rs.plugin.annotations.ServerStartupEvent;
+import com.rs.plugin.annotations.ServerStartupEvent.Priority;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-
+@PluginEventHandler
 public final class NPCSpawns {
 
-	static File npcSpawnsFile = new File("data/npc_spawns.yml");
+	private final static String PATH = "data/npcs/spawns/";
+	final static Charset ENCODING = StandardCharsets.UTF_8;
+
 	private static final Object lock = new Object();
-	public static List<NPCSpawn> npcSpawns;
+	private static final ArrayList<NPCSpawn> ALL_SPAWNS = new ArrayList<>();
+	private static final ArrayList<NPCSpawn> ADDED_SPAWNS = new ArrayList<>();
+	private static final Map<Integer, List<NPCSpawn>> NPC_SPAWNS = new HashMap<>();
 
-	static {
-		npcSpawns = new ArrayList<NPCSpawn>();
-		loadNPCSpawns(); // Load NPC spawns from the YML file at startup
-	}
-
-	public static List<NPCSpawn> getInstance() {
-		return npcSpawns;
-	}
-
-	private static void addNPCSpawn(String username, int npcId, WorldTile tile, String direction) {
-		npcSpawns.add(new NPCSpawn(username, npcId, tile, direction));
-		save(); // Save to the YML file after adding a spawn
-	}
-
-	public static void save() {
-		try {
-			Yaml yaml = new Yaml();
-			FileWriter writer = new FileWriter(npcSpawnsFile);
-			yaml.dump(npcSpawns, writer); // Dump the list to the YML file
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public List<NPCSpawn> getSpawns() {
-		return npcSpawns;
-	}
-
-	public static class NPCSpawn {
-		public long time;
-		public String username;
-		public int npcId;
-		public WorldTile tile;
-		public String direction;  // Add this field to store direction
-
-		public NPCSpawn(String username, int npcId, WorldTile tile, String direction) {
-			this.time = System.currentTimeMillis();
-			this.username = username;
-			this.npcId = npcId;
-			this.tile = tile;
-			this.direction = direction;  // Set the direction
-		}
-	}
-
-
-	public static boolean addUnsavedSpawn(String username, int id, WorldTile tile) {
+	public static boolean addSpawn(String username, int id, Tile tile) {
 		synchronized (lock) {
+			File file = new File("./data/npcs/addedSpawns.json");
+			ADDED_SPAWNS.add(new NPCSpawn(id, tile, ""+NPCDefinitions.getDefs(id).getName()+" added by " + username));
 			World.spawnNPC(id, tile, -1, true);
-			return true;
-		}
-	}
-
-	public static boolean addSavedSpawn(String username, int id, WorldTile tile, String direction) {
-		synchronized (lock) {
-			addNPCSpawn(username, id, tile, direction);
-			World.spawnNPC(id, tile, -1, true);
-			return true;
-		}
-	}
-
-	public static boolean removeSavedSpawn(WorldTile tile) {
-		synchronized (lock) {
-			for (NPCSpawn npcSpawn : npcSpawns) {
-				if (npcSpawn.tile.matches(tile)) {
-					npcSpawns.remove(npcSpawn);
-					save(); // Save to the YML file after removal
-					return true;
-				}
+			try {
+				JsonFileManager.saveJsonFile(ADDED_SPAWNS, file);
+			} catch (IOException e) {
+				return false;
 			}
-			return false;
+			return true;
 		}
 	}
 
-	public static final void loadNPCSpawns() {
-		int loadedCount = 0;
+	@ServerStartupEvent(Priority.FILE_IO)
+	public static final void init() throws JsonIOException, IOException {
+		Logger.info(NPCSpawns.class, "init", "Loading NPC spawns...");
+		File[] spawnFiles = new File(PATH).listFiles();
+		for (File f : spawnFiles)
+			load(f);
+		Logger.info(NPCSpawns.class, "init", "Loaded " + ALL_SPAWNS.size() + " NPC spawns...");
+	}
 
-		// Load the NPC spawns from the npc_spawns.yml file
-		if (!npcSpawnsFile.exists()) {
+	public static void load(File file) throws IOException {
+		if (file.getName().startsWith("_"))
+			return;
+		if (file.isDirectory()) {
+			for (File f : file.listFiles())
+				load(f);
 			return;
 		}
+		NPCSpawn[] spawns = (NPCSpawn[]) JsonFileManager.loadJsonFile(file, NPCSpawn[].class);
+		if (spawns != null)
+			for(NPCSpawn spawn : spawns)
+				add(spawn);
+	}
 
-		Yaml yaml = new Yaml();
-		try {
-			FileReader fileReader = new FileReader(npcSpawnsFile);
-			// Load as a list of maps
-			List<Map<String, Object>> npcSpawnsList = yaml.loadAs(fileReader, List.class);
-
-			for (Map<String, Object> spawn : npcSpawnsList) {
-				// Safely parse and convert the values to integers
-				int npcId = Integer.parseInt(spawn.get("id").toString());
-				int x = Integer.parseInt(spawn.get("x").toString());
-				int y = Integer.parseInt(spawn.get("y").toString());
-				int z = Integer.parseInt(spawn.get("z").toString());
-
-				// Check if direction exists, otherwise default to "EAST"
-				String direction = spawn.containsKey("direction") ? spawn.get("direction").toString() : "EAST";
-
-				WorldTile tile = new WorldTile(x, y, z);
-				// Create and add the NPCSpawn object to the list
-				npcSpawns.add(new NPCSpawn(null, npcId, tile, direction)); // Assuming null username for now
-				loadedCount++;
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static void add(NPCSpawn spawn) {
+		if (spawn != null) {
+			ALL_SPAWNS.add(spawn);
+			List<NPCSpawn> regionSpawns = NPC_SPAWNS.get(spawn.getTile().getChunkId());
+			if (regionSpawns == null)
+				regionSpawns = new ArrayList<>();
+			regionSpawns.add(spawn);
+			NPC_SPAWNS.put(spawn.getTile().getChunkId(), regionSpawns);
 		}
 	}
 
-
-
-	public static boolean addSpawn(String username, int id, WorldTile tile) throws Throwable {
-		synchronized (lock) {
-			File file = new File("data/npcs/spawns.txt");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-			writer.write("// " + NPCDefinitions.getNPCDefinitions(id).name + ", " + NPCDefinitions.getNPCDefinitions(id).combatLevel + ", added by: " + username);
-			writer.newLine();
-			writer.flush();
-			writer.write(id + " - " + tile.getX() + " " + tile.getY() + " " + tile.getPlane());
-			writer.newLine();
-			writer.flush();
-			writer.close();
-			World.spawnNPC(id, tile, -1, true);
-			return true;
-		}
+	public static List<NPCSpawn> getAllSpawns() {
+		return ALL_SPAWNS;
 	}
 
-	public static boolean addUnpackedSpawn(String username, int id, WorldTile tile) throws Throwable {
-		synchronized (lock) {
-			File file = new File("data/npcs/unpackedSpawns.txt");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-			writer.write("//" + NPCDefinitions.getNPCDefinitions(id).name + " spawned by " + username);
-			writer.newLine();
-			writer.flush();
-			writer.write(id + " " + tile.getX() + " " + tile.getY() + " " + tile.getPlane());
-			writer.newLine();
-			writer.flush();
-			writer.close();
-			World.spawnNPC(id, tile, -1, true);
-			return true;
-		}
+	public static void loadNPCSpawns(int chunkId) {
+		List<NPCSpawn> spawns = NPC_SPAWNS.get(chunkId);
+		if (spawns != null)
+			for (NPCSpawn spawn : spawns)
+				spawn.spawn();
 	}
 
-	public static boolean removeSpawn(NPC npc) throws Throwable {
-		synchronized (lock) {
-			List<String> page = new ArrayList<>();
-			File file = new File("data/npcs/spawns.txt");
-			BufferedReader in = new BufferedReader(new FileReader(file));
-			String line;
-			boolean removed = false;
-			int id = npc.getId();
-			WorldTile tile = npc.getRespawnTile();
-			while ((line = in.readLine()) != null) {
-				if (line.equals(id + " - " + tile.getX() + " " + tile.getY() + " " + tile.getPlane())) {
-					page.remove(page.get(page.size() - 1)); // description
-					removed = true;
-					continue;
-				}
-				page.add(line);
-			}
-			if (!removed)
-				return false;
-			file.delete();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			for (String l : page) {
-				writer.write(l);
-				writer.newLine();
-				writer.flush();
-			}
-			npc.finish();
-			return true;
-		}
-	}
-
-	public static void spawnAllNPCs() {
-		synchronized (lock) {
-			int loadedCount = 0; // Initialize counter
-			for (NPCSpawn npcSpawn : npcSpawns) {
-				// Convert the string direction to the actual direction enum or constant as needed
-				// For example, assuming EntityDirection is an enum
-				EntityDirection direction = EntityDirection.valueOf(npcSpawn.direction.toUpperCase());
-
-				// Spawn the NPC with the direction
-				World.spawnNPC(npcSpawn.npcId, npcSpawn.tile, -1, true, direction);
-				loadedCount++; // Increment the counter for each NPC spawned
-			}
-
-			// Log the count of NPCs that were spawned
-			Logger.log("NPCSpawns", "Spawned " + loadedCount + " NPCs from the list.");
-		}
-	}
-
-	public static void init() {
-		// Call spawnAllNPCs to spawn all NPCs from the list
-		spawnAllNPCs();
+	public static List<NPCSpawn> getSpawnsForChunk(int chunkId) {
+		return NPC_SPAWNS.get(chunkId);
 	}
 }

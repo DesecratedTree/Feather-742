@@ -1503,13 +1503,13 @@ public class WorldPacketsEncoder extends Encoder {
 		session.write(stream);
 	}
 
-	public void sendItemMessage(int border, int colour, int id, int x, int y, String message) {
+	public void sendItemMessage(int border, int colour, FloorItem item, String message) {
 		sendGameMessage(message);
 		sendGlobalString(306, message);
 		sendGlobalConfig(1699, colour); //"color" - Default; 1 - Black
 		sendGlobalConfig(1700, border); //"border" - Default; 0 - White; 1 - Red; 2 - No Border
 		sendGlobalConfig(1695, 1);
-		sendItemInterface(new Item(id), new WorldTile(x, y, player.getPlane()), true, 746, 0, 1177);
+		sendItemInterface(item, item.getTile(), true, 746, 0, 1177);
 	}
 
 	public void sendItemInterface(Item item, WorldTile tile, boolean noclipped, int windowId, int windowComponentId, int interfaceId) {
