@@ -17,8 +17,8 @@ A RuneScape private server framework, based on client build 718, loading a 742 c
 | Wilderness | ❌ |
 
 ### Combat System
-| Feature | Status | Progress | Notes |
-|---------|--------|----------|-------|
+| Feature | Status |
+|---------|--------|
 | Melee Combat | ❌ |
 | Ranged Combat | ❌ |
 | Magic Combat | ❌ |
