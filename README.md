@@ -2,6 +2,29 @@
 
 A RuneScape private server framework, based on client build 718, loading a 742 cache. Using a Matrix codebase. 
 
+## Progress
+- **Development Stage:** Alpha
+- **Server Status:** Development / Live
+- **Completion Estimate:** 0%
+
+### Areas
+| Location | Status | 
+|----------|--------|
+| Lumbridge | ❌ |
+| Varrock | ❌ |
+| Falador | ❌ |
+| Edgeville | ❌ |
+| Wilderness | ❌ |
+
+### Combat System
+| Feature | Status | Progress | Notes |
+|---------|--------|----------|-------|
+| Melee Combat | ❌ |
+| Ranged Combat | ❌ |
+| Magic Combat | ❌ |
+| Combat Formulas | ❌ |
+| Special Attacks | ❌ |
+
 ## Getting Started
 
 Place the contents of the cache zip into the /data/cache/ directory. 
