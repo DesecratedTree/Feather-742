@@ -8,7 +8,7 @@ A RuneScape private server framework, based on client build 718, loading a 742 c
 - **Completion Estimate:** 0%
 
 ### Areas
-| Location | Status | 
+| Location | Status |
 |----------|--------|
 | Lumbridge | ❌ |
 | Varrock | ❌ |
@@ -16,7 +16,7 @@ A RuneScape private server framework, based on client build 718, loading a 742 c
 | Edgeville | ❌ |
 | Wilderness | ❌ |
 
-### Combat System
+### Features
 | Feature | Status |
 |---------|--------|
 | Melee Combat | ❌ |
